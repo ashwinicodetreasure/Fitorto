@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
+
+   <!-- <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/searchbtn"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:background="#FFFFFF"
+            android:focusable="true"
+            android:hint="  Discover gyms,yogacenters.."
+            android:inputType="textNoSuggestions" />
+        &lt;!&ndash;<Button
+            android:layout_width="50dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSearch"
+            android:background="@drawable/ic_search"/>&ndash;&gt;
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#dbdbdb" />
+
+    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <AutoCompleteTextView
+            android:id="@+id/edtitem"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:drawableTint="#dbdbdb"
+            android:singleLine="true"
+            android:hint="Discover gyms,yogacenters.."
+            android:padding="10dp"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_cancel"
+            android:visibility="visible" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#dbdbdb" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search History"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:background="#dbdbdb"
+        android:textSize="15dp"/>
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

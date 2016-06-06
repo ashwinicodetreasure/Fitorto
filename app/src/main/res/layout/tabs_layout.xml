@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2px"
+        android:background="#dbdbdb"
+        android:layout_marginTop="15dp" />
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:id="@+id/feed">
+            <ImageView
+                android:id="@+id/feedimg"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_rss_feed"
+
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/feedimg"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:id="@+id/tvfeed"
+                android:text="Feeds"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:id="@+id/discover">
+
+
+            <ImageView
+                android:id="@+id/discoverimg"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+
+                android:src="@drawable/ic_search"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/discoverimg"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:id="@+id/tvdis"
+                android:textColor="#000000"
+                android:text="Discover"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:visibility="visible">
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_user"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:text="Profile"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:id="@+id/profile">
+            <ImageView
+                android:id="@+id/profileimg"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_user"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileimg"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:id="@+id/tvpro"
+                android:text="Profile"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:id="@+id/friends">
+            <ImageView
+                android:id="@+id/friendsimg"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_friends"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/friendsimg"
+                android:layout_centerInParent="true"
+                android:id="@+id/tvfrd"
+                android:text="Friends"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="72dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/fitorto"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

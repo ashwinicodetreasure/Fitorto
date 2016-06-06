@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/wallet"
+        android:title="wallet"
+        android:icon="@mipmap/ic_action_wallet"
+        android:orderInCategory="3"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/setting"
+        android:title="setting"
+        android:icon="@drawable/s"
+        android:orderInCategory="3"
+        app:showAsAction="ifRoom" />
+</menu>

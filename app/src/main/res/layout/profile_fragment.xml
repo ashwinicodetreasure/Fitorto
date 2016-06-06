@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingRight="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/gymimage"
+        android:layout_width="160dp"
+        android:layout_height="130dp"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_below="@+id/textView6"
+        android:background="@drawable/carddrawable"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/gymtitle"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/gymimage"
+        android:layout_alignStart="@+id/gymimage"
+        android:layout_below="@+id/gymimage"
+        android:background="#FBAC00"
+        android:gravity="center_horizontal"
+        android:text="Gold's Gym"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+</RelativeLayout>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#388E3C</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="link">#0000FF	</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="hexa1">#0079FE</color>
+    <color name="hexa2">#F9A61A</color>
+    <color name="hexa3">#D32A4B</color>
+    <color name="hexa4">#009788</color>
+    <color name="hexa5">#4CAF50</color>
+    <color name="hexa6">#F44336</color>
+    <color name="text">#000000</color>
+    <color name="button_pressed">#388E3C</color>
+    <color name="button_focused">#388E3C</color>
+    <color name="button_default">#FFFFFF</color>
+    <color name="tint">#6c6c6d</color>
+
+
+
+
+</resources>

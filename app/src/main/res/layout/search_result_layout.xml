@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+
+
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Gold&apos;s Gym"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/title"
+            android:layout_marginLeft="100dp"
+            android:text="Bandra"
+            android:textColor="#000000"
+            android:textSize="10sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/star" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/location"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@+id/imageButton"
+            android:layout_toStartOf="@+id/imageButton"
+            android:text="4.5"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/imageButton"
+            android:layout_alignRight="@+id/imageButton"
+            android:layout_below="@+id/imageButton"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:text="25000/yr"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/yogabtn"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/profil" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignTop="@+id/image3"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/image3"
+            android:layout_toRightOf="@+id/image3"
+            android:src="@drawable/profil" />
+
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignTop="@+id/image4"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/image4"
+            android:layout_toRightOf="@+id/image4"
+            android:src="@drawable/profil" />
+
+        <ImageView
+            android:id="@+id/image4"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignTop="@+id/image1"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/image1"
+            android:layout_toRightOf="@+id/image1"
+            android:src="@drawable/profil" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_below="@+id/image1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/mark" />
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="7dp"
+            android:text="1.7 km from current location"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/yogabtn"
+            android:layout_width="80dp"
+            android:layout_height="23dp"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="Yoga"
+            android:textColor="#000000"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/zumbtn"
+            android:layout_width="80dp"
+            android:layout_height="23dp"
+            android:layout_below="@+id/location"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/buttonshape"
+            android:text="Zumba"
+            android:textColor="#000000"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/bookbtn"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+
+            android:background="@drawable/book_from_result_activity"
+            android:text="              Book"
+            android:textColor="#FFFFFF"
+            android:layout_below="@+id/image2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3px"
+        android:layout_below="@+id/container"
+        android:background="#dbdbdb" />
+
+</RelativeLayout>

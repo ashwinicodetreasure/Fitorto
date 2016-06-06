@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="250dp"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/txtUsername"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="EmailId">
+
+        <requestFocus></requestFocus>
+    </EditText>
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="Password"
+        android:inputType="textPassword"></EditText>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="200dp"
+            android:onClick="invokeLogin"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="#388E3C"
+            android:text="LOGIN"
+            android:textColor="#FFFFFF"></Button>
+        <!--<Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_weight="0.5"
+            android:id="@+id/btnCancel" android:text="Cancel"></Button>-->
+    </LinearLayout>
+</LinearLayout>
