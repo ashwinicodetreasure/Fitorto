@@ -74,13 +74,67 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/address"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- FlowLayout-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/info"
+                android:text="Info"
+                android:layout_marginLeft="65dp"
+                android:textColor="#000000"
+                android:textSize="2.5mm"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/flowlayout"
+                android:layout_below="@+id/info"
+                android:layout_marginLeft="65dp"
+                android:layout_marginTop="10dp">
+                <com.ct.fitorto.flowlayou.FlowLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:id="@+id/flow"
+                    android:minHeight="50dp">
+
+                    <!--<TextView
+                        android:id="@+id/yogabtn"
+                        android:layout_width="80dp"
+                        android:layout_height="23dp"
+                        android:layout_below="@+id/title"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/buttonshape"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/zumba"
+                        android:layout_width="80dp"
+                        android:layout_height="23dp"
+                        android:layout_below="@+id/title"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/buttonshape"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:textSize="11sp" />-->
 
 
-            >
+
+                </com.ct.fitorto.flowlayou.FlowLayout>
+
+            </LinearLayout>
+
             <!-- Timimg selection-->
             <ImageView
                 android:id="@+id/imageView"
+                android:layout_below="@+id/flowlayout"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
@@ -91,6 +145,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/flowlayout"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="10dp"
                 android:text="Timing"
@@ -102,9 +157,10 @@
                 android:id="@+id/content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:text="5:30 am - 11:30 am      |    5:30 pm - 10:30 pm"
                 android:textColor="#000000"
                 android:textStyle="bold" />
@@ -113,9 +169,10 @@
                 android:id="@+id/expand"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/content"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="Roboto bold"
                 android:text="Show All Timing"
                 android:textColor="#2B59A2"
@@ -129,20 +186,40 @@
                 android:layout_below="@+id/expand"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/allTime"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="5:30 am - 11:30 am      |    5:30 pm - 10:30 pm"
                     android:textColor="#000000"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/allTime1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/allTime"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/allTime2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/allTime1"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
 
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2px"
+                android:id="@+id/v"
                 android:layout_below="@+id/expanpanel"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
@@ -152,17 +229,18 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_below="@+id/v"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="135dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/marker" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_below="@+id/v"
                 android:layout_marginLeft="65dp"
-                android:layout_marginTop="135dp"
+                android:layout_marginTop="10dp"
                 android:text="Location"
                 android:textColor="#000000"
                 android:textSize="2.5mm"
@@ -174,26 +252,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="160dp"
+                android:layout_below="@+id/textView5"
+                android:layout_marginTop="10dp"
                 android:text="509,Spaces 912,Brand Factory,Mira bhayandar,Thane"
                 android:textColor="#000000" />
 
             <ImageView
                 android:id="@+id/location_image"
                 android:layout_width="fill_parent"
+                android:layout_below="@+id/location"
                 android:layout_height="250dp"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="195dp"
+                android:layout_marginTop="10dp"
                 android:autoLink="web"
                 android:src="@drawable/location" />
+            <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/locbtn"
+                android:background="@drawable/ic_loction"
+                android:scaleType="centerCrop"
+                android:layout_below="@+id/location_image"
+                android:layout_marginTop="-60dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"/>
 
             <View
                 android:id="@+id/view"
                 android:layout_width="fill_parent"
                 android:layout_height="1px"
                 android:layout_below="@+id/location_image"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="65dp"
                 android:background="#dbdbdb" />
             <!-- Membership selection-->
             <ImageView
@@ -223,14 +313,113 @@
                 android:layout_below="@+id/member"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="Roboto bold"
-                android:text="Gym"
+                android:text="Gym Packages"
                 android:textColor="#2B59A2"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textIsSelectable="false" />
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/expanpane2"
+                android:layout_below="@+id/gym"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
 
-            <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                <TableRow
+                    android:id="@+id/month"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="1 Maonth"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/oneMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow android:id="@+id/tmonth">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="3 Months"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/threMonths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow android:id="@+id/smonth">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="6 Months"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sixMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow android:id="@+id/yearly">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="Yearly"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/yeraly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+
+            </TableLayout>
+
+           <!-- <com.github.aakira.expandablelayout.ExpandableRelativeLayout
                 android:id="@+id/expanpane2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -239,21 +428,137 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp">
 
-                <ImageView
+
+                <TableLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="250dp"
-                    android:background="@drawable/membership"
+                    android:layout_height="fill_parent">
+
+                    <TableRow
+                        android:id="@+id/month"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:text="1 Maonth"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/oneMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow android:id="@+id/tmonth">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:text="3 Months"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/threMonths"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow android:id="@+id/smonth">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:text="6 Months"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/sixMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow android:id="@+id/yearly">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:text="Yearly"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/yeraly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </TableRow>
 
 
-                    />
+                </TableLayout>
+
 
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-
+-->
             <View
                 android:id="@+id/ex"
                 android:layout_width="fill_parent"
                 android:layout_height="2px"
                 android:layout_below="@+id/expanpane2"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="10dp"
+                android:background="#dbdbdb" />
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ex"
+                android:layout_marginLeft="65dp"
+                android:layout_marginTop="10dp"
+                android:text="Gender"
+                android:textColor="#000000"
+                android:textSize="2.5mm"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvgender"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gender"
+                android:textColor="#000000"
+                android:layout_marginLeft="65dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"/>
+            <View
+                android:id="@+id/vgender"
+                android:layout_width="fill_parent"
+                android:layout_height="2px"
+                android:layout_below="@+id/tvgender"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:background="#dbdbdb" />
@@ -263,66 +568,35 @@
                 android:id="@+id/ameti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ex"
+                android:layout_below="@id/vgender"
                 android:layout_marginLeft="65dp"
-                android:layout_marginTop="15dp"
-                android:text="AMENITIES"
+                android:layout_marginTop="10dp"
+                android:text="Amenities"
                 android:textColor="#000000"
                 android:textSize="2.5mm"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/lock"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_below="@id/ameti"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/lock" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ameti"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="15dp"
-                android:text="Lockers"
-                android:textColor="#000000" />
-
-            <View
-                android:id="@+id/v"
+            <!-- <ListView
+                 android:layout_width="fill_parent"
+                 android:layout_height="100dp"
+                 android:layout_below="@+id/ameti"
+                 android:layout_marginLeft="65dp"
+                 android:id="@+id/amenities"></ListView>-->
+            <LinearLayout
+                android:id="@+id/llAmenitiContainer"
                 android:layout_width="fill_parent"
-                android:layout_height="2px"
-                android:layout_below="@+id/lock"
-                android:layout_marginLeft="65dp"
-                android:layout_marginTop="7.5dp"
-                android:background="#dbdbdb" />
-
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_below="@id/v"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/music" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/v"
+                android:layout_below="@+id/ameti"
                 android:layout_marginLeft="65dp"
-                android:layout_marginTop="15dp"
-                android:text="Music System"
-                android:textColor="#000000" />
+                android:orientation="vertical"></LinearLayout>
 
             <View
                 android:id="@+id/v1"
                 android:layout_width="fill_parent"
                 android:layout_height="2px"
-                android:layout_below="@+id/music"
+                android:layout_below="@+id/llAmenitiContainer"
                 android:layout_marginLeft="65dp"
-                android:layout_marginTop="15dp"
+
                 android:background="#dbdbdb" />
             <!-- Equipment selection-->
             <ImageView
@@ -344,60 +618,20 @@
                 android:textColor="#000000"
                 android:textSize="2.5mm"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/cycle"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_below="@id/equipment"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/circle" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- <ListView
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/equipment"
+                 android:layout_marginLeft="65dp"
+                 android:id="@+id/equipment1"></ListView>-->
+            <LinearLayout
+                android:id="@+id/llEquipmentContainer"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/equipment"
+                android:layout_below="@+id/equipment"
                 android:layout_marginLeft="65dp"
-                android:layout_marginTop="15dp"
-                android:text="Cycle"
-                android:textColor="#000000" />
+                android:orientation="vertical"/>
 
-            <ImageView
-                android:id="@+id/pull"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_below="@id/cycle"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/circle" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cycle"
-                android:layout_marginLeft="65dp"
-                android:layout_marginTop="15dp"
-                android:text="Pull Down Machine"
-                android:textColor="#000000" />
-
-            <ImageView
-                android:id="@+id/trainer"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_below="@id/pull"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/circle" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/pull"
-                android:layout_marginLeft="65dp"
-                android:layout_marginTop="15dp"
-                android:text="Cross Trainers"
-                android:textColor="#000000" />
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -408,7 +642,6 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical"
-
 
         >
 

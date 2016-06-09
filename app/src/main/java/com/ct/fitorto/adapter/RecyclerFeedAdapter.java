@@ -77,6 +77,11 @@ public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapte
 
         holder.time.setText(formattedDate);
 
+       /* Bitmap original = BitmapFactory.decodeFile(feed.getImageLink());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        original.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+*/
 
         if (!TextUtils.isEmpty(feed.getImageLink())) {
             Picasso.with(context)

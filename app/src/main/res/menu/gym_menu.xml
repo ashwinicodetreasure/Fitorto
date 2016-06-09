@@ -6,6 +6,7 @@
         android:title="Like"
         android:icon="@drawable/hearts"
         android:orderInCategory="3"
+
         app:showAsAction="ifRoom" />
     <item android:id="@+id/share"
         android:title="Share"

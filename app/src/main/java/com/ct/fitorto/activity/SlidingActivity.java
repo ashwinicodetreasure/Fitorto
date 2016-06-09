@@ -297,6 +297,9 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
                         //Toast.makeText(MainActivity.this, response.getName(), Toast.LENGTH_LONG).show();
                         preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL,response.getEmail());
                         preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME,response.getName());
+                        preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_TYPE,response.getId());
+
+
                         preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK,response.getPicture().toString());
                         Intent i=new Intent(SlidingActivity.this,CityActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -375,6 +378,7 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
             preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL,acct.getEmail());
             preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME,acct.getDisplayName());
             preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK,acct.getPhotoUrl().toString());
+            preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_TYPE,acct.getId());
             Intent i=new Intent(SlidingActivity.this,CityActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);

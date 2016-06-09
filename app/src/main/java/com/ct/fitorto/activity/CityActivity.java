@@ -28,7 +28,7 @@ import retrofit2.Response;
  */
 public class CityActivity extends AppCompatActivity implements View.OnClickListener {
     private ListView clist;
-    List<City> citylist=new ArrayList<>();
+    List<City> citylist=new ArrayList<City>();
     private PreferenceManager preferenceManager;
     CityAdapter adapt;
 
@@ -57,6 +57,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                         citylist.addAll(response.body().getCities());   //Always addall for arraylist
                         if (citylist.size() > 0) {
                             adapt = new CityAdapter(CityActivity.this, R.layout.city_list_item, citylist);
+
                             clist.setAdapter(adapt);
                         }
                     }
@@ -65,7 +66,10 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                 clist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        preferenceManager.putPreferenceValues(preferenceManager.PREF_City, citylist.get(i).toString());
+                        String itemString=clist.getSelectedItem().toString();
+                       // preferenceManager.putPreferenceValues(preferenceManager.PREF_City,citylist.get(i).toString());
+                        preferenceManager.putPreferenceValues(preferenceManager.PREF_City,itemString);
+
 
                         Intent link=new Intent(CityActivity.this,HomeActivity.class);
                         link.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

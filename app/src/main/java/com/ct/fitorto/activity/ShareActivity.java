@@ -50,9 +50,9 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private EditText edcontent;
     private TextView tvlink;
     private ImageView ivimage;
-    private Bitmap bitmap;
-    private  String picturePath;
-    private  File f;
+    private Bitmap bitmap,thumbnail;
+    private String picturePath;
+    private File f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +100,23 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
 
             case R.id.ivcamera:
-                selectImage();
+                //selectImage();
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 2);
                 break;
 
             case R.id.ivLink:
                 setLink();
+
                 break;
 
             case R.id.sharebtn:
                 uploadData();
+                /*Fragment fr = new Feed_Fragment();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.show_fragment, fr);
+                ft.commit();*/
                 ivimage.setImageBitmap(null);
                 tvlink.setText("");
                 edcontent.setText("");
@@ -121,14 +129,21 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
     private void uploadData() {
 
-       // RequestBody content = ApiClientMain.getStringRequestBody(edcontent.getText().toString());
-       // RequestBody link = ApiClientMain.getStringRequestBody(txtLink.getText().toString());
-       // RequestBody image = RequestBody.create(MediaType.parse("temp.jpg"), picturePath);
-        RequestBody image = RequestBody.create(MediaType.parse("application/image"), new File(picturePath));
+       /*PreferenceManager preferenceManager = new PreferenceManager(ShareActivity.this);
+        String id = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_TYPE);*/
+        RequestBody id = ApiClientMain.getStringRequestBody("1");
+        RequestBody content = ApiClientMain.getStringRequestBody(edcontent.getText().toString());
+        RequestBody link = ApiClientMain.getStringRequestBody(txtLink.getText().toString());
+        RequestBody flag = ApiClientMain.getStringRequestBody("1");
 
+        /*Bitmap original = BitmapFactory.decodeFile(picturePath);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        original.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+        String image1=BitMapToString(decoded);*/
 
-        Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseaaFedd("1", edcontent.getText().toString(),txtLink.getText().toString() , "1",image);
-
+        RequestBody image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
+        Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseFeed(id,content ,link ,flag ,image);
         response.enqueue(new Callback<JsonResponseAddFeed>() {
             @Override
             public void onResponse(Call<JsonResponseAddFeed> call, retrofit2.Response<JsonResponseAddFeed> response) {
@@ -254,8 +269,9 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 picturePath = c.getString(columnIndex);
                 c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                thumbnail = (BitmapFactory.decodeFile(picturePath));
                 // Log.w("path of image from gallery......******************.........", picturePath+"");
+
                 ivimage.setImageBitmap(thumbnail);
             }
         }
