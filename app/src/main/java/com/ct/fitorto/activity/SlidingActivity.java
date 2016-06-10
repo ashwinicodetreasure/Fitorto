@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.Slidingimage_Adapter;
-import com.ct.fitorto.model.City;
+import com.ct.fitorto.model.FitortoUser;
+import com.ct.fitorto.model.JsonResponseSocial;
 import com.ct.fitorto.model.JsonResponseUser;
 import com.ct.fitorto.network.ApiClient;
+import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -71,7 +73,7 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
     private Button signup;
     private Button fbLogin;
     private Dialog login;
-    ArrayList<City> city = new ArrayList<>();
+    private List<FitortoUser> user = new ArrayList<>();
 
     //private List<FitortoUser> data=new ArrayList<>();
     private String username = "";
@@ -95,12 +97,15 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
         String name = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_NAME);
         String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
 
-        if (!TextUtils.isEmpty(email)||!TextUtils.isEmpty(name) ||!TextUtils.isEmpty(city)) {
-            Intent intent = new Intent(this, HomeActivity.class);
+        if (!TextUtils.isEmpty(email)&& !TextUtils.isEmpty(name) && !TextUtils.isEmpty(city) ) {
+            Intent intent = new Intent(SlidingActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
         }
+
+
+
 
         // hashkey();
         init();
@@ -190,24 +195,7 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
 
 
 
-    /*private void registerUser() {
 
-
-        String emailID = txtPassword.getText().toString().trim();
-
-
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        boolean cancel = false;
-
-
-        if (emailID.matches(emailPattern)) {
-            userLogin();
-
-           cancel = false;
-        } else
-            Toast.makeText(getApplicationContext(), "Please Enter Valid Email Adress", Toast.LENGTH_SHORT).show();
-    }
-*/
     private void userLogin() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -224,7 +212,7 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<JsonResponseUser> call, Response<JsonResponseUser> response) {
                 JsonResponseUser resp = response.body();
-                city.addAll(response.body().getCities());
+                //addAll(response.body().getData());
                 if(resp.getStatus().equals("1")){
 
                     //preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL,user.getEmailID());
@@ -233,9 +221,8 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
                     Intent i = new Intent(SlidingActivity.this, HomeActivity.class);
                     startActivity(i);*/
                     Intent link = new Intent(SlidingActivity.this, CityActivity.class);
-                    link.putExtra("cityItem", city);
                     startActivity(link);
-                    city.clear();
+
                     login.dismiss();
                 }else{
                     Toast.makeText(SlidingActivity.this, "Please Enter Valid username & password", Toast.LENGTH_SHORT).show();
@@ -297,14 +284,10 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
                         //Toast.makeText(MainActivity.this, response.getName(), Toast.LENGTH_LONG).show();
                         preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL,response.getEmail());
                         preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME,response.getName());
-                        preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_TYPE,response.getId());
-
-
+                        preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_GENDER,response.getGender());
                         preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK,response.getPicture().toString());
-                        Intent i=new Intent(SlidingActivity.this,CityActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
-                        Toast.makeText(SlidingActivity.this,"Welcom"+" "+response.getName(),Toast.LENGTH_SHORT).show();
+                        socialLogin();
+
 
                     }
                 });
@@ -377,12 +360,10 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
             GoogleSignInAccount acct = result.getSignInAccount();
             preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL,acct.getEmail());
             preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME,acct.getDisplayName());
+            //preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_PHONE,acct.ge);
             preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK,acct.getPhotoUrl().toString());
-            preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_TYPE,acct.getId());
-            Intent i=new Intent(SlidingActivity.this,CityActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-            Toast.makeText(SlidingActivity.this,"Welcom"+" "+acct.getDisplayName(),Toast.LENGTH_SHORT).show();
+            socialLogin();
+
 
 
         } else {
@@ -390,6 +371,51 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(SlidingActivity.this, "Login error Please try again", Toast.LENGTH_LONG).show();
         }
     }
+
+    private void socialLogin() {
+       final String email = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL);
+        final String name = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_NAME);
+        final String image = preferenceManager.getPreferenceValues(preferenceManager.USER_IMAGE_LINK);
+        final String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+
+
+        Call<JsonResponseSocial> response = ApiClientMain.getApiClient().getResponseSocial(name,email,"",image,"");
+
+        response.enqueue(new Callback<JsonResponseSocial>() {
+
+            @Override
+            public void onResponse(Call<JsonResponseSocial> call, Response<JsonResponseSocial> response) {
+                JsonResponseSocial resp = response.body();
+                if(resp.getStatus().equals("1")){
+
+
+                    Intent i=new Intent(SlidingActivity.this,CityActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                    Toast.makeText(SlidingActivity.this,"Welcom"+" "+name,Toast.LENGTH_SHORT).show();
+
+
+                }else{
+                    Toast.makeText(SlidingActivity.this, "Please Enter Valid username & password", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponseSocial> call, Throwable t) {
+
+
+                Log.d("Error", "failed");
+                Toast.makeText(SlidingActivity.this,t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();

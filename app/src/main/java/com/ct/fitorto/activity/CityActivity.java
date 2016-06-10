@@ -2,12 +2,15 @@ package com.ct.fitorto.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ct.fitorto.CommonFunction;
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.CityAdapter;
 import com.ct.fitorto.model.City;
@@ -44,6 +47,13 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         preferenceManager = new PreferenceManager(CityActivity.this);
+        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+        if (!TextUtils.isEmpty(city) ) {
+            Intent intent = new Intent(CityActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+        }
 
         clist = (ListView) findViewById(R.id.city_listview);
 
@@ -66,16 +76,20 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                 clist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String itemString=clist.getSelectedItem().toString();
-                       // preferenceManager.putPreferenceValues(preferenceManager.PREF_City,citylist.get(i).toString());
-                        preferenceManager.putPreferenceValues(preferenceManager.PREF_City,itemString);
+                        City city = (City) adapterView.getItemAtPosition(i);
 
+                        final CommonFunction function = new CommonFunction(CityActivity.this);
+                        if (function.checkFirstRun()) {
+                            getSharedPreferences("myPreference", MODE_PRIVATE)
+                                    .edit()
+                                    .putBoolean("isFirstRun", false)
+                                    .apply();
+                            preferenceManager.putPreferenceValues(preferenceManager.PREF_City, city.getCityName());
+                            Intent intent = new Intent(CityActivity.this, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
 
-                        Intent link=new Intent(CityActivity.this,HomeActivity.class);
-                        link.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                        //link.putExtra("res",lp.get(i));
-                        startActivity(link);
+                        }
 
                     }
                 });

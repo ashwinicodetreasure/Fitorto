@@ -28,6 +28,18 @@ public class FitortoUser {
     @SerializedName("dob")
     @Expose
     private String dob;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("height")
+    @Expose
+    private String height;
+    @SerializedName("weight")
+    @Expose
+    private String weight;
+    @SerializedName("bloodGroup")
+    @Expose
+    private String bloodGroup;
     @SerializedName("AndroidRegKey")
     @Expose
     private String androidRegKey;
@@ -164,6 +176,78 @@ public class FitortoUser {
     /**
      *
      * @return
+     * The address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     *
+     * @param address
+     * The address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     *
+     * @return
+     * The height
+     */
+    public String getHeight() {
+        return height;
+    }
+
+    /**
+     *
+     * @param height
+     * The height
+     */
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    /**
+     *
+     * @return
+     * The weight
+     */
+    public String getWeight() {
+        return weight;
+    }
+
+    /**
+     *
+     * @param weight
+     * The weight
+     */
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    /**
+     *
+     * @return
+     * The bloodGroup
+     */
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    /**
+     *
+     * @param bloodGroup
+     * The bloodGroup
+     */
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    /**
+     *
+     * @return
      * The androidRegKey
      */
     public String getAndroidRegKey() {
@@ -196,6 +280,5 @@ public class FitortoUser {
     public void setIosRegKey(String iosRegKey) {
         this.iosRegKey = iosRegKey;
     }
-
 }
 

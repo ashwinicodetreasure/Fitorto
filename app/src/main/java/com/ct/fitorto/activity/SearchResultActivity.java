@@ -7,6 +7,7 @@ package com.ct.fitorto.activity;
         import android.support.v7.widget.RecyclerView;
         import android.support.v7.widget.Toolbar;
         import android.util.Log;
+        import android.view.View;
 
         import com.ct.fitorto.R;
         import com.ct.fitorto.adapter.SearchAdapter;
@@ -21,26 +22,24 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
     private LinearLayoutManager lLayout;
     private RecyclerView rView;
     private SearchAdapter adapter;
-    ArrayList<Search> testing = new ArrayList<Search>();
+    private ArrayList<Search> testing = new ArrayList<Search>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchresult_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Search Result");
-            //getSupportActionBar().setHomeButtonEnabled(true);
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
+        setToolbar();
+
         lLayout = new LinearLayoutManager(SearchResultActivity.this);
         rView = (RecyclerView) findViewById(R.id.search_recycler);
         rView.setHasFixedSize(true);
         rView.setLayoutManager(lLayout);
         //this.getIntent().getParcelableArrayListExtra("extraextra");
         testing.addAll(getIntent().<Search>getParcelableArrayListExtra("searchItem"));
+
         if (testing.size() > 0) {
+
             adapter = new SearchAdapter(SearchResultActivity.this, testing);
             Log.d("Logs", "Search:" + adapter);
             rView.setAdapter(adapter);
@@ -49,6 +48,24 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         }
 
 
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("Search Result");
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SearchResultActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

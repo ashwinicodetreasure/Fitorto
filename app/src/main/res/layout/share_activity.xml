@@ -12,47 +12,40 @@
         android:background="@color/colorPrimary"
         android:elevation="5dp"
         app:theme="@style/AppTheme.AppBarOverlay" />
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivprofil"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/ic_feed_user"
-        android:scaleType="centerCrop"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/tool_bar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edFeed"
-        android:hint="Write something or use @ to mention someone"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#FFFFFF"
-        android:textColor="#dbdbdb"
-        android:layout_alignBottom="@+id/ivprofil"
-        android:layout_toRightOf="@+id/ivprofil"
-        android:layout_toEndOf="@+id/ivprofil" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+   <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:layout_above="@+id/container"
+       android:background="#FFFFFF"
+       android:layout_marginTop="55dp">
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:id="@+id/ivprofil"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:src="@drawable/ic_feed_user"
+           android:scaleType="centerCrop"
+           android:layout_marginLeft="20dp"
+           android:layout_marginTop="15dp"
+           />
+       <EditText
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:id="@+id/edFeed"
+           android:hint="Write something "
+            android:layout_marginTop="10dp"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
+           android:gravity="top"
+           android:background="#FFFFFF"
+           android:textColor="#000000"
+           android:layout_alignBottom="@+id/ivprofil"
+           android:layout_toRightOf="@+id/ivprofil"
+           android:layout_toEndOf="@+id/ivprofil" />
 
-        android:layout_above="@+id/container"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity=""
-        android:id="@+id/linearLayout2">
+   </LinearLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2px"
-            android:layout_marginTop="0dp"
-            android:background="#dbdbdb" />
-    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/container"
@@ -74,13 +67,13 @@
             android:background="#FFFFFF"
             android:orientation="horizontal">
 
-            ImageView
+          <!--  ImageView
                 android:id="@+id/ivprivate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:src="@drawable/ic_earth" />
-
+-->
             <ImageView
                 android:id="@+id/ivLink"
                 android:layout_width="30dp"
@@ -108,7 +101,7 @@
             android:layout_height="30dp"
             android:id="@+id/sharebtn"
             android:layout_marginBottom="3dp"
-            android:layout_marginLeft="115dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/sharebutton"
             android:text="SHARE"
@@ -117,23 +110,29 @@
 
 
     </LinearLayout>
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="100dp">
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/ivimage"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/ivprofil"
-        android:layout_alignStart="@+id/ivprofil" />
+
+         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvlink"
-        android:layout_above="@+id/linearLayout2"
+        android:layout_below="@+id/ivimage"
         android:layout_alignLeft="@+id/ivimage"
         android:layout_alignStart="@+id/ivimage"
         android:linksClickable="true"
+        android:textColor="#000000"
         android:textSize="16sp"
-        android:layout_marginBottom="76dp" />
+         />
+    </RelativeLayout>
+
 </RelativeLayout>

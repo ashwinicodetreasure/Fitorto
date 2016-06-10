@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -76,6 +77,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.membership_main_layout);
+
         testing = (Search) getIntent().getParcelableExtra("memberItem");
         setToolbar();
         init();
@@ -416,12 +418,14 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gym_menu, menu);
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.gym_menu, menu);
+        /* MenuItem mi = (MenuItem)findViewById(R.id.like);
+        mi.setChecked(true);*/
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

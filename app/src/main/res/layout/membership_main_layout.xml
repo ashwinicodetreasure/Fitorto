@@ -135,8 +135,8 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_below="@+id/flowlayout"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/time" />
@@ -533,7 +533,17 @@
                 android:layout_below="@+id/expanpane2"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
                 android:background="#dbdbdb" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_below="@+id/ex"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/gender" />
             <TextView
                 android:id="@+id/gender"
                 android:layout_width="wrap_content"
@@ -545,13 +555,21 @@
                 android:textColor="#000000"
                 android:textSize="2.5mm"
                 android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_below="@+id/ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="37dp"
+                android:src="@drawable/circle" />
             <TextView
                 android:id="@+id/tvgender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/gender"
                 android:textColor="#000000"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="85dp"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical"/>
             <View
@@ -561,9 +579,19 @@
                 android:layout_below="@+id/tvgender"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
                 android:background="#dbdbdb" />
 
             <!-- Amenitis selection-->
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_below="@+id/vgender"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/amenities" />
             <TextView
                 android:id="@+id/ameti"
                 android:layout_width="wrap_content"

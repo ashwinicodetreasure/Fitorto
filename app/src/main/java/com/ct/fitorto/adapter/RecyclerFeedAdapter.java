@@ -84,6 +84,7 @@ public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapte
 */
 
         if (!TextUtils.isEmpty(feed.getImageLink())) {
+            holder.display.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(feed.getImageLink())
                     .into(holder.display);

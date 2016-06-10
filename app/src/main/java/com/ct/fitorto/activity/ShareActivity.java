@@ -82,7 +82,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Share");
             getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,9 +100,9 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
 
             case R.id.ivcamera:
-                //selectImage();
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 2);
+                selectImage();
+                /*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 2);*/
                 break;
 
             case R.id.ivLink:
@@ -111,15 +111,22 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.sharebtn:
+               // if(!TextUtils.isEmpty(edcontent.getText() )){
                 uploadData();
+                    ivimage.setImageBitmap(null);
+                    tvlink.setText("");
+                    edcontent.setText("");//}
+                //else
+               // {
+
+                //}
+
                 /*Fragment fr = new Feed_Fragment();
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.show_fragment, fr);
                 ft.commit();*/
-                ivimage.setImageBitmap(null);
-                tvlink.setText("");
-                edcontent.setText("");
+
 
                 break;
 
@@ -140,7 +147,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         original.compress(Bitmap.CompressFormat.JPEG, 100, out);
         Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-        String image1=BitMapToString(decoded);*/
+       String image1=BitMapToString(decoded);*/
 
         RequestBody image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
         Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseFeed(id,content ,link ,flag ,image);
@@ -165,10 +172,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private void setLink() {
         login = new Dialog(this);
         login.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // Set GUI of login screen
         login.setContentView(R.layout.link_dialog);
-
-        // Init button of login GUI
         btnLink = (Button) login.findViewById(R.id.btnLink);
         //Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
 
@@ -178,9 +182,28 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         btnLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvlink.setText(txtLink.getText().toString());
-                login.dismiss();
+                String str=txtLink.getText().toString();
+                /*Pattern regex = Pattern.compile("^[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|COM|ORG|NET|MIL|EDU)$");
+                Matcher matcher = regex.matcher(str);
+                if (matcher.matches()) {
+                    //It's an url
+                    tvlink.setText(str);
+                    login.dismiss();
+                }else {
+                    //Not an url
+                    Toast.makeText(ShareActivity.this,"Invalid link",Toast.LENGTH_SHORT).show();
 
+                }*/
+
+
+
+
+                //Pattern regex = Pattern.compile("^[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|COM|ORG|NET|MIL|EDU)$");
+                //Matcher matcher = regex.matcher(str);
+                 //if(matcher.matches()) {
+                     tvlink.setText(str);
+                     login.dismiss();
+                 //}
             }
         });
 
@@ -237,13 +260,13 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
                     ivimage.setImageBitmap(bitmap);
 
-                    String path = android.os.Environment
+                    String Path = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
                     f.delete();
                     OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    File file = new File(Path, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     try {
                         outFile = new FileOutputStream(file);
@@ -273,6 +296,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 // Log.w("path of image from gallery......******************.........", picturePath+"");
 
                 ivimage.setImageBitmap(thumbnail);
+
             }
         }
     }

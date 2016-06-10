@@ -48,29 +48,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
         }else
         {
-           //holder.logo.setColorFilter(Color.parseColor(category.getColorCode()), PorterDuff.Mode.DARKEN);
+            //holder.logo.setColorFilter(Color.parseColor(category.getColorCode()), PorterDuff.Mode.DARKEN);
             holder.logo.setBackgroundColor(Color.parseColor(category.getColorCode()));
 
 
 
         }
 
-       // for(int i=0; i<=category.getCount().length();i++) {
-            if (category.getCategoryName().equals("Gym")) {
-                holder.content.setText(category.getCount() + " Gym");
-            } else if (category.getCategoryName().equals("Aerobic")) {
-                holder.content.setText(category.getCount() + " Aerobic");
-            } else if (category.getCategoryName().equals("Dance")) {
-                holder.content.setText(category.getCount() + " Dance");
-            } else if (category.getCategoryName().equals("Yoga")) {
-                holder.content.setText(category.getCount() + " Yoga");
-            } else if (category.getCategoryName().equals("Zumba")) {
-                holder.content.setText(category.getCount() + " Zumba");
-            } else if (category.getCategoryName().equals("Marital Arts")) {
-                holder.content.setText(category.getCount() + " Marital Arts");
-            } else if (category.getCategoryName().equals("Crossfit")) {
-                holder.content.setText(category.getCount() + " Crossfit");
-            }
+        // for(int i=0; i<=category.getCount().length();i++) {
+        if (category.getCategoryName().equals("Gym")) {
+            holder.content.setText(category.getCount() + " Gym");
+        } else if (category.getCategoryName().equals("Aerobic")) {
+            holder.content.setText(category.getCount() + " Aerobic");
+        } else if (category.getCategoryName().equals("Dance")) {
+            holder.content.setText(category.getCount() + " Dance");
+        } else if (category.getCategoryName().equals("Yoga")) {
+            holder.content.setText(category.getCount() + " Yoga");
+        } else if (category.getCategoryName().equals("Zumba")) {
+            holder.content.setText(category.getCount() + " Zumba");
+        } else if (category.getCategoryName().equals("Marital Arts")) {
+            holder.content.setText(category.getCount() + " Marital Arts");
+        } else if (category.getCategoryName().equals("Crossfit")) {
+            holder.content.setText(category.getCount() + " Crossfit");
+        }
         //}
 
 
@@ -78,7 +78,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
 
 
-            if(TextUtils.isEmpty(category.getIcon())) {
+        if(TextUtils.isEmpty(category.getIcon())) {
 
             Toast.makeText(context,"No Image ",Toast.LENGTH_SHORT).show();
 
@@ -95,7 +95,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                     .into(holder.dis);
         }*/
         //holder.dis.setImageResource(category.getIcon());
-         }
+    }
 
     @Override
     public int getItemCount() {

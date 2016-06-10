@@ -27,6 +27,8 @@ public class PreferenceManager {
     public final String PREF_INCOMING_CLIENT_EMAIL = "pref_incoming_client_email";
     public final String PREF_CLIENT_PASSWORD = "pref_client_password";
     public final String PREF_USER_TYPE = "pref_user_type";
+    public final String PREF_USER_PHONE = "pref_user_PHONE";
+    public final String PREF_USER_GENDER = "pref_user_GENDER";
     public final String PREF_City="PREF_City";
 
     public PreferenceManager(Context context) {
@@ -62,7 +64,7 @@ public class PreferenceManager {
     }
 */
     public boolean getPreferenceBoolValues(String key) {
-        return prefs.getBoolean(key, false);
+        return prefs.getBoolean(key, true);
     }
 
     public int getPreferenceIntValues(String key) {

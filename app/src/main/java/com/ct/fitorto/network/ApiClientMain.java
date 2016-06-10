@@ -5,6 +5,7 @@ import com.ct.fitorto.model.JsonResponseCategory;
 import com.ct.fitorto.model.JsonResponseFeed;
 import com.ct.fitorto.model.JsonResponseKeywords;
 import com.ct.fitorto.model.JsonResponseSearch;
+import com.ct.fitorto.model.JsonResponseSocial;
 import com.ct.fitorto.model.JsonResponseUser;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -91,6 +92,17 @@ public class ApiClientMain {
         @FormUrlEncoded
         @POST("getFeeds.php")
         Call<JsonResponseFeed> getResponseFedd(@Field("userID") String userlID) ;
+
+        @FormUrlEncoded
+        @POST("socialLogin.php")
+        Call<JsonResponseSocial> getResponseSocial(@Field("userName") String userName,
+                                                   @Field("emailID") String emailID,
+                                                   @Field("phoneNo") String phoneNo,
+                                                   @Field("profilePic") String profilePic,
+                                                   @Field("gender") String gender);
+
+
+
 
         @Multipart
         @POST("addFeed.php")

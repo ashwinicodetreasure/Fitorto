@@ -55,6 +55,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private ImageView gymImage2;
         private ImageView gymImage3;
         private ImageView gymImage4;
+        private ImageView imageButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,9 +66,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             gymImage2 = (ImageView) itemView.findViewById(R.id.image2);
             gymImage3 = (ImageView) itemView.findViewById(R.id.image3);
             gymImage4 = (ImageView) itemView.findViewById(R.id.image4);
+            imageButton = (ImageView) itemView.findViewById(R.id.imageButton);
         }
 
         public void bind(final Search item, final OnItemClickListener listener) {
+
 
             if (TextUtils.isEmpty(item.getGymName())) {
             } else {
@@ -79,6 +82,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             } else {
                 gymloaction.setText(item.getArea());
             }
+
+            if(item.getRating().equals("0"))
+                 {
+                     imageButton.setImageResource(R.drawable.blank);
+                 }
+            else{
+                imageButton.setImageResource(R.drawable.star);
+
+            }
+
+
 
             if (TextUtils.isEmpty(item.getRating())) {
             } else {
