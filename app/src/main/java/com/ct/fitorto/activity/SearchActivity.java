@@ -27,6 +27,7 @@ import com.ct.fitorto.model.JsonResponseSearch;
 import com.ct.fitorto.model.Search;
 import com.ct.fitorto.model.categoryName;
 import com.ct.fitorto.network.ApiClientMain;
+import com.ct.fitorto.preferences.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ import retrofit2.Response;
  * Created by Ashwini on 5/26/2016.
  */
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
-   // private EditText search;
+    // private EditText search;
     private ListView slist;
     // private Button searchbtn;
     ArrayList<Search> lp = new ArrayList<>();
@@ -52,6 +53,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Cursor cursor;
     private AutoCompleteTextView search;
     private Button clear;
+    private PreferenceManager preferenceManager;
 
 
     @Override
@@ -67,12 +69,32 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
         search = (AutoCompleteTextView) findViewById(R.id.edtitem);//searchthrough edittext
         search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        clear=(Button)findViewById(R.id.btn_clear);
-        clear.setOnClickListener(this);
+        clear = (Button) findViewById(R.id.btn_clear);
+
+        //clear.setOnClickListener(this);
+        clear.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+
+                switch (actionId) {
+
+                    case EditorInfo.IME_ACTION_UNSPECIFIED:
+
+                }
+                return false;
+            }
+        });
         autosearch();
         autoComplete();
         displayHistory();
-
+        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                categoryName str = (categoryName)parent.getItemAtPosition(position);
+                autocompleteOnlcick(str.getCategoryName());
+            }
+        });
 
         /*searchbtn = (Button) findViewById(R.id.btnSearch);
         searchbtn.setOnClickListener(this);*/
@@ -81,10 +103,50 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    private void autocompleteOnlcick(String str) {
+
+        preferenceManager = new PreferenceManager(SearchActivity.this);
+        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+
+        //  String str = search.getText().toString().trim();
+        if (!TextUtils.isEmpty(str)) {
+            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1","kandivali", city, str);
+            call.enqueue(new Callback<JsonResponseSearch>() {
+                @Override
+                public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
+                    if (response.isSuccessful()) {
+                        //if(response.body().getData().size()>0) {
+                        lp.addAll(response.body().getData());//Always addall for arraylist
+                        if (lp.size() > 0) {
+                            Intent link = new Intent(SearchActivity.this, SearchResultActivity.class);
+                            link.putParcelableArrayListExtra("searchItem", (ArrayList<? extends Parcelable>) lp);
+                            startActivity(link);
+                            lp.clear();
+
+                        }
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<JsonResponseSearch> call, Throwable t) {
+
+                }
+            });
+        } else {
+            Toast.makeText(SearchActivity.this, "Please Enter Text", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
 
     private void clearsearch() {
 
-      search.setText("");
+        search.setText("");
     }
 
     private void autosearch() {
@@ -92,7 +154,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public boolean onEditorAction(TextView v, int actionId,
                                           KeyEvent event) {
+
                 switch (actionId) {
+
                     case EditorInfo.IME_ACTION_UNSPECIFIED:
                     case EditorInfo.IME_ACTION_SEARCH:
                         if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
@@ -144,9 +208,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setDataResultActivity() {
+        preferenceManager = new PreferenceManager(SearchActivity.this);
+        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+
         String str = search.getText().toString().trim();
         if (!TextUtils.isEmpty(str)) {
-            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1", "kandivali", "mumbai", str);
+            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1", "kandivali", city, str);
             call.enqueue(new Callback<JsonResponseSearch>() {
                 @Override
                 public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
@@ -183,11 +250,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         adapter = new HistoryAdapter(this);
         String history = search.getText().toString();
 
-        if(!TextUtils.isEmpty(history)){
-        long val = adapter.insertDetails(history);
-      //  Toast.makeText(getApplicationContext(), Long.toString(val), Toast.LENGTH_SHORT).show();
-        }else
-        Toast.makeText(SearchActivity.this, "Please Enter Text", Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(history)) {
+            long val = adapter.insertDetails(history);
+            //  Toast.makeText(getApplicationContext(), Long.toString(val), Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(SearchActivity.this, "Please Enter Text", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -208,10 +275,44 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 // TODO Auto-generated method stub
                 Bundle passdata = new Bundle();
                 Cursor listCursor = (Cursor) arg0.getItemAtPosition(arg2);
-                int nameId = listCursor.getInt(listCursor
-                        .getColumnIndex(helper_ob.KEY_ID));
-                // Toast.makeText(getApplicationContext(),
-                // Integer.toString(nameId), 500).show();
+                // int nameId = listCursor.getInt(listCursor.getColumnIndex(helper_ob.FNAME));
+                String str = listCursor.getString(listCursor.getColumnIndex(helper_ob.FNAME));
+                //Toast.makeText(getApplicationContext(), str, 500).show();
+                preferenceManager = new PreferenceManager(SearchActivity.this);
+                String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+
+                //  String str = search.getText().toString().trim();
+                if (!TextUtils.isEmpty(str)) {
+                    Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1", "kandivali", city, str);
+                    call.enqueue(new Callback<JsonResponseSearch>() {
+                        @Override
+                        public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
+                            if (response.isSuccessful()) {
+                                //if(response.body().getData().size()>0) {
+                                lp.addAll(response.body().getData());//Always addall for arraylist
+                                if (lp.size() > 0) {
+                                    Intent link = new Intent(SearchActivity.this, SearchResultActivity.class);
+                                    link.putParcelableArrayListExtra("searchItem", (ArrayList<? extends Parcelable>) lp);
+                                    startActivity(link);
+                                    lp.clear();
+
+                                }
+
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<JsonResponseSearch> call, Throwable t) {
+
+                        }
+                    });
+                } else {
+                    Toast.makeText(SearchActivity.this, "Please Enter Text", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -234,7 +335,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 clearsearch();
                 break;
 
-           /* case R.id.btnSearch:
+           /*case R.id.btnSearch:
                 //  if(!TextUtils.isEmpty(search.getText().toString())){
                 setDataResultActivity();//}
                 insert();

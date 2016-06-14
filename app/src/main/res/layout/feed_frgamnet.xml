@@ -92,9 +92,10 @@
             <ImageView
                 android:id="@+id/ivdis"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+
 
                 android:scaleType="centerCrop"
                 /></RelativeLayout>

@@ -67,9 +67,10 @@
             android:id="@+id/btn_clear"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="05dp"
+            android:layout_marginLeft="25dp"
             android:background="@drawable/ic_cancel"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

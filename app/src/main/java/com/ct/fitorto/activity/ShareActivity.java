@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -30,6 +31,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -111,13 +114,13 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.sharebtn:
-               // if(!TextUtils.isEmpty(edcontent.getText() )){
+                // if(!TextUtils.isEmpty(edcontent.getText() )){
                 uploadData();
-                    ivimage.setImageBitmap(null);
-                    tvlink.setText("");
-                    edcontent.setText("");//}
+                ivimage.setImageBitmap(null);
+                tvlink.setText("");
+                edcontent.setText("");//}
                 //else
-               // {
+                // {
 
                 //}
 
@@ -200,17 +203,27 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
                 //Pattern regex = Pattern.compile("^[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|COM|ORG|NET|MIL|EDU)$");
                 //Matcher matcher = regex.matcher(str);
-                 //if(matcher.matches()) {
-                     tvlink.setText(str);
-                     login.dismiss();
-                 //}
+                //if(matcher.matches()) {
+                isValidUrl(str);
+
+                //}
             }
         });
 
         login.show();
         login.getWindow().setLayout(700, 350);
     }
+    private void isValidUrl(String url) {
+        Pattern p = Patterns.WEB_URL;
+        Matcher m = p.matcher(url);
+        if(m.matches())
+        {tvlink.setText(url);
+            login.dismiss();}
+        else{
+            Toast.makeText(ShareActivity.this,"Please Enter Valid Url/dont leave blank",Toast.LENGTH_SHORT).show();
+        }
 
+    }
 
     private void selectImage() {
 

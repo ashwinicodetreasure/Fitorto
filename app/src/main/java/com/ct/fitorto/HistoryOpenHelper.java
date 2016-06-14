@@ -17,7 +17,7 @@ public class HistoryOpenHelper extends SQLiteOpenHelper {
 			+ " text not null);";*/
 	public static final String SCRIPT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
 			+ KEY_ID + " integer primary key autoincrement, " + FNAME
-			+ " text not null);";
+			+ " TEXT NOT NULL UNIQUE);";
 
 	public HistoryOpenHelper(Context context, String name,
 							 CursorFactory factory, int version) {

@@ -7,6 +7,7 @@ import com.ct.fitorto.model.JsonResponseKeywords;
 import com.ct.fitorto.model.JsonResponseSearch;
 import com.ct.fitorto.model.JsonResponseSocial;
 import com.ct.fitorto.model.JsonResponseUser;
+import com.ct.fitorto.model.JsonResponselikeshare;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
@@ -101,6 +102,14 @@ public class ApiClientMain {
                                                    @Field("profilePic") String profilePic,
                                                    @Field("gender") String gender);
 
+        @FormUrlEncoded
+        @POST("likeShare.php")
+        Call<JsonResponselikeshare> getResponselikeshare(@Field("userID") String userID,
+                                                      @Field("feedID") String feedID,
+                                                      @Field("flag") String flag,
+                                                      @Field("isLike") String isLike,
+                                                      @Field("isUser") String isUser);
+
 
 
 
@@ -111,16 +120,7 @@ public class ApiClientMain {
                                                   @Part("url") RequestBody url,
                                                   @Part("flag") RequestBody flag,
                                                   @Part("file\"; filename=\"file\" ") RequestBody file) ;
-              /*  @FormUrlEncoded
-                @POST("addFeed.php")
-                Call<JsonResponseAddFeed> getResponseFeed( @Field("userID") String userID,
-                                                           @Field("feed") String feed,
-                                                           @Field("url") String url,
-                                                           @Field("flag") String flag)*/
-        ;
 
-                /*@POST("loginUser.php")
-                Call<JsonResponseUser> city();*/
     }
 
     public static RequestBody getStringRequestBody(String s) {

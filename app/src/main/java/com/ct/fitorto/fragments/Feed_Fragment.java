@@ -1,5 +1,6 @@
 package com.ct.fitorto.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +34,8 @@ public class Feed_Fragment extends Fragment {
     private FloatingActionButton fab;
     private RecyclerFeedAdapter adapter;
     private  RecyclerView rview;
+    private ProgressDialog pDialog;
+
     private ArrayList<Feed> feed=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +47,10 @@ public class Feed_Fragment extends Fragment {
         rview = (RecyclerView) view.findViewById(R.id.discover_recycler);
         rview.setHasFixedSize(true);
         rview.setLayoutManager(llayout);
+        pDialog = new ProgressDialog(getActivity());
+
+        pDialog.setMessage("loading ...");
+        pDialog.show();
         //RecyclerFeedAdapter radapter = new RecyclerFeedAdapter(getActivity(), listItem);
         //rview.setAdapter(radapter);
         fab = (FloatingActionButton)view.findViewById(R.id.fab);
@@ -63,10 +70,15 @@ public class Feed_Fragment extends Fragment {
             public void onResponse(Call<JsonResponseFeed> call, Response<JsonResponseFeed> response) {
 
                 if (response.isSuccessful()) {
+
+
+
                     JsonResponseFeed jsonResponse = response.body();
                     feed = new ArrayList<>(jsonResponse.getData());
                     adapter = new RecyclerFeedAdapter(getActivity(), feed);
                     rview.setAdapter(adapter);
+                    pDialog.dismiss();
+
 
                 } else {
                     Toast.makeText(getActivity(), "Error darim else onresponse", Toast.LENGTH_SHORT).show();

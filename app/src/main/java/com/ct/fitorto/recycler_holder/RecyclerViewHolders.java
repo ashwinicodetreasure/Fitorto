@@ -7,6 +7,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.model.FitortoCategory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -15,6 +19,7 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
     public ImageView logo;
     public TextView content;
     public ImageView dis;
+    public List<FitortoCategory> mDataset=new ArrayList<>();
 
 
     public RecyclerViewHolders(View itemView) {
@@ -28,7 +33,15 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(view.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
+        int i =getPosition();
+       // FitortoCategory fc=mDataset.get(getPosition());
+        Toast.makeText(view.getContext(), "Clicked Country Position = " +getPosition(), Toast.LENGTH_SHORT).show();
+
+       /* if(getPosition()==0){
+            Intent i=new Intent(itemView.getContext(), SearchResultActivity.class);
+            i.get
+            itemView.getContext().startActivity(i);
+        }*/
     }
 
 }

@@ -39,6 +39,7 @@
             android:layout_alignTop="@+id/title"
             android:layout_marginLeft="100dp"
             android:text="Bandra"
+            android:layout_marginTop="3dp"
             android:textColor="#000000"
             android:textSize="10sp" />
 
@@ -87,7 +88,7 @@
             android:layout_below="@+id/yogabtn"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="70dp"
             android:src="@drawable/profil" />
 
         <ImageView
@@ -139,7 +140,7 @@
             android:text="1.7 km from current location"
             android:textColor="#000000" />-->
 
-        <Button
+       <!-- <Button
             android:id="@+id/yogabtn"
             android:layout_width="80dp"
             android:layout_height="23dp"
@@ -161,7 +162,15 @@
             android:background="@drawable/buttonshape"
             android:text="Zumba"
             android:textColor="#000000"
-            android:textSize="11sp" />
+            android:textSize="11sp" />-->
+        <com.ct.fitorto.flowlayou.FlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="5dp"
+            android:id="@+id/flow"
+           />
 
         <Button
             android:id="@+id/bookbtn"

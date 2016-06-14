@@ -212,22 +212,26 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<JsonResponseUser> call, Response<JsonResponseUser> response) {
                 JsonResponseUser resp = response.body();
-                //addAll(response.body().getData());
-                if(resp.getStatus().equals("1")){
+              //  FitortoUser fu= (FitortoUser) resp.getData();
+                List<FitortoUser> fu= (ArrayList<FitortoUser>) resp.getData();
 
-                    //preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL,user.getEmailID());
-                    //preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME,user.getName());
-                    /*Toast.makeText(SlidingActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(SlidingActivity.this, HomeActivity.class);
-                    startActivity(i);*/
-                    Intent link = new Intent(SlidingActivity.this, CityActivity.class);
-                    startActivity(link);
 
-                    login.dismiss();
-                }else{
-                    Toast.makeText(SlidingActivity.this, "Please Enter Valid username & password", Toast.LENGTH_SHORT).show();
-                }
 
+                    if (resp.getStatus().equals("1")) {
+                       /* if(resp.getData().size()>0) {
+                        preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_Email, fu.getEmailID());
+                        preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_UserId, fu.getUserID());*/
+
+
+
+                        Intent link = new Intent(SlidingActivity.this, CityActivity.class);
+                        startActivity(link);
+
+                        login.dismiss();
+                    } else {
+                        Toast.makeText(SlidingActivity.this, "Please Enter Valid username & password", Toast.LENGTH_SHORT).show();
+                    }
+                //}
             }
 
             @Override
@@ -387,7 +391,6 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(Call<JsonResponseSocial> call, Response<JsonResponseSocial> response) {
                 JsonResponseSocial resp = response.body();
                 if(resp.getStatus().equals("1")){
-
 
                     Intent i=new Intent(SlidingActivity.this,CityActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

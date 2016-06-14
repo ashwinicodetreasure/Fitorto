@@ -40,19 +40,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public void onBindViewHolder(RecyclerViewHolders holder, int position) {
         FitortoCategory category=itemList.get(position);
 
-        holder.title.setText(category.getCategoryName());
+        holder.title.setText(category.getCategoryName().toUpperCase());
 
         if(TextUtils.isEmpty(category.getColorCode())) {
-
             Toast.makeText(context,"No Image ",Toast.LENGTH_SHORT).show();
-
         }else
         {
             //holder.logo.setColorFilter(Color.parseColor(category.getColorCode()), PorterDuff.Mode.DARKEN);
             holder.logo.setBackgroundColor(Color.parseColor(category.getColorCode()));
-
-
-
         }
 
         // for(int i=0; i<=category.getCount().length();i++) {
@@ -72,12 +67,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
             holder.content.setText(category.getCount() + " Crossfit");
         }
         //}
-
-
-
-
-
-
         if(TextUtils.isEmpty(category.getIcon())) {
 
             Toast.makeText(context,"No Image ",Toast.LENGTH_SHORT).show();

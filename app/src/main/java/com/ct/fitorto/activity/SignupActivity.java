@@ -11,8 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ct.fitorto.R;
-import com.ct.fitorto.network.ApiClient;
+import com.ct.fitorto.model.FitortoUser;
 import com.ct.fitorto.model.JsonResponseUser;
+import com.ct.fitorto.network.ApiClient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -136,6 +140,11 @@ public class SignupActivity extends Activity implements View.OnClickListener {
             public void onResponse(Call<JsonResponseUser> call, retrofit2.Response<JsonResponseUser> response) {
 
                 JsonResponseUser resp = response.body();
+                List<FitortoUser> fu= (ArrayList<FitortoUser>) resp.getData();
+                if(resp.getData().size()>0)
+
+
+
 
                 Toast.makeText(SignupActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
             }

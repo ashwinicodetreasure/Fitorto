@@ -31,6 +31,10 @@ public class PreferenceManager {
     public final String PREF_USER_GENDER = "pref_user_GENDER";
     public final String PREF_City="PREF_City";
 
+    //User Details
+    public final String PREF_USER_Email = "pref_user_Email";
+    public final String PREF_USER_UserId = "pref_user_UserId";
+    public final String PREF_USER_FeedId = "pref_user_FeedId";
     public PreferenceManager(Context context) {
         this.context = context;
         this.editor = context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE).edit();

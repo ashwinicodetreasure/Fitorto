@@ -6,6 +6,7 @@ import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,12 +53,9 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(CityActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-
         }
 
         clist = (ListView) findViewById(R.id.city_listview);
-
-
         Call<JsonResponseUser> call = ApiClientMain.getApiClient().city("sunil@gmail.com","123456");
         call.enqueue(new Callback<JsonResponseUser>() {
             @Override
@@ -67,7 +65,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                         citylist.addAll(response.body().getCities());   //Always addall for arraylist
                         if (citylist.size() > 0) {
                             adapt = new CityAdapter(CityActivity.this, R.layout.city_list_item, citylist);
-
                             clist.setAdapter(adapt);
                         }
                     }
@@ -77,7 +74,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         City city = (City) adapterView.getItemAtPosition(i);
-
                         final CommonFunction function = new CommonFunction(CityActivity.this);
                         if (function.checkFirstRun()) {
                             getSharedPreferences("myPreference", MODE_PRIVATE)
@@ -85,6 +81,9 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                     .putBoolean("isFirstRun", false)
                                     .apply();
                             preferenceManager.putPreferenceValues(preferenceManager.PREF_City, city.getCityName());
+                            String city1 = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+                            Log.d("city",city1);
+
                             Intent intent = new Intent(CityActivity.this, HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);

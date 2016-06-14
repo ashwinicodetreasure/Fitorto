@@ -1,5 +1,6 @@
 package com.ct.fitorto.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,10 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.flowlayou.FlowLayout;
+import com.ct.fitorto.model.GynImages;
+import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Search;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
@@ -56,7 +62,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private ImageView gymImage3;
         private ImageView gymImage4;
         private ImageView imageButton;
-
+        private TextView pack;
+        private FlowLayout mFlowLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             gymaname = (TextView) itemView.findViewById(R.id.title);
@@ -67,9 +74,44 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             gymImage3 = (ImageView) itemView.findViewById(R.id.image3);
             gymImage4 = (ImageView) itemView.findViewById(R.id.image4);
             imageButton = (ImageView) itemView.findViewById(R.id.imageButton);
-        }
+            pack = (TextView) itemView.findViewById(R.id.textView11);
+            mFlowLayout = (FlowLayout)itemView.findViewById(R.id.flow);
 
+        }
+        private void setcategory(List<String> sizeArrayList) {
+
+            if (sizeArrayList != null && sizeArrayList.size() > 0) {
+
+                for (String size : sizeArrayList) {
+                    LayoutInflater inflater = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final TextView equipment1 = (TextView) inflater.inflate(R.layout.search_layout_button, mFlowLayout, false);
+                    equipment1.setText(size);
+                    mFlowLayout.addView(equipment1);
+                }
+            }
+        }
         public void bind(final Search item, final OnItemClickListener listener) {
+
+            List<Package> fu = (ArrayList<Package>) item.getPackages();
+            List<GynImages> gi = (ArrayList<GynImages>) item.getImages();
+            ArrayList aList = new ArrayList(Arrays.asList(item.getCategory().split(",")));
+            if (aList.size() > 0) {
+                Log.d("Logs", "Schedule:" + aList);
+                setcategory(aList);
+            }
+            if (gi.size() > 0) {
+
+                Picasso.with(itemView.getContext())
+                        .load(gi.get(0).getImageLink())
+                        .into(gymImage1);
+                Picasso.with(itemView.getContext())
+                        .load(gi.get(1).getImageLink())
+                        .into(gymImage2);
+            }
+
+            if (fu.size() > 0) {
+                pack.setText("Rs." + fu.get(0).getOneMonth() + "/-");
+            }
 
 
             if (TextUtils.isEmpty(item.getGymName())) {
@@ -83,15 +125,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 gymloaction.setText(item.getArea());
             }
 
-            if(item.getRating().equals("0"))
-                 {
-                     imageButton.setImageResource(R.drawable.blank);
-                 }
-            else{
+            if (item.getRating().equals("0")) {
+                imageButton.setImageResource(R.drawable.blank);
+            } else {
                 imageButton.setImageResource(R.drawable.star);
 
             }
-
 
 
             if (TextUtils.isEmpty(item.getRating())) {
@@ -99,19 +138,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 gymrating.setText(item.getRating());
             }
 
-
             if (TextUtils.isEmpty(item.getLogo())) {
 
                 Toast.makeText(itemView.getContext(), "No Image ", Toast.LENGTH_SHORT).show();
                 Log.d("no image", item.getLogo());
 
             } else {
-                Picasso.with(itemView.getContext())
-                        .load(item.getLogo())
-                        .into(gymImage1);
-                Picasso.with(itemView.getContext())
-                        .load(item.getLogo())
-                        .into(gymImage2);
+
                 Picasso.with(itemView.getContext())
                         .load(item.getLogo())
                         .into(gymImage3);

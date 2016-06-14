@@ -5,6 +5,7 @@ package com.ct.fitorto.activity;
  */
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -69,6 +70,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout llEquipmentContainer;
     private LinearLayout llAmenitiContainer;
     private FlowLayout mFlowLayout;
+    private ProgressDialog pDialog;
 
     // private static final int MY_BUTTON = 9000;
     @Override
@@ -78,8 +80,12 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.membership_main_layout);
 
+
         testing = (Search) getIntent().getParcelableExtra("memberItem");
         setToolbar();
+        pDialog = new ProgressDialog(MembershipActivity.this);
+        pDialog.setMessage("loading ...");
+        pDialog.show();
         init();
         expandableWindow();
         setTime();
@@ -96,6 +102,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
             TextView gender = (TextView) findViewById(R.id.tvgender);
             gender.setText(testing.getGender());
         }
+        pDialog.dismiss();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -421,8 +428,15 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.gym_menu, menu);
-        /* MenuItem mi = (MenuItem)findViewById(R.id.like);
-        mi.setChecked(true);*/
+        MenuItem mi = (MenuItem)findViewById(R.id.like);
+       /* if(mi!=null){if (!testing.getIsFavorite().equals("0")) {
+
+            mi.setIcon(R.drawable.rhearts);
+        } }*//*else {
+
+            mi.setIcon(R.drawable.hearts);
+        }*//*
+        //mi.setIcon(R.drawable.rhearts);*/
         return true;
     }
 

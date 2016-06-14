@@ -3,6 +3,7 @@ package com.ct.fitorto.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.model.Feed;
+import com.ct.fitorto.model.JsonResponselikeshare;
+import com.ct.fitorto.network.ApiClientMain;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -22,6 +25,9 @@ import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapter.ViewHolder> {
     private List<Feed> itemList;
@@ -62,7 +68,7 @@ public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapte
 
         DateFormat readFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
-        try {
+        try {if(!TextUtils.isEmpty(dateStr))
             date = readFormat.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -88,13 +94,14 @@ public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapte
             Picasso.with(context)
                     .load(feed.getImageLink())
                     .into(holder.display);
-        }else{
+        } else {
             holder.display.setVisibility(View.GONE);
         }
 
         holder.link.setText(feed.getUrl());
         holder.like.setText(feed.getLikes() + " like");
         holder.sharebtn.setText(feed.getShares() + " shares");
+        // itemList.clear();
 
     }
 
@@ -117,7 +124,7 @@ public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapte
         public Button sharebtn;
 
 
-        public ViewHolder(View itemview) {
+        public ViewHolder(final View itemview) {
             super(itemview);
 
             image = (CircleImageView) itemview.findViewById(R.id.ivprofil);
@@ -130,7 +137,43 @@ public class RecyclerFeedAdapter extends RecyclerView.Adapter<RecyclerFeedAdapte
             like_btn = (ImageButton) itemview.findViewById(R.id.likebtn);
             sharebtn = (Button) itemview.findViewById(R.id.sharebtn);
 
-            //itemLayoutView.setOnClickListener(new OnClickListener() {
+            like_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+
+                    Call<JsonResponselikeshare> response = ApiClientMain.getApiClient().getResponselikeshare("1", "1", "1", "1","1");
+                    response.enqueue(new Callback<JsonResponselikeshare>() {
+
+                        @Override
+                        public void onResponse(Call<JsonResponselikeshare> call, Response<JsonResponselikeshare> response) {
+                            JsonResponselikeshare resp = response.body();
+
+                            if(resp.equals("0"))
+                            {
+                               like_btn.setImageResource(R.drawable.hearts);
+                                } else {
+                                like_btn.setImageResource(R.drawable.rrheart);
+                                //like.setText(itemview.feed.getLikes() + " like");
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<JsonResponselikeshare> call, Throwable t) {
+
+
+                            Log.d("Error", t.getMessage());
+                            //Toast.makeText(itemview.getContext(),t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+
+
+                }
+            });
 
 
         }

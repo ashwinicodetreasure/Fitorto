@@ -1,5 +1,6 @@
 package com.ct.fitorto.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.ct.fitorto.adapter.RecyclerViewAdapter;
 import com.ct.fitorto.model.FitortoCategory;
 import com.ct.fitorto.model.JsonResponseCategory;
 import com.ct.fitorto.network.ApiClientMain;
+import com.ct.fitorto.preferences.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -33,31 +35,38 @@ public class Discover_Fragment extends Fragment {
     private RecyclerViewAdapter adapter;
     private TextView searchbtn;
     private ArrayList<FitortoCategory> data;//= new ArrayList<FitortoCategory>();
+    private PreferenceManager preferenceManager;
+    ProgressDialog pDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        preferenceManager = new PreferenceManager(getActivity());
         View view = inflater.inflate(R.layout.discover_recycler, null);
         getActivity().setTitle("Discover");
         lLayout = new GridLayoutManager(getActivity(), 2);
         rView = (RecyclerView) view.findViewById(R.id.discover_recycler);
         rView.setHasFixedSize(true);
         rView.setLayoutManager(lLayout);
+        pDialog = new ProgressDialog(getActivity());
+
+        pDialog.setMessage("loading ...");
+        pDialog.show();
 
         //loadJSON();
         searchbtn=(TextView)view.findViewById(R.id.search) ;
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), SearchActivity.class);
+                Intent intent=new Intent(getActivity(),SearchActivity.class);
                 startActivity(intent);
 
             }
         });
-
-        Call<JsonResponseCategory> response = ApiClientMain.getApiClient().category("Mumbai");
+        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+        Call<JsonResponseCategory> response = ApiClientMain.getApiClient().category(city);
         response.enqueue(new Callback<JsonResponseCategory>() {
             @Override
             public void onResponse(Call<JsonResponseCategory> call, Response<JsonResponseCategory> response) {
@@ -67,8 +76,10 @@ public class Discover_Fragment extends Fragment {
                     data = new ArrayList<>(jsonResponse.getData());
                     adapter = new RecyclerViewAdapter(getActivity(), data);
                     rView.setAdapter(adapter);
+                    pDialog.dismiss();
 
-                } else {
+                } else
+                {
                     Toast.makeText(getActivity(), "Error darim else onresponse", Toast.LENGTH_SHORT).show();
                 }
 
