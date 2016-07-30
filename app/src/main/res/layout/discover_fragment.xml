@@ -1,77 +1,96 @@
-<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
-    android:layout_width="110dp"
-    android:layout_height="190dp"
-    card_view:cardUseCompatPadding="true"
-    card_view:contentPaddingLeft="5dp"
-    card_view:contentPaddingRight="5dp"
-    card_view:cardCornerRadius="8dp"
-    android:gravity="center">
+<?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    android:gravity="center">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Demo"
+        android:orientation="horizontal">
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:background="#f6f7f7"
+            android:drawableLeft="@drawable/search"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:hint="Discover Fitness Centers."
+            android:inputType="textNoSuggestions" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/discover_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/linearLayout"
+        android:background="#f6f7f7"
+        android:clipToPadding="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:scrollbars="vertical" />
+
+    <com.ct.fitorto.custom.CustomTextViewBold
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/margin_small"
         android:gravity="center"
-        android:id="@+id/tv_title"
+        android:text="@string/feed_empty_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
-        android:fontFamily="Roboto bold"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/image"
-    android:background="@drawable/hexagon"
-    android:layout_alignParentLeft="false"
-    android:layout_alignParentStart="true"
-    android:layout_below="@+id/tv_title"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:gravity="center">
+        android:visibility="visible" />
 
-    <com.ct.fitorto.activity.HexagonImageView
-        android:id="@+id/Logo"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="5dp"
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-         />
-    <ImageView
-        android:id="@+id/imagedis"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
+        <ImageView
+            android:id="@+id/ivNoInterNet"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/ic_signal_wifi_off_black_48dp"
+            android:tint="@color/colorPrimary" />
 
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="38dp" />
+        <com.ct.fitorto.custom.CustomTextViewBold
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:gravity="center"
+            android:text="@string/feed_empty_text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
+        <ImageButton
+            android:id="@+id/ivRetry"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/ic_retry"
+            android:tint="#565656" />
+
+
+    </LinearLayout>
 </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_content"
-        android:text="Demo"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="170dp"
-        android:textColor="#000000"
-        android:fontFamily="Roboto-Medium"
-        android:layout_marginBottom="5dp" />
 
-</RelativeLayout>
-</android.support.v7.widget.CardView>

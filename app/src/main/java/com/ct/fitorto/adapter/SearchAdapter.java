@@ -3,16 +3,15 @@ package com.ct.fitorto.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ct.fitorto.R;
-import com.ct.fitorto.flowlayou.FlowLayout;
+import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.GynImages;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Search;
@@ -57,57 +56,79 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private TextView gymaname;
         private TextView gymloaction;
         private TextView gymrating;
-        private ImageView gymImage1;
-        private ImageView gymImage2;
-        private ImageView gymImage3;
-        private ImageView gymImage4;
         private ImageView imageButton;
         private TextView pack;
         private FlowLayout mFlowLayout;
+        private LinearLayout imgContainer;
+
         public ViewHolder(View itemView) {
             super(itemView);
             gymaname = (TextView) itemView.findViewById(R.id.title);
             gymloaction = (TextView) itemView.findViewById(R.id.location);
             gymrating = (TextView) itemView.findViewById(R.id.textView10);
-            gymImage1 = (ImageView) itemView.findViewById(R.id.image1);
-            gymImage2 = (ImageView) itemView.findViewById(R.id.image2);
-            gymImage3 = (ImageView) itemView.findViewById(R.id.image3);
-            gymImage4 = (ImageView) itemView.findViewById(R.id.image4);
             imageButton = (ImageView) itemView.findViewById(R.id.imageButton);
             pack = (TextView) itemView.findViewById(R.id.textView11);
-            mFlowLayout = (FlowLayout)itemView.findViewById(R.id.flow);
-
+            mFlowLayout = (FlowLayout) itemView.findViewById(R.id.flow);
+            imgContainer = (LinearLayout) itemView.findViewById(R.id.imgContainer);
         }
+
         private void setcategory(List<String> sizeArrayList) {
-
+            mFlowLayout.removeAllViews();
             if (sizeArrayList != null && sizeArrayList.size() > 0) {
-
+                int limit = 0;
                 for (String size : sizeArrayList) {
-                    LayoutInflater inflater = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final TextView equipment1 = (TextView) inflater.inflate(R.layout.search_layout_button, mFlowLayout, false);
-                    equipment1.setText(size);
-                    mFlowLayout.addView(equipment1);
+                    if (limit < 3) {
+                        LayoutInflater inflater = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        final TextView equipment1 = (TextView) inflater.inflate(R.layout.search_layout_button, mFlowLayout, false);
+                        equipment1.setText(size);
+                        mFlowLayout.addView(equipment1);
+                    }
+                    limit++;
                 }
             }
         }
+
+
+        private void setGymImageList(List<GynImages> sizeArrayList) {
+            imgContainer.removeAllViews();
+            if (sizeArrayList != null && sizeArrayList.size() > 0) {
+                int limit = 0;
+                for (GynImages images : sizeArrayList) {
+                    if (limit < 3) {
+                        LayoutInflater inflater = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        final ImageView imageView = (ImageView) inflater.inflate(R.layout.list_item_fitness_center_image, imgContainer, false);
+                        if (!TextUtils.isEmpty(images.getImageLink())) {
+                            Picasso.with(itemView.getContext())
+                                    .load(images.getImageLink())
+                                    .placeholder(R.drawable.ic_gymnasium)
+                                    .into(imageView);
+                        } else {
+                            Picasso.with(itemView.getContext())
+                                    .load(R.drawable.ic_gymnasium)
+                                    .placeholder(R.drawable.ic_gymnasium)
+                                    .into(imageView);
+                        }
+                        imgContainer.addView(imageView);
+                    }
+                    limit++;
+                }
+            }
+        }
+
         public void bind(final Search item, final OnItemClickListener listener) {
 
-            List<Package> fu = (ArrayList<Package>) item.getPackages();
-            List<GynImages> gi = (ArrayList<GynImages>) item.getImages();
+            List<Package> fu = new ArrayList<>();
+            fu.addAll(item.getPackages());
+            List<GynImages> gi = new ArrayList<>();
+            gi.addAll(item.getImages());
             ArrayList aList = new ArrayList(Arrays.asList(item.getCategory().split(",")));
             if (aList.size() > 0) {
-                Log.d("Logs", "Schedule:" + aList);
+                mFlowLayout.setVisibility(View.VISIBLE);
                 setcategory(aList);
+            } else {
+                mFlowLayout.setVisibility(View.GONE);
             }
-            if (gi.size() > 0) {
 
-                Picasso.with(itemView.getContext())
-                        .load(gi.get(0).getImageLink())
-                        .into(gymImage1);
-                Picasso.with(itemView.getContext())
-                        .load(gi.get(1).getImageLink())
-                        .into(gymImage2);
-            }
 
             if (fu.size() > 0) {
                 pack.setText("Rs." + fu.get(0).getOneMonth() + "/-");
@@ -131,26 +152,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 imageButton.setImageResource(R.drawable.star);
 
             }
-
-
             if (TextUtils.isEmpty(item.getRating())) {
             } else {
                 gymrating.setText(item.getRating());
             }
 
-            if (TextUtils.isEmpty(item.getLogo())) {
-
-                Toast.makeText(itemView.getContext(), "No Image ", Toast.LENGTH_SHORT).show();
-                Log.d("no image", item.getLogo());
-
+            if (gi.size() > 0) {
+                imgContainer.setVisibility(View.VISIBLE);
+                setGymImageList(gi);
             } else {
-
-                Picasso.with(itemView.getContext())
-                        .load(item.getLogo())
-                        .into(gymImage3);
-                Picasso.with(itemView.getContext())
-                        .load(item.getLogo())
-                        .into(gymImage4);
+                imgContainer.setVisibility(View.GONE);
             }
 
 

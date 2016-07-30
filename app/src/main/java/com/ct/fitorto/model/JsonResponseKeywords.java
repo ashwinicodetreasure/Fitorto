@@ -24,13 +24,7 @@ public class JsonResponseKeywords implements Parcelable {
     private int count;
     @SerializedName("data")
     @Expose
-    private List<categoryName> data = new ArrayList<categoryName>();
-    @SerializedName("countLocations")
-    @Expose
-    private int countLocations;
-    @SerializedName("locations")
-    @Expose
-    private List<Location> locations = new ArrayList<Location>();
+    private List<Location> data = new ArrayList<Location>();
 
     /**
      *
@@ -91,7 +85,7 @@ public class JsonResponseKeywords implements Parcelable {
      * @return
      * The data
      */
-    public List<categoryName> getData() {
+    public List<Location> getData() {
         return data;
     }
 
@@ -100,45 +94,10 @@ public class JsonResponseKeywords implements Parcelable {
      * @param data
      * The data
      */
-    public void setData(List<categoryName> data) {
+    public void setData(List<Location> data) {
         this.data = data;
     }
 
-    /**
-     *
-     * @return
-     * The countLocations
-     */
-    public int getCountLocations() {
-        return countLocations;
-    }
-
-    /**
-     *
-     * @param countLocations
-     * The countLocations
-     */
-    public void setCountLocations(int countLocations) {
-        this.countLocations = countLocations;
-    }
-
-    /**
-     *
-     * @return
-     * The locations
-     */
-    public List<Location> getLocations() {
-        return locations;
-    }
-
-    /**
-     *
-     * @param locations
-     * The locations
-     */
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
-    }
 
 
     protected JsonResponseKeywords(Parcel in) {
@@ -146,17 +105,10 @@ public class JsonResponseKeywords implements Parcelable {
         msg = in.readString();
         count = in.readInt();
         if (in.readByte() == 0x01) {
-            data = new ArrayList<categoryName>();
+            data = new ArrayList<Location>();
             in.readList(data, categoryName.class.getClassLoader());
         } else {
             data = null;
-        }
-        countLocations = in.readInt();
-        if (in.readByte() == 0x01) {
-            locations = new ArrayList<Location>();
-            in.readList(locations, Location.class.getClassLoader());
-        } else {
-            locations = null;
         }
     }
 
@@ -176,13 +128,7 @@ public class JsonResponseKeywords implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeList(data);
         }
-        dest.writeInt(countLocations);
-        if (locations == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(locations);
-        }
+
     }
 
     @SuppressWarnings("unused")

@@ -85,7 +85,7 @@ public class JsonResponseSearch implements Parcelable {
      * @return
      * The data
      */
-    public List<Search> getData() {
+    public ArrayList<Search> getData() {
         return data;
     }
 

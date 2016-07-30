@@ -1,34 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="5dp"
-        app:theme="@style/AppTheme.AppBarOverlay" />
-
-    <FrameLayout
-        android:id="@+id/show_fragment"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"
-        android:layout_above="@+id/lltab"
-        android:layout_below="@+id/tool_bar" />
-
-    <LinearLayout
-        android:id="@+id/lltab"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        app:elevation="2dp">
 
-        <include layout="@layout/tabs_layout" />
 
-    </LinearLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:contentInsetEnd="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetStart="0dp"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:elevation="2dp"
+            app:theme="@style/AppTheme.AppBarOverlay">
 
-</RelativeLayout>
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_logo_full" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/show_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/lltab"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="top"
+            android:layout_marginTop="?attr/actionBarSize" />
+
+        <RelativeLayout
+            android:id="@+id/lltab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent">
+
+            <!--
+                    <include layout="@layout/tabs_layout" />
+            -->
+            <View
+                android:id="@+id/view"
+                android:layout_width="fill_parent"
+                android:layout_height="2px"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorBackGround"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/feed"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/feedimg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_feed" />
+
+                    <com.ct.fitorto.custom.CustomTextViewBold
+                        android:id="@+id/tvfeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/feedimg"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif"
+                        android:singleLine="true"
+                        android:text="Feeds"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/discover"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:id="@+id/discoverimg"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_search" />
+
+                    <com.ct.fitorto.custom.CustomTextViewBold
+                        android:id="@+id/tvdis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/discoverimg"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif"
+                        android:singleLine="true"
+                        android:text="Discover"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_user"
+                        android:visibility="invisible" />
+
+                    <com.ct.fitorto.custom.CustomTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:singleLine="true"
+                        android:text="Profile"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/profile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/profileimg"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_user" />
+
+                    <com.ct.fitorto.custom.CustomTextViewBold
+                        android:id="@+id/tvpro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profileimg"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif"
+                        android:singleLine="true"
+                        android:text="Profile"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/friends"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/friendsimg"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_friends" />
+
+                    <com.ct.fitorto.custom.CustomTextViewBold
+                        android:id="@+id/tvfrd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/friendsimg"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif"
+                        android:text="Friends"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/logo"
+            android:visibility="gone" />
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+

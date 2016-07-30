@@ -14,6 +14,18 @@ public class JsonResponselikeshare {
     @SerializedName("msg")
     @Expose
     private String msg;
+    @SerializedName("count")
+    @Expose
+    private int count;
+
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     /**
      *

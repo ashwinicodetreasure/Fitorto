@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Ashwini on 5/26/2016.
  */
 public class Location implements Parcelable {
+
     @SerializedName("area")
     @Expose
     private String area;

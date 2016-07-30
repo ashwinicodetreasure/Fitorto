@@ -86,8 +86,8 @@
         <View
             android:layout_width="2px"
             android:layout_height="25dp"
-            android:layout_alignEnd="@+id/follow"
-            android:layout_alignRight="@+id/follow"
+            android:layout_alignEnd="@+id/following"
+            android:layout_alignRight="@+id/following"
             android:layout_marginRight="55dp"
             android:layout_marginTop="180dp"
             android:background="#dbdbdb" />
@@ -120,7 +120,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/follow"
+            android:id="@+id/btnfollowing"
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_below="@+id/textView7"

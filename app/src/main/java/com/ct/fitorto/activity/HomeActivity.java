@@ -1,6 +1,6 @@
 package com.ct.fitorto.activity;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,37 +11,37 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ct.fitorto.R;
-import com.ct.fitorto.fragments.Discover_Fragment;
-import com.ct.fitorto.fragments.Feed_Fragment;
-import com.ct.fitorto.fragments.Profile_Fragment;
+import com.ct.fitorto.fragments.DiscoverFragment;
+import com.ct.fitorto.fragments.FeedFragment;
+import com.ct.fitorto.fragments.FriendsFragment;
+import com.ct.fitorto.fragments.ProfileFragment;
+import com.ct.fitorto.utils.ApplicationData;
 
 
 /**
  * Created by Ashwini on 5/13/2016.
  */
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+
     private LinearLayout feed;
     private LinearLayout discover;
     private LinearLayout profile;
     private LinearLayout friends;
-
     private ImageView feedimg;
     private ImageView discoverimg;
     private ImageView profileimg;
     private ImageView friendsimg;
-
     private TextView tvfeed;
     private TextView tvdis;
     private TextView tvpro;
     private TextView tvfrd;
-
-    private  FragmentManager fm;
+    private FragmentManager fm;
     private FragmentTransaction ft;
     private Fragment fr = null;
 
@@ -55,12 +55,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            //getSupportActionBar().setTitle("Discover");
-            //getSupportActionBar().setHomeButtonEnabled(true);
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        fr = new Discover_Fragment();
+        fr = new DiscoverFragment();
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         ft.replace(R.id.show_fragment, fr);
@@ -81,20 +78,27 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         friends = (LinearLayout) findViewById(R.id.friends);
         friends.setOnClickListener(this);
 
-        feedimg=(ImageView)findViewById(R.id.feedimg);
-        discoverimg=(ImageView)findViewById(R.id.discoverimg);
-        profileimg=(ImageView)findViewById(R.id.profileimg);
-        friendsimg=(ImageView)findViewById(R.id.friendsimg);
+        feedimg = (ImageView) findViewById(R.id.feedimg);
+        discoverimg = (ImageView) findViewById(R.id.discoverimg);
+        profileimg = (ImageView) findViewById(R.id.profileimg);
+        friendsimg = (ImageView) findViewById(R.id.friendsimg);
 
-        tvfeed=(TextView) findViewById(R.id.tvfeed);
-        tvdis=(TextView)findViewById(R.id.tvdis);
-        tvpro=(TextView)findViewById(R.id.tvpro);
-        tvfrd=(TextView)findViewById(R.id.tvfrd);
+        tvfeed = (TextView) findViewById(R.id.tvfeed);
+        tvdis = (TextView) findViewById(R.id.tvdis);
+        tvpro = (TextView) findViewById(R.id.tvpro);
+        tvfrd = (TextView) findViewById(R.id.tvfrd);
 
-        discoverimg.setColorFilter(Color.parseColor("#388E3C"), PorterDuff.Mode.SRC_IN);
-        tvdis.setTextColor(Color.parseColor("#388E3C"));
+        discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
+        tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
 
-
+        feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
+        discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
+        profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
+        friendsimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
+        tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
+        tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
+        tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
+        tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
     }
 
     @Override
@@ -114,12 +118,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
 
         if (id == R.id.notification) {
-
+            Intent i = new Intent(HomeActivity.this, NotificationActivity.class);
+            startActivityForResult(i, ApplicationData.REQUEST_CODE_NOTIFICATION);
 
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -127,18 +133,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.feed:
 
-                feedimg.setColorFilter(Color.parseColor("#388E3C"), PorterDuff.Mode.SRC_IN);
+                feedimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
                 friendsimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(Color.parseColor("#388E3C"));
-                tvdis.setTextColor(Color.parseColor("#000000"));
-                tvpro.setTextColor(Color.parseColor("#000000"));
-                tvfrd.setTextColor(Color.parseColor("#000000"));
-
-
-
-                fr = new Feed_Fragment();
+                tvfeed.setTextColor(getResources().getColor(R.color.selectedTab));
+                tvdis.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                fr = new FeedFragment();
                 fm = getSupportFragmentManager();
                 ft = fm.beginTransaction();
                 ft.replace(R.id.show_fragment, fr);
@@ -147,15 +150,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.discover:
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                discoverimg.setColorFilter(Color.parseColor("#388E3C"), PorterDuff.Mode.SRC_IN);
+                discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 friendsimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(Color.parseColor("#000000"));
-                tvdis.setTextColor(Color.parseColor("#388E3C"));
-                tvpro.setTextColor(Color.parseColor("#000000"));
-                tvfrd.setTextColor(Color.parseColor("#000000"));
+                tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
+                tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
 
-                fr = new Discover_Fragment();
+                fr = new DiscoverFragment();
                 fm = getSupportFragmentManager();
                 ft = fm.beginTransaction();
                 ft.replace(R.id.show_fragment, fr);
@@ -166,13 +169,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.profile:
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                profileimg.setColorFilter(Color.parseColor("#388E3C"), PorterDuff.Mode.SRC_IN);
+                profileimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
                 friendsimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(Color.parseColor("#000000"));
-                tvdis.setTextColor(Color.parseColor("#000000"));
-                tvpro.setTextColor(Color.parseColor("#388E3C"));
-                tvfrd.setTextColor(Color.parseColor("#000000"));
-                fr = new Profile_Fragment();
+                tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvdis.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvpro.setTextColor(getResources().getColor(R.color.selectedTab));
+                tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                fr = new ProfileFragment();
                 fm = getSupportFragmentManager();
                 ft = fm.beginTransaction();
                 ft.replace(R.id.show_fragment, fr);
@@ -182,14 +185,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                friendsimg.setColorFilter(Color.parseColor("#388E3C"), PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(Color.parseColor("#000000"));
-                tvdis.setTextColor(Color.parseColor("#000000"));
-                tvpro.setTextColor(Color.parseColor("#000000"));
-                tvfrd.setTextColor(Color.parseColor("#388E3C"));
+                friendsimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
+                tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvdis.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvfrd.setTextColor(getResources().getColor(R.color.selectedTab));
                 /*Intent intent2 = new Intent(HomeActivity.this, MembershipActivity.class);
                 startActivity(intent2);*/
-                Toast.makeText(HomeActivity.this, "Add Activity", Toast.LENGTH_SHORT).show();
+                fr = new FriendsFragment();
+                fm = getSupportFragmentManager();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.show_fragment, fr);
+                ft.commit();
                 break;
 
 
@@ -198,4 +205,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment != null) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }

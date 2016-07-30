@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Light">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/main.collapsing"
@@ -36,7 +36,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
-                <com.viewpagerindicator.CirclePageIndicator
+                <com.ct.fitorto.custom.CirclePageIndicator
                     android:id="@+id/mem_indicator"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -56,6 +56,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Light"
 
                 />
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -77,71 +78,50 @@
             android:layout_height="wrap_content">
 
             <!-- FlowLayout-->
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
+                android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/info"
-                android:text="Info"
                 android:layout_marginLeft="65dp"
+                android:layout_marginTop="10dp"
+                android:text="Info"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"/>
+                android:letterSpacing="0.1"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
             <LinearLayout
+                android:id="@+id/flowlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/flowlayout"
                 android:layout_below="@+id/info"
                 android:layout_marginLeft="65dp"
-                android:layout_marginTop="10dp">
-                <com.ct.fitorto.flowlayou.FlowLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.ct.fitorto.flowlayout.FlowLayout
+                    android:id="@+id/flow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
-                    android:id="@+id/flow"
                     android:minHeight="50dp">
 
-                    <!--<TextView
-                        android:id="@+id/yogabtn"
-                        android:layout_width="80dp"
-                        android:layout_height="23dp"
-                        android:layout_below="@+id/title"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/buttonshape"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:textSize="11sp" />
-                    <TextView
-                        android:id="@+id/zumba"
-                        android:layout_width="80dp"
-                        android:layout_height="23dp"
-                        android:layout_below="@+id/title"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/buttonshape"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:textSize="11sp" />-->
-
-
-
-                </com.ct.fitorto.flowlayou.FlowLayout>
+                </com.ct.fitorto.flowlayout.FlowLayout>
 
             </LinearLayout>
 
             <!-- Timimg selection-->
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_below="@+id/flowlayout"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_below="@+id/flowlayout"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/time" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,10 +130,12 @@
                 android:layout_marginTop="10dp"
                 android:text="Timing"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
+                android:letterSpacing="0.1"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextView
                 android:id="@+id/content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -165,7 +147,7 @@
                 android:textColor="#000000"
                 android:textStyle="bold" />
             <!-- Expandable section-->
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/expand"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -177,6 +159,7 @@
                 android:text="Show All Timing"
                 android:textColor="#2B59A2"
                 android:textSize="16sp"
+                android:letterSpacing="0.1"
                 android:textStyle="bold" />
 
             <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -188,14 +171,14 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp">
 
-                <TextView
+                <com.ct.fitorto.custom.CustomTextView
                     android:id="@+id/allTime"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.ct.fitorto.custom.CustomTextView
                     android:id="@+id/allTime1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -204,7 +187,7 @@
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.ct.fitorto.custom.CustomTextView
                     android:id="@+id/allTime2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -217,9 +200,9 @@
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
             <View
+                android:id="@+id/v"
                 android:layout_width="fill_parent"
                 android:layout_height="2px"
-                android:id="@+id/v"
                 android:layout_below="@+id/expanpanel"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
@@ -234,7 +217,7 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/marker" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -243,40 +226,44 @@
                 android:layout_marginTop="10dp"
                 android:text="Location"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
+                android:textSize="@dimen/text_size_medium"
+                android:letterSpacing="0.1"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextView
                 android:id="@+id/location"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textView5"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_below="@+id/textView5"
                 android:layout_marginTop="10dp"
+                android:letterSpacing="0.1"
                 android:text="509,Spaces 912,Brand Factory,Mira bhayandar,Thane"
                 android:textColor="#000000" />
 
             <ImageView
                 android:id="@+id/location_image"
                 android:layout_width="fill_parent"
-                android:layout_below="@+id/location"
                 android:layout_height="250dp"
+                android:layout_below="@+id/location"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:autoLink="web"
                 android:src="@drawable/location" />
+
             <ImageButton
-                android:layout_width="45dp"
-                android:layout_height="45dp"
                 android:id="@+id/locbtn"
-                android:background="@drawable/ic_loction"
-                android:scaleType="centerCrop"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/location_image"
-                android:layout_marginTop="-60dp"
                 android:layout_marginRight="15dp"
-                android:layout_alignParentRight="true"/>
+                android:layout_marginTop="-60dp"
+                android:background="@drawable/ic_loction"
+                android:scaleType="centerCrop" />
 
             <View
                 android:id="@+id/view"
@@ -295,7 +282,7 @@
                 android:layout_marginTop="15dp"
                 android:src="@drawable/service" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view"
@@ -303,10 +290,12 @@
                 android:layout_marginTop="15dp"
                 android:text="Membership and Services"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
+                android:textSize="@dimen/text_size_medium"
+                android:letterSpacing="0.1"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/gym"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -317,13 +306,16 @@
                 android:fontFamily="Roboto bold"
                 android:text="Gym Packages"
                 android:textColor="#2B59A2"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textIsSelectable="false" />
+                android:letterSpacing="0.1"
+                android:textAllCaps="true"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
             <TableLayout
+                android:id="@+id/expanpane2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/expanpane2"
                 android:layout_below="@+id/gym"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
@@ -334,198 +326,99 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
-                        android:text="1 Maonth"
+                        android:text="1 Month"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:id="@+id/oneMonth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
                 <TableRow android:id="@+id/tmonth">
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
                         android:text="3 Months"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:id="@+id/threMonths"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
                 <TableRow android:id="@+id/smonth">
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
                         android:text="6 Months"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:id="@+id/sixMonth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
                 <TableRow android:id="@+id/yearly">
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
                         android:text="Yearly"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <com.ct.fitorto.custom.CustomTextView
                         android:id="@+id/yeraly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_small"
+                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
 
             </TableLayout>
 
-           <!-- <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-                android:id="@+id/expanpane2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/gym"
-                android:layout_marginLeft="65dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp">
-
-
-                <TableLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <TableRow
-                        android:id="@+id/month"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="1"
-                            android:text="1 Maonth"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/oneMonth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </TableRow>
-
-                    <TableRow android:id="@+id/tmonth">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="1"
-                            android:text="3 Months"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/threMonths"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </TableRow>
-
-                    <TableRow android:id="@+id/smonth">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="1"
-                            android:text="6 Months"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/sixMonth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </TableRow>
-
-                    <TableRow android:id="@+id/yearly">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="1"
-                            android:text="Yearly"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/yeraly"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:textColor="#000000"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </TableRow>
-
-
-                </TableLayout>
-
-
-            </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
--->
             <View
                 android:id="@+id/ex"
                 android:layout_width="fill_parent"
@@ -538,13 +431,14 @@
 
             <ImageView
                 android:id="@+id/imageView6"
-                android:layout_below="@+id/ex"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_below="@+id/ex"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/gender" />
-            <TextView
+
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -552,26 +446,31 @@
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="10dp"
                 android:text="Gender"
+                android:textAllCaps="true"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/imageView9"
-                android:layout_below="@+id/ex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ex"
                 android:layout_marginLeft="70dp"
                 android:layout_marginTop="37dp"
                 android:src="@drawable/circle" />
-            <TextView
+
+            <com.ct.fitorto.custom.CustomTextView
                 android:id="@+id/tvgender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/gender"
-                android:textColor="#000000"
                 android:layout_marginLeft="85dp"
                 android:layout_marginTop="5dp"
-                android:orientation="vertical"/>
+                android:orientation="vertical"
+                android:letterSpacing="0.1"
+                android:textColor="#000000" />
+
             <View
                 android:id="@+id/vgender"
                 android:layout_width="fill_parent"
@@ -586,13 +485,14 @@
 
             <ImageView
                 android:id="@+id/imageView7"
-                android:layout_below="@+id/vgender"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_below="@+id/vgender"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/amenities" />
-            <TextView
+
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/ameti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -601,7 +501,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Amenities"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
+                android:textSize="@dimen/text_size_medium"
+                android:letterSpacing="0.1"
                 android:textStyle="bold" />
 
             <!-- <ListView
@@ -636,7 +537,7 @@
                 android:layout_marginTop="15dp"
                 android:src="@drawable/equipment" />
 
-            <TextView
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/v1"
@@ -644,7 +545,8 @@
                 android:layout_marginTop="15dp"
                 android:text="Equipments"
                 android:textColor="#000000"
-                android:textSize="2.5mm"
+                android:textSize="@dimen/text_size_medium"
+                android:letterSpacing="0.1"
                 android:textStyle="bold" />
             <!-- <ListView
                  android:layout_width="fill_parent"
@@ -658,7 +560,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/equipment"
                 android:layout_marginLeft="65dp"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
 
         </RelativeLayout>
 
@@ -669,9 +571,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        android:orientation="vertical"
-
-        >
+        android:orientation="vertical">
 
 
         <Button

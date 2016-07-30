@@ -1,4 +1,4 @@
-    package com.ct.fitorto.model;
+package com.ct.fitorto.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -40,6 +40,18 @@ public class FitortoUser {
     @SerializedName("bloodGroup")
     @Expose
     private String bloodGroup;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("isFollowing")
+    @Expose
+    private String isFollowing;
+    @SerializedName("followingCount")
+    @Expose
+    private String followingCount;
+    @SerializedName("followersCount")
+    @Expose
+    private String followersCount;
     @SerializedName("AndroidRegKey")
     @Expose
     private String androidRegKey;
@@ -248,6 +260,78 @@ public class FitortoUser {
     /**
      *
      * @return
+     * The status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     *
+     * @param status
+     * The status
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     *
+     * @return
+     * The isFollowing
+     */
+    public String getIsFollowing() {
+        return isFollowing;
+    }
+
+    /**
+     *
+     * @param isFollowing
+     * The isFollowing
+     */
+    public void setIsFollowing(String isFollowing) {
+        this.isFollowing = isFollowing;
+    }
+
+    /**
+     *
+     * @return
+     * The followingCount
+     */
+    public String getFollowingCount() {
+        return followingCount;
+    }
+
+    /**
+     *
+     * @param followingCount
+     * The followingCount
+     */
+    public void setFollowingCount(String followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    /**
+     *
+     * @return
+     * The followersCount
+     */
+    public String getFollowersCount() {
+        return followersCount;
+    }
+
+    /**
+     *
+     * @param followersCount
+     * The followersCount
+     */
+    public void setFollowersCount(String followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    /**
+     *
+     * @return
      * The androidRegKey
      */
     public String getAndroidRegKey() {
@@ -281,4 +365,3 @@ public class FitortoUser {
         this.iosRegKey = iosRegKey;
     }
 }
-

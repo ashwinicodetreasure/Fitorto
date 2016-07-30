@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Ashwini on 4/28/2016.
  */
 public class SignupActivity extends Activity implements View.OnClickListener {
+
     private EditText user_email;
     private EditText user_pass;
     private EditText user_name;

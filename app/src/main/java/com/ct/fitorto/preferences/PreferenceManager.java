@@ -8,13 +8,17 @@ import android.content.SharedPreferences;
  */
 public class PreferenceManager {
 
-    public static final String USER_OBJECT_ID = "object_id";
+    public static final String USER_ID = "object_id";
     public static final String USER_CREDITES = "credits";
     public static final String PREF_LAST_NAME = "last_name";
     public static final String PREF_FIRST_NAME = "first_name";
     public static final String USER_LOGIN_STATUS = "user_login_status";
     public static final String USER_IMAGE_LINK = "image_link";
     public static final String PREF_CLIENT_NAME = "client_name";
+    public static final String PREF_LOCALITY = "locality";
+    public static final String GCM_TOKEN = "gcm_token";
+    public static final String PREF_AREA = "pref_area";
+    public static final String ADDRESS = "address";
     public final String MY_PREFS_NAME = "myPreference";
 
     private Context context;

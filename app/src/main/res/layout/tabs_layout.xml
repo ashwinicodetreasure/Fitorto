@@ -2,57 +2,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
 
-    >
     <View
         android:layout_width="fill_parent"
         android:layout_height="2px"
-        android:background="#dbdbdb"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="18dp"
+        android:background="#dbdbdb" />
+
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
         android:layout_marginTop="20dp"
+        android:gravity="bottom"
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/feed"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:background="#FFFFFF"
-            android:orientation="vertical"
-            android:id="@+id/feed">
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/feedimg"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_rss_feed"
+                android:layout_gravity="center_horizontal"
 
-                android:layout_gravity="center_horizontal" />
-            <TextView
+                android:src="@drawable/ic_rss_feed" />
+
+            <com.ct.fitorto.custom.CustomTextViewBold
+                android:id="@+id/tvfeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/feedimg"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
                 android:singleLine="true"
-                android:id="@+id/tvfeed"
                 android:text="Feeds"
-                android:textColor="#000000"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/discover"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:id="@+id/discover">
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
 
             <ImageView
@@ -60,109 +63,120 @@
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
 
-                android:src="@drawable/ic_search"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_search" />
+
             <TextView
+                android:id="@+id/tvdis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/discoverimg"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
                 android:singleLine="true"
-                android:id="@+id/tvdis"
-                android:textColor="#000000"
                 android:text="Discover"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:background="@android:color/white"
             android:orientation="vertical"
-            android:background="#FFFFFF"
             android:visibility="visible">
+
             <ImageView
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_user"
-                android:layout_gravity="center_horizontal" />
-            <TextView
+                android:visibility="invisible" />
+
+            <com.ct.fitorto.custom.CustomTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
                 android:singleLine="true"
                 android:text="Profile"
-                android:textColor="#000000"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:visibility="invisible" />
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/profile"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:id="@+id/profile">
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/profileimg"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_user"
-                android:layout_gravity="center_horizontal" />
-            <TextView
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_user" />
+
+            <com.ct.fitorto.custom.CustomTextViewBold
+                android:id="@+id/tvpro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profileimg"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
                 android:singleLine="true"
-                android:id="@+id/tvpro"
                 android:text="Profile"
-                android:textColor="#000000"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/friends"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:id="@+id/friends">
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/friendsimg"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_friends"
-                android:layout_gravity="center_horizontal" />
-            <TextView
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_friends" />
+
+            <com.ct.fitorto.custom.CustomTextViewBold
+                android:id="@+id/tvfrd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/friendsimg"
                 android:layout_centerInParent="true"
-                android:id="@+id/tvfrd"
+                android:layout_gravity="center_horizontal"
                 android:text="Friends"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
+
     <ImageView
         android:layout_width="80dp"
         android:layout_height="72dp"
+        android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:src="@drawable/logo"
-        android:visibility="visible"
-        android:layout_centerHorizontal="true"
-        />
+        android:visibility="visible" />
 
 </RelativeLayout>

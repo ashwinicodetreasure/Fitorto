@@ -11,43 +11,50 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="5dp"
-        app:theme="@style/AppTheme.AppBarOverlay" />
+        app:theme="@style/AppTheme.AppBarOverlay">
 
-   <LinearLayout
-       android:layout_width="fill_parent"
-       android:layout_height="fill_parent"
-       android:layout_above="@+id/container"
-       android:background="#FFFFFF"
-       android:layout_marginTop="55dp">
-       <de.hdodenhof.circleimageview.CircleImageView
-           android:id="@+id/ivprofil"
-           android:layout_width="35dp"
-           android:layout_height="35dp"
-           android:src="@drawable/ic_feed_user"
-           android:scaleType="centerCrop"
-           android:layout_marginLeft="20dp"
-           android:layout_marginTop="15dp"
-           />
-       <EditText
-           android:layout_width="fill_parent"
-           android:layout_height="fill_parent"
-           android:id="@+id/edFeed"
-           android:hint="Write something "
-            android:layout_marginTop="10dp"
-           android:layout_marginLeft="10dp"
-           android:layout_marginRight="10dp"
-           android:gravity="top"
-           android:background="#FFFFFF"
-           android:textColor="#000000"
-           android:layout_alignBottom="@+id/ivprofil"
-           android:layout_toRightOf="@+id/ivprofil"
-           android:layout_toEndOf="@+id/ivprofil" />
-
-   </LinearLayout>
-
-
+        <ImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_cancel" />
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/container"
+        android:layout_marginTop="55dp"
+        android:background="#FFFFFF">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivprofil"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile" />
+
+        <EditText
+            android:id="@+id/edFeed"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@+id/ivprofil"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/ivprofil"
+            android:layout_toRightOf="@+id/ivprofil"
+            android:background="#FFFFFF"
+            android:gravity="top"
+            android:hint="Write something "
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -65,74 +72,68 @@
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:background="#FFFFFF"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-          <!--  ImageView
-                android:id="@+id/ivprivate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ic_earth" />
--->
             <ImageView
                 android:id="@+id/ivLink"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginBottom="0.5dp"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="0.5"
-
+                android:layout_weight="1"
                 android:src="@drawable/ic_link" />
 
             <ImageView
                 android:id="@+id/ivcamera"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginBottom="0.5dp"
                 android:layout_marginLeft="10dp"
-
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:src="@drawable/ic_camera" />
         </LinearLayout>
 
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="30dp"
             android:id="@+id/sharebtn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="3dp"
-            android:layout_marginLeft="150dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/sharebutton"
+            android:background="@drawable/checkinbtn"
+            android:gravity="center"
             android:text="SHARE"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorText"
             android:textSize="15sp" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="100dp">
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/ivimage"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp">
 
-         />
+        <ImageView
+            android:id="@+id/ivimage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin_small" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvlink"
-        android:layout_below="@+id/ivimage"
-        android:layout_alignLeft="@+id/ivimage"
-        android:layout_alignStart="@+id/ivimage"
-        android:linksClickable="true"
-        android:textColor="#000000"
-        android:textSize="16sp"
-         />
+        <TextView
+            android:id="@+id/tvlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ivimage"
+            android:layout_alignStart="@+id/ivimage"
+            android:layout_below="@+id/ivimage"
+            android:linksClickable="true"
+            android:text=""
+            android:textColor="#000000"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </RelativeLayout>

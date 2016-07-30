@@ -3,10 +3,18 @@ package com.ct.fitorto.network;
 import com.ct.fitorto.model.JsonResponseAddFeed;
 import com.ct.fitorto.model.JsonResponseCategory;
 import com.ct.fitorto.model.JsonResponseFeed;
+import com.ct.fitorto.model.JsonResponseFollow;
+import com.ct.fitorto.model.JsonResponseFriends;
+import com.ct.fitorto.model.JsonResponseFriendsProfile;
 import com.ct.fitorto.model.JsonResponseKeywords;
+import com.ct.fitorto.model.JsonResponseNotification;
 import com.ct.fitorto.model.JsonResponseSearch;
+import com.ct.fitorto.model.JsonResponseSearchFriends;
 import com.ct.fitorto.model.JsonResponseSocial;
+import com.ct.fitorto.model.JsonResponseUpdateProfile;
 import com.ct.fitorto.model.JsonResponseUser;
+import com.ct.fitorto.model.JsonResponseUserProfile;
+import com.ct.fitorto.model.JsonResponseUserUpdate;
 import com.ct.fitorto.model.JsonResponselikeshare;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -55,7 +63,7 @@ public class ApiClientMain {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            FitortoApiInterface= retrofit.create(FitortoApiInterface.class);
+            FitortoApiInterface = retrofit.create(FitortoApiInterface.class);
         }
         return FitortoApiInterface;
     }
@@ -78,21 +86,38 @@ public class ApiClientMain {
                                         @Field("area") String area,
                                         @Field("city") String city,
                                         @Field("keywords") String keywords);
+
         @FormUrlEncoded
         @POST("search.php")
-        Call<JsonResponseSearch> search1(@Field("gymName")String gymname);
+        Call<JsonResponseSearch> search1(@Field("gymName") String gymname);
 
         @POST("getKeywords.php")
-        Call<JsonResponseKeywords> getResponseKeywordsCall() ;
+        Call<JsonResponseKeywords> getResponseKeywordsCall();
 
         @FormUrlEncoded
         @POST("loginUser.php")
-        Call<JsonResponseUser> city(@Field("emailID") String emailID,
-                                    @Field("password") String password
-        );
+        Call<JsonResponseUser> login(@Field("emailID") String emailID,
+                                     @Field("password") String password,
+                                     @Field("androidRegKey") String androidRegKey,
+                                     @Field("iosRegKey") String iosRegKey);
+
+        @POST("city.php")
+        Call<JsonResponseUser> city();
+
+
+        @FormUrlEncoded
+        @POST("registerUser.php")
+        Call<JsonResponseUser> registration(
+                @Field("emailID") String emailID,
+                @Field("password") String password,
+                @Field("userName") String userName,
+                @Field("phoneNo") String phoneNo,
+                @Field("androidRegKey") String androidRegKey,
+                @Field("iosRegKey") String iosRegKey);
+
         @FormUrlEncoded
         @POST("getFeeds.php")
-        Call<JsonResponseFeed> getResponseFedd(@Field("userID") String userlID) ;
+        Call<JsonResponseFeed> getResponseFedd(@Field("userID") String userlID);
 
         @FormUrlEncoded
         @POST("socialLogin.php")
@@ -100,26 +125,88 @@ public class ApiClientMain {
                                                    @Field("emailID") String emailID,
                                                    @Field("phoneNo") String phoneNo,
                                                    @Field("profilePic") String profilePic,
-                                                   @Field("gender") String gender);
+                                                   @Field("gender") String gender,
+                                                   @Field("androidRegKey") String androidRegKey,
+                                                   @Field("iosRegKey") String iosRegKey);
 
         @FormUrlEncoded
         @POST("likeShare.php")
         Call<JsonResponselikeshare> getResponselikeshare(@Field("userID") String userID,
-                                                      @Field("feedID") String feedID,
-                                                      @Field("flag") String flag,
-                                                      @Field("isLike") String isLike,
-                                                      @Field("isUser") String isUser);
-
-
+                                                         @Field("feedID") String feedID,
+                                                         @Field("flag") String flag,
+                                                         @Field("isLike") String isLike,
+                                                         @Field("isUser") String isUser);
 
 
         @Multipart
         @POST("addFeed.php")
-        Call<JsonResponseAddFeed> getResponseFeed(@Part("userID") RequestBody  userID,
+        Call<JsonResponseAddFeed> getResponseFeed(@Part("userID") RequestBody userID,
                                                   @Part("feed") RequestBody feed,
                                                   @Part("url") RequestBody url,
                                                   @Part("flag") RequestBody flag,
-                                                  @Part("file\"; filename=\"file\" ") RequestBody file) ;
+                                                  @Part("file\"; filename=\"file\" ") RequestBody file);
+
+        @FormUrlEncoded
+        @POST("friends.php")
+        Call<JsonResponseFriends> getFriendsList(@Field("userID") String userID);
+
+        @FormUrlEncoded
+        @POST("searchFriend.php")
+        Call<JsonResponseSearchFriends> searchFriends(@Field("userID") String userID,
+                                                      @Field("keyWords") String keyWords);
+
+        @FormUrlEncoded
+        @POST("follow.php")
+        Call<JsonResponseSearchFriends> follow(@Field("userID") String userID,
+                                               @Field("friendID") String keyWords,
+                                               @Field("flag") String flag);
+
+
+        @FormUrlEncoded
+        @POST("getUserProfile.php")
+        Call<JsonResponseUserProfile> getResponseUserprofile(@Field("userID") String userID
+        );
+
+        @FormUrlEncoded
+        @POST("updateUser.php")
+        Call<JsonResponseUserUpdate> getResponseUserUpdate(@Field("userID") String userID,
+                                                           @Field("userName") String userName,
+                                                           @Field("phoneNo") String phoneNo,
+                                                           @Field("dob") String dob,
+                                                           @Field("gender") String gender,
+                                                           @Field("address") String address,
+                                                           @Field("bloodGroup") String bloodGroup,
+                                                           @Field("status") String status
+        );
+
+
+        @Multipart
+        @POST("updateProfilePic.php")
+        Call<JsonResponseUpdateProfile> getResponseUpdateProfile(@Part("userID") RequestBody userID,
+                                                                 @Part("file\"; filename=\"file\" ") RequestBody file);
+
+        @FormUrlEncoded
+        @POST("getUserFeeds.php")
+        Call<JsonResponseFeed> getUserFeed(@Field("userID") String userId);
+
+        @FormUrlEncoded
+        @POST("friendProfile.php")
+        Call<JsonResponseFriendsProfile> getResponseFriendProfile(@Field("userID") String userID,
+                                                                  @Field("friendID") String friendID
+        );
+
+        @FormUrlEncoded
+        @POST("follow.php")
+        Call<JsonResponseFollow> getResponseFollow(@Field("userID") String userID,
+                                                   @Field("friendID") String friendID,
+                                                   @Field("flag") String flag
+        );
+
+
+        @FormUrlEncoded
+        @POST("getNotifications.php")
+        Call<JsonResponseNotification> getNotification(@Field("userID") String userID);
+
 
     }
 

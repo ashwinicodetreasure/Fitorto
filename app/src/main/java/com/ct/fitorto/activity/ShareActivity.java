@@ -1,5 +1,6 @@
 package com.ct.fitorto.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import com.ct.fitorto.R;
 import com.ct.fitorto.model.JsonResponseAddFeed;
 import com.ct.fitorto.network.ApiClientMain;
+import com.ct.fitorto.preferences.PreferenceManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,9 +56,11 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private EditText edcontent;
     private TextView tvlink;
     private ImageView ivimage;
-    private Bitmap bitmap,thumbnail;
+    private Bitmap bitmap, thumbnail;
     private String picturePath;
     private File f;
+    private ImageView ivCancel;
+    private String link = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
         ivimage = (ImageView) findViewById(R.id.ivimage);
         tvlink = (TextView) findViewById(R.id.tvlink);
+
 
         btngLink = (ImageView) findViewById(R.id.ivLink);
         btngLink.setOnClickListener(this);
@@ -83,8 +89,15 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Share");
-            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setTitle("");
+            ivCancel = (ImageView) toolbar.findViewById(R.id.ivCancel);
+            ivCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finishThis();
+                }
+            });
+           /* getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -92,16 +105,28 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 public void onClick(View v) {
                     onBackPressed();
                 }
-            });
+            });*/
         }
+
+    }
+
+
+    private void finishThis() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishThis();
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-
-
             case R.id.ivcamera:
                 selectImage();
                 /*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -110,7 +135,6 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.ivLink:
                 setLink();
-
                 break;
 
             case R.id.sharebtn:
@@ -124,7 +148,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
                 //}
 
-                /*Fragment fr = new Feed_Fragment();
+                /*Fragment fr = new FeedFragment();
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.show_fragment, fr);
@@ -138,38 +162,35 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void uploadData() {
+        String string = edcontent.getText().toString();
+        if (!TextUtils.isEmpty(string)) {
+            PreferenceManager preferenceManager = new PreferenceManager(ShareActivity.this);
+            String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+            RequestBody id = ApiClientMain.getStringRequestBody(userId);
+            RequestBody content = ApiClientMain.getStringRequestBody(string);
+            RequestBody link = ApiClientMain.getStringRequestBody(this.link);
 
-       /*PreferenceManager preferenceManager = new PreferenceManager(ShareActivity.this);
-        String id = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_TYPE);*/
-        RequestBody id = ApiClientMain.getStringRequestBody("1");
-        RequestBody content = ApiClientMain.getStringRequestBody(edcontent.getText().toString());
-        RequestBody link = ApiClientMain.getStringRequestBody(txtLink.getText().toString());
-        RequestBody flag = ApiClientMain.getStringRequestBody("1");
+            RequestBody flag = ApiClientMain.getStringRequestBody("1");
 
-        /*Bitmap original = BitmapFactory.decodeFile(picturePath);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        original.compress(Bitmap.CompressFormat.JPEG, 100, out);
-        Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-       String image1=BitMapToString(decoded);*/
+            RequestBody image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
+            Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseFeed(id, content, link, flag, image);
+            response.enqueue(new Callback<JsonResponseAddFeed>() {
+                @Override
+                public void onResponse(Call<JsonResponseAddFeed> call, retrofit2.Response<JsonResponseAddFeed> response) {
+                    //JsonResponseAddFeed resp = response.body();
+                    //Toast.makeText(ShareActivity.this, "Shared", Toast.LENGTH_SHORT).show();
+                    finishThis();
+                }
 
-        RequestBody image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
-        Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseFeed(id,content ,link ,flag ,image);
-        response.enqueue(new Callback<JsonResponseAddFeed>() {
-            @Override
-            public void onResponse(Call<JsonResponseAddFeed> call, retrofit2.Response<JsonResponseAddFeed> response) {
+                @Override
+                public void onFailure(Call<JsonResponseAddFeed> call, Throwable t) {
+                    Toast.makeText(ShareActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(ShareActivity.this, "Please write something.", Toast.LENGTH_SHORT).show();
+        }
 
-                JsonResponseAddFeed resp = response.body();
-
-                Toast.makeText(ShareActivity.this, "Shared", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<JsonResponseAddFeed> call, Throwable t) {
-                Toast.makeText(ShareActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-
-        });
     }
 
     private void setLink() {
@@ -178,14 +199,12 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         login.setContentView(R.layout.link_dialog);
         btnLink = (Button) login.findViewById(R.id.btnLink);
         //Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
-
         txtLink = (EditText) login.findViewById(R.id.txtLink);
-
         // Attached listener for login GUI button
         btnLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str=txtLink.getText().toString();
+                link = txtLink.getText().toString();
                 /*Pattern regex = Pattern.compile("^[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|COM|ORG|NET|MIL|EDU)$");
                 Matcher matcher = regex.matcher(str);
                 if (matcher.matches()) {
@@ -199,12 +218,10 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 }*/
 
 
-
-
                 //Pattern regex = Pattern.compile("^[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|COM|ORG|NET|MIL|EDU)$");
                 //Matcher matcher = regex.matcher(str);
                 //if(matcher.matches()) {
-                isValidUrl(str);
+                isValidUrl(link);
 
                 //}
             }
@@ -213,14 +230,15 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         login.show();
         login.getWindow().setLayout(700, 350);
     }
+
     private void isValidUrl(String url) {
         Pattern p = Patterns.WEB_URL;
         Matcher m = p.matcher(url);
-        if(m.matches())
-        {tvlink.setText(url);
-            login.dismiss();}
-        else{
-            Toast.makeText(ShareActivity.this,"Please Enter Valid Url/dont leave blank",Toast.LENGTH_SHORT).show();
+        if (m.matches()) {
+            tvlink.setText(url);
+            login.dismiss();
+        } else {
+            Toast.makeText(ShareActivity.this, "Please Enter Valid Url/dont leave blank", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -306,8 +324,6 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 picturePath = c.getString(columnIndex);
                 c.close();
                 thumbnail = (BitmapFactory.decodeFile(picturePath));
-                // Log.w("path of image from gallery......******************.........", picturePath+"");
-
                 ivimage.setImageBitmap(thumbnail);
 
             }

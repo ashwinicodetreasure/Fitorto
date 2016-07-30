@@ -31,8 +31,9 @@ import retrofit2.Response;
  * Created by Ashwini on 5/26/2016.
  */
 public class CityActivity extends AppCompatActivity implements View.OnClickListener {
+
     private ListView clist;
-    List<City> citylist=new ArrayList<City>();
+    List<City> citylist = new ArrayList<City>();
     private PreferenceManager preferenceManager;
     CityAdapter adapt;
 
@@ -49,19 +50,19 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
         }
         preferenceManager = new PreferenceManager(CityActivity.this);
         String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
-        if (!TextUtils.isEmpty(city) ) {
+        if (!TextUtils.isEmpty(city)) {
             Intent intent = new Intent(CityActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
 
         clist = (ListView) findViewById(R.id.city_listview);
-        Call<JsonResponseUser> call = ApiClientMain.getApiClient().city("sunil@gmail.com","123456");
+        Call<JsonResponseUser> call = ApiClientMain.getApiClient().city();
         call.enqueue(new Callback<JsonResponseUser>() {
             @Override
             public void onResponse(Call<JsonResponseUser> call, Response<JsonResponseUser> response) {
                 if (response.isSuccessful()) {
-                    if(response.body().getCities().size()>0){
+                    if (response.body().getCities().size() > 0) {
                         citylist.addAll(response.body().getCities());   //Always addall for arraylist
                         if (citylist.size() > 0) {
                             adapt = new CityAdapter(CityActivity.this, R.layout.city_list_item, citylist);
@@ -80,10 +81,10 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                                     .edit()
                                     .putBoolean("isFirstRun", false)
                                     .apply();
+                            preferenceManager.putPreferenceValues(preferenceManager.ADDRESS, city.getCityName());
                             preferenceManager.putPreferenceValues(preferenceManager.PREF_City, city.getCityName());
                             String city1 = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
-                            Log.d("city",city1);
-
+                            //Log.d("city",city1);
                             Intent intent = new Intent(CityActivity.this, HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -99,7 +100,6 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-
 
 
     }

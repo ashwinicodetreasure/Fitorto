@@ -31,13 +31,13 @@ import android.widget.TextView;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.Membership_Slider_Adapter;
-import com.ct.fitorto.flowlayou.FlowLayout;
+import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Schedule;
 import com.ct.fitorto.model.Search;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.squareup.picasso.Picasso;
-import com.viewpagerindicator.CirclePageIndicator;
+import com.ct.fitorto.custom.CirclePageIndicator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,22 +50,18 @@ import java.util.TimerTask;
 
 
 public class MembershipActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+
     private ViewPager mPager;
     private int currentPage = 0;
     private int NUM_PAGES = 0;
-    //private  final Integer[] IMAGES = {R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.a};
-    // private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     private Search testing;
-    // private AmenitisAdapter adapt;
-    // private EquipmentAdapter adapt1;
-    //private ArrayList<Schedule> schedule=new ArrayList<>();
     private Schedule schedule;
     private TextView expand, member;
     private TextView tvLoc;
     private TextView tvTime;
     TextView zumba;
-
-
     private ExpandableRelativeLayout expand_panel, expand_pane2;
     private LinearLayout llEquipmentContainer;
     private LinearLayout llAmenitiContainer;
@@ -88,7 +84,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         pDialog.show();
         init();
         expandableWindow();
-        setTime();
+       // setTime();
         setPackage();
         setAmenities();
         setEquipment();

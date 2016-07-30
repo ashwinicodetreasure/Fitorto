@@ -3,6 +3,23 @@
     <string name="action_settings">Settings</string>
     <string name="follow_btn">+Follow</string>
     <string name="facebook_app_id">1608994799390664</string>
+    <string name="feed_empty_text">Start Following your friends and fitness centers to get daily feeds.</string>
 
-
+    <string name="discover_empty_text">No Data found</string>
+    <string name="search_hint">Search friends here.</string>
+    <string name="hint_prompt">Speak friend name.</string>
+    <string name="profile_empty_view">Login to view your profile.</string>
+    <string name="gym_empty_view">No Fitness centers found.</string>
+    <string name="my_feed_empty_text">No feed found. Use Pencil button to write some feed.</string>
+    <string name="empty_friend">Find your friends here.</string>
+    <string name="txt_fees">PRICE</string>
+    <string name="empty_text">No Data Found</string>
+    <string name="notification_empty_text">No notification found.</string>
+    <string name="notification_activity">Notification</string>
+    <string name="txt_intro_1">Connect with your Fitness centers.</string>
+    <string name="txt_intro_2">Track your Fitness with Fitorto.</string>
+    <string name="section_format">Page %1$d</string>
+    <string name="action_email_id">EMAIL ID</string>
+    <string name="action_password">PASSWORD</string>
+    <string name="action_txt_login">LOGIN</string>
 </resources>

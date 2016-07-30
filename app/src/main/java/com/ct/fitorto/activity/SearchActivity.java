@@ -28,6 +28,7 @@ import com.ct.fitorto.model.Search;
 import com.ct.fitorto.model.categoryName;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 
 import java.util.ArrayList;
 
@@ -54,23 +55,24 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private AutoCompleteTextView search;
     private Button clear;
     private PreferenceManager preferenceManager;
-
+    private TextView tvLocation;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Search");
             //getSupportActionBar().setHomeButtonEnabled(true);
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         search = (AutoCompleteTextView) findViewById(R.id.edtitem);//searchthrough edittext
         search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         clear = (Button) findViewById(R.id.btn_clear);
-
+        tvLocation = (TextView) toolbar.findViewById(R.id.tvLocation);
         //clear.setOnClickListener(this);
         clear.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -86,12 +88,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
         autosearch();
-        autoComplete();
+        // autoComplete();
         displayHistory();
         search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-                categoryName str = (categoryName)parent.getItemAtPosition(position);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                categoryName str = (categoryName) parent.getItemAtPosition(position);
                 autocompleteOnlcick(str.getCategoryName());
             }
         });
@@ -99,18 +101,33 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         /*searchbtn = (Button) findViewById(R.id.btnSearch);
         searchbtn.setOnClickListener(this);*/
         // slist = (ListView) findViewById(R.id.search_list);
+        preferenceManager = new PreferenceManager(SearchActivity.this);
+        String address = preferenceManager.getPreferenceValues(preferenceManager.ADDRESS);
 
+
+        if (!TextUtils.isEmpty(address)) {
+            tvLocation.setText(address);
+
+            tvLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(SearchActivity.this, ChangeLocationActivity.class);
+                    startActivityForResult(i, ApplicationData.ACTIVITY_RESULT_LOCATION);
+                }
+            });
+        }
 
     }
 
     private void autocompleteOnlcick(String str) {
 
-        preferenceManager = new PreferenceManager(SearchActivity.this);
-        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
 
+        String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+        String Area = preferenceManager.getPreferenceValues(preferenceManager.PREF_AREA);
         //  String str = search.getText().toString().trim();
         if (!TextUtils.isEmpty(str)) {
-            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1","kandivali", city, str);
+            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search(userId, Area, city, str);
             call.enqueue(new Callback<JsonResponseSearch>() {
                 @Override
                 public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
@@ -124,11 +141,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                             lp.clear();
 
                         }
-
-
                     }
-
-
                 }
 
                 @Override
@@ -141,7 +154,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
 
     }
-
 
 
     private void clearsearch() {
@@ -174,7 +186,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void autoComplete() {
+   /* private void autoComplete() {
         Call<JsonResponseKeywords> call = ApiClientMain.getApiClient().getResponseKeywordsCall();
         call.enqueue(new Callback<JsonResponseKeywords>() {
             @Override
@@ -184,17 +196,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     //if(response.body().getData().size()>0) {
                     autoComplete.addAll(response.body().getData());//Always addall for arraylist
                     if (autoComplete.size() > 0) {
-
                         AutoCompleteAdapter adapter = new AutoCompleteAdapter(SearchActivity.this, R.layout.autocomplete_item, R.id.autoitem, autoComplete);
                         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.edtitem);
                         autoCompleteTextView.setAdapter(adapter);
-
                     }
-
-
                 }
-
-
             }
 
             @Override
@@ -205,15 +211,17 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         });
 
-    }
+    }*/
 
     private void setDataResultActivity() {
         preferenceManager = new PreferenceManager(SearchActivity.this);
-        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
 
+        String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+        String Area = preferenceManager.getPreferenceValues(preferenceManager.PREF_AREA);
         String str = search.getText().toString().trim();
         if (!TextUtils.isEmpty(str)) {
-            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1", "kandivali", city, str);
+            Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search(userId, Area, city, str);
             call.enqueue(new Callback<JsonResponseSearch>() {
                 @Override
                 public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
@@ -227,11 +235,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                             lp.clear();
 
                         }
-
-
                     }
-
-
                 }
 
                 @Override
@@ -275,15 +279,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 // TODO Auto-generated method stub
                 Bundle passdata = new Bundle();
                 Cursor listCursor = (Cursor) arg0.getItemAtPosition(arg2);
-                // int nameId = listCursor.getInt(listCursor.getColumnIndex(helper_ob.FNAME));
                 String str = listCursor.getString(listCursor.getColumnIndex(helper_ob.FNAME));
                 //Toast.makeText(getApplicationContext(), str, 500).show();
                 preferenceManager = new PreferenceManager(SearchActivity.this);
+                String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
                 String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+                String Area = preferenceManager.getPreferenceValues(preferenceManager.PREF_AREA);
 
-                //  String str = search.getText().toString().trim();
                 if (!TextUtils.isEmpty(str)) {
-                    Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search("1", "kandivali", city, str);
+                    Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search(userId, Area, city, str);
                     call.enqueue(new Callback<JsonResponseSearch>() {
                         @Override
                         public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
@@ -297,11 +301,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                                     lp.clear();
 
                                 }
-
-
                             }
-
-
                         }
 
                         @Override
@@ -312,12 +312,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 } else {
                     Toast.makeText(SearchActivity.this, "Please Enter Text", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
-
-
     }
 
     public void deleteHistory() {
@@ -345,6 +341,16 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 // }
                 break;*/
 
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String address = preferenceManager.getPreferenceValues(preferenceManager.ADDRESS);
+        if (!TextUtils.isEmpty(address)) {
+            tvLocation.setText(address);
         }
     }
 }

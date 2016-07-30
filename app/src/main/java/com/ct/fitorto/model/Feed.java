@@ -41,6 +41,30 @@ public class Feed {
     @Expose
     private String isUser;
 
+    @SerializedName("feedIsLike")
+    @Expose
+    private String isLike;
+    @SerializedName("feedIsShare")
+    @Expose
+    private String isShare;
+
+
+    public String getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(String isLike) {
+        this.isLike = isLike;
+    }
+
+    public String getIsShare() {
+        return isShare;
+    }
+
+    public void setIsShare(String isShare) {
+        this.isShare = isShare;
+    }
+
     /**
      *
      * @return
