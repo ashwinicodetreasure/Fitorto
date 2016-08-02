@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.github.siyamed.shapeimageview.HexagonImageView
                 android:id="@+id/ivprofil"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
@@ -25,10 +25,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:rotation="90"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_profile"
-                card_view:civ_border_color="@color/colorAccent"
-                card_view:civ_border_width="2dp" />
+                card_view:siBorderColor="@color/colorAccent"
+                card_view:siBorderWidth="2dp"
+                card_view:siStrokeCap="round" />
 
 
             <com.ct.fitorto.custom.CustomTextViewBold
@@ -41,7 +43,7 @@
                 android:layout_toEndOf="@+id/ivprofil"
                 android:layout_toRightOf="@+id/ivprofil"
                 android:fontFamily="Roboto bold"
-                android:letterSpacing="0.1"
+                android:letterSpacing="0.05"
                 android:maxLines="2"
                 android:text="Text"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -56,16 +58,17 @@
                 android:layout_below="@+id/tv_title"
                 android:layout_marginLeft="@dimen/margin_small"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="@dimen/marging_mini"
+                android:layout_marginTop="3dp"
                 android:layout_toEndOf="@+id/ivprofil"
                 android:layout_toRightOf="@+id/ivprofil"
                 android:fontFamily="sans-serif"
-                android:letterSpacing="0.1"
+                android:letterSpacing="0.05"
                 android:text="1W ago"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/tertiary_text_light"
                 android:textSize="10sp" />
         </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -83,7 +86,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="Roboto regular"
-                android:letterSpacing="0.1"
+                android:letterSpacing="0.05"
                 android:lineSpacingExtra="2.5dp"
                 android:text="@string/feed_empty_text"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -100,7 +103,7 @@
                 <ImageView
                     android:id="@+id/ivdis"
                     android:layout_width="fill_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="250dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/a"
@@ -133,12 +136,10 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="fill_parent"
-                android:layout_height="3px"
+                android:layout_height="1px"
                 android:layout_below="@+id/tv_link"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#dbdbdb" />
+                android:background="@color/image_border" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -152,15 +153,26 @@
                     android:orientation="horizontal"
                     android:padding="5dp">
 
-                    <ImageButton
+                    <com.like.LikeButton
                         android:id="@+id/likebtn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/view"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/ic_dislike" />
+                        android:padding="3dp"
+                        card_view:anim_scale_factor="2.5"
+                        card_view:icon_size="20dp"
+                        card_view:icon_type="heart" />
+                    <!-- <ImageButton
+                         android:id="@+id/likebtn"
+                         android:layout_width="25dp"
+                         android:layout_height="25dp"
+                         android:layout_alignParentLeft="true"
+                         android:layout_alignParentStart="true"
+                         android:layout_below="@+id/view"
+                         android:layout_marginLeft="10dp"
+                         android:background="@drawable/ic_dislike" />-->
 
                     <TextSwitcher
                         android:id="@+id/tv_like"
@@ -168,7 +180,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:text="22 Likes"
+                        android:text="22"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.ct.fitorto.custom.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:text="Likes"
                         android:textSize="@dimen/text_size_small" />
                 </LinearLayout>
 

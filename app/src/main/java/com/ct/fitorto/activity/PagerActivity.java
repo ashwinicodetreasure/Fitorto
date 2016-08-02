@@ -1,9 +1,11 @@
 package com.ct.fitorto.activity;
 
 import android.animation.ArgbEvaluator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,11 +16,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
+
 import com.ct.fitorto.R;
+import com.ct.fitorto.custom.Typewriter;
+import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.Utils;
 
@@ -42,7 +49,7 @@ public class PagerActivity extends AppCompatActivity {
     ImageButton mNextBtn;
     Button mSkipBtn, mFinishBtn;
 
-    ImageView zero, one, two;
+    ImageView zero, one, two,three;
     ImageView[] indicators;
 
     int lastLeftValue = 0;
@@ -53,22 +60,31 @@ public class PagerActivity extends AppCompatActivity {
     static final String TAG = "PagerActivity";
 
     int page = 0;   //  to track page position
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().getDecorView().setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black_trans80));
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black_trans80));
+        }
+
+
 
         setContentView(R.layout.activity_pager);
+        preferenceManager = new PreferenceManager(PagerActivity.this);
+        boolean isFirstTime=preferenceManager.getPreferenceBoolValues(ApplicationData.PREF_USER_FIRST_TIME);
+        if(!isFirstTime){
+            Intent i = new Intent(PagerActivity.this, LoginActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
 
-
+        }
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -85,11 +101,11 @@ public class PagerActivity extends AppCompatActivity {
         zero = (ImageView) findViewById(R.id.intro_indicator_0);
         one = (ImageView) findViewById(R.id.intro_indicator_1);
         two = (ImageView) findViewById(R.id.intro_indicator_2);
-
+        three= (ImageView) findViewById(R.id.intro_indicator_3);
         mCoordinator = (CoordinatorLayout) findViewById(R.id.main_content);
 
 
-        indicators = new ImageView[]{zero, one, two};
+        indicators = new ImageView[]{zero, one, two,three};
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -101,8 +117,8 @@ public class PagerActivity extends AppCompatActivity {
         final int color1 = ContextCompat.getColor(this, R.color.cyan);
         final int color2 = ContextCompat.getColor(this, R.color.orange);
         final int color3 = ContextCompat.getColor(this, R.color.green);
-
-        final int[] colorList = new int[]{color1, color2, color3};
+        final int color4=ContextCompat.getColor(this,R.color.color7);
+        final int[] colorList = new int[]{color1, color2, color3,color4};
 
         final ArgbEvaluator evaluator = new ArgbEvaluator();
 
@@ -113,7 +129,7 @@ public class PagerActivity extends AppCompatActivity {
                 /*
                 color update
                  */
-                int colorUpdate = (Integer) evaluator.evaluate(positionOffset, colorList[position], colorList[position == 2 ? position : position + 1]);
+                int colorUpdate = (Integer) evaluator.evaluate(positionOffset, colorList[position], colorList[position == 3 ? position : position + 1]);
                 mViewPager.setBackgroundColor(colorUpdate);
 
             }
@@ -135,13 +151,12 @@ public class PagerActivity extends AppCompatActivity {
                     case 2:
                         mViewPager.setBackgroundColor(color3);
                         break;
+                    case 3:
+                        mViewPager.setBackgroundColor(color4);
+                        break;
                 }
-
-
-                mNextBtn.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
-                mFinishBtn.setVisibility(position == 2 ? View.VISIBLE : View.GONE);
-
-
+                mNextBtn.setVisibility(position == 3 ? View.GONE : View.VISIBLE);
+                mFinishBtn.setVisibility(position == 3 ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -161,18 +176,23 @@ public class PagerActivity extends AppCompatActivity {
         mSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                finish();
+                preferenceManager.putPreferenceBoolValues(ApplicationData.PREF_USER_FIRST_TIME, false);
+                Intent i = new Intent(PagerActivity.this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+               // overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
         mFinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                //  update 1st time pref
-                Utils.saveSharedSetting(PagerActivity.this, ApplicationData.PREF_USER_FIRST_TIME, "false");
-
+                preferenceManager.putPreferenceBoolValues(ApplicationData.PREF_USER_FIRST_TIME, false);
+                Intent i = new Intent(PagerActivity.this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //Utils.saveSharedSetting(PagerActivity.this, ApplicationData.PREF_USER_FIRST_TIME, "false");
             }
         });
 
@@ -187,8 +207,6 @@ public class PagerActivity extends AppCompatActivity {
     }
 
 
-
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -198,20 +216,30 @@ public class PagerActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
         ImageView img;
+        int[] bgs = new int[]{R.drawable.ic_gymnasium, R.drawable.graph, R.drawable.network,R.drawable.feed_vector_drwable};
+        String[] title = new String[]{"Connect with your fitness centers.", "Track your fitness", "Refer a friend and get points.","Read and share daily fitness related feeds."};
 
-        int[] bgs = new int[]{R.drawable.ic_gymnasium, R.drawable.graph, R.drawable.network};
-        String[] title=new String[]{"Connect with your Fitness Centers.","Track your Fitness","Refer a friend and get Points."};
-      //  String[] desc=new String[]{""}
+        //  String[] desc=new String[]{""}
         public PlaceholderFragment() {
         }
+
+        private Typewriter textView;
+        private Handler mHandler = new Handler();
+        private int delay = 80;
+
+        private ImageView img1;
+        private ImageView img2;
+        private ImageView img3;
+        private ImageView img4;
+        private RelativeLayout rlScreen1;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {
+
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -223,17 +251,86 @@ public class PagerActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pager, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-          //  textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            textView.setText(title[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
+            textView = (Typewriter) rootView.findViewById(R.id.section_label);
             img = (ImageView) rootView.findViewById(R.id.section_img);
             img.setBackgroundResource(bgs[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
+            textView.setCharacterDelay(delay);
 
-
+            img1= (ImageView) rootView.findViewById(R.id.img1);
+            img2= (ImageView) rootView.findViewById(R.id.img2);
+            img3= (ImageView) rootView.findViewById(R.id.img3);
+            img4= (ImageView) rootView.findViewById(R.id.img4);
+            rlScreen1= (RelativeLayout) rootView.findViewById(R.id.rlScreen1);
+          //  chart= (LineChartView) rootView.findViewById(R.id.chart);
+            int viewPagerItem = (getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+            if (viewPagerItem == 0) {
+                initTextData();
+                animateTranslateImages();
+            }
             return rootView;
         }
 
+        private void animateTranslateImages() {
+            rlScreen1.setVisibility(View.VISIBLE);
+            img.setVisibility(View.INVISIBLE);
+            Animation mAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.translate_top);
+            Animation mAnimation1 = AnimationUtils.loadAnimation(getActivity(), R.anim.translate_right);
+            Animation mAnimation2 = AnimationUtils.loadAnimation(getActivity(), R.anim.translate_left);
+            Animation mAnimation3 = AnimationUtils.loadAnimation(getActivity(), R.anim.translate_bottom);
+            img1.setVisibility(View.INVISIBLE);
+            img2.setVisibility(View.INVISIBLE);
+            img3.setVisibility(View.INVISIBLE);
+            img4.setVisibility(View.INVISIBLE);
+            img1.startAnimation(mAnimation);
+            img2.startAnimation(mAnimation1);
+            img3.startAnimation(mAnimation2);
+            img4.startAnimation(mAnimation3);
+            mAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    img1.setVisibility(View.VISIBLE);
+                    img2.setVisibility(View.VISIBLE);
+                    img3.setVisibility(View.VISIBLE);
+                    img4.setVisibility(View.VISIBLE);
 
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+            });
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+            if (isVisibleToUser) {
+                if (textView != null) {
+                    initTextData();
+                }
+            }
+        }
+
+        public void initTextData() {
+            final int index = (getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+            textView.animateText(title[index]);
+            int i = delay * (title[getArguments().getInt(ARG_SECTION_NUMBER) - 1]).length();
+            /*final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handler.removeMessages(0);
+                    mViewPager.setCurrentItem(index + 1, true);
+                    //  Toast.makeText(getActivity(), "Toast"+(getArguments().getInt(ARG_SECTION_NUMBER) - 1), Toast.LENGTH_SHORT).show();
+                }
+            }, i + 800);*/
+        }
     }
 
     /**
@@ -252,13 +349,12 @@ public class PagerActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
-
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -270,6 +366,8 @@ public class PagerActivity extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+                case 3:
+                    return "SECTION 4";
             }
             return null;
         }

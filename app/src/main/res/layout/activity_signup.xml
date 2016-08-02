@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/root_view"
+    android:background="@drawable/gradient_3"
+    android:fillViewport="true"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.ct.fitorto.custom.LogoTextView
+            android:id="@+id/tvLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:gravity="center_horizontal"
+            android:text="FiTORTO"
+            android:textColor="@android:color/white"
+            android:textSize="45dp"
+            android:textStyle="bold" />
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/tvSlogan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLogo"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center_horizontal"
+            android:text="Slow and steady is the key."
+            android:textColor="@android:color/white"
+            android:textSize="13dp" />
+
+        <LinearLayout
+            android:id="@+id/llLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSlogan"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgName"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#88000000"
+                    android:padding="@dimen/margin_small"
+                    android:src="@drawable/ic_user_white"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#55000000"
+                    android:hint="@string/action_user_name"
+                    android:inputType="textPersonName"
+                    android:padding="9.2dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgEmail"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#88000000"
+                    android:padding="@dimen/margin_small"
+                    android:src="@drawable/ic_email"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#55000000"
+                    android:hint="@string/action_email_id"
+                    android:inputType="textEmailAddress"
+                    android:padding="9.2dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgPassword"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#88000000"
+                    android:padding="@dimen/margin_small"
+                    android:src="@drawable/ic_key"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#55000000"
+                    android:hint="@string/action_password"
+                    android:inputType="textPassword"
+                    android:padding="9.2dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgConfirmPassword"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#88000000"
+                    android:padding="@dimen/margin_small"
+                    android:src="@drawable/ic_phone"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#55000000"
+                    android:hint="@string/action_action_phone"
+                    android:inputType="textPhonetic"
+                    android:padding="9.2dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/drawable_login"
+                android:text="@string/action_txt_signup"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_medium"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSocial"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_above="@+id/tvCreateAccount"
+            android:background="#33ffffff"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:weightSum="2">
+
+            <com.ct.fitorto.custom.CustomTextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginLeft="@dimen/margin_medium"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.1"
+                android:text="Login with"
+                android:textColor="@android:color/white"
+                android:textSize="17dp"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:id="@+id/fb_login"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="@dimen/margin_higher"
+                    android:layout_marginRight="@dimen/margin_medium"
+                    android:background="@drawable/ic_fb"
+                    android:padding="@dimen/margin_medium"
+                    android:scaleType="fitCenter" />
+
+                <ImageButton
+                    android:id="@+id/google_login"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="@dimen/margin_higher"
+                    android:layout_marginRight="@dimen/margin_medium"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ic_google_plus"
+                    android:scaleType="centerInside" />
+
+                <ImageButton
+                    android:id="@+id/ibEmailLogin"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:layout_marginRight="@dimen/margin_small"
+                    android:adjustViewBounds="true"
+                    android:background="@android:drawable/ic_dialog_email"
+                    android:scaleType="centerInside"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/tvBackLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.1"
+            android:padding="@dimen/margin_medium"
+            android:text="Back to login"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/rlProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleInverse"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:indeterminate="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

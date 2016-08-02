@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager fm;
     private FragmentTransaction ft;
     private Fragment fr = null;
+    private TextView tvTitle;
 
 
     @Override
@@ -56,7 +57,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-
+        tvTitle= (TextView) toolbar.findViewById(R.id.tvTitle);
+        tvTitle.setText("Discover");
         fr = new DiscoverFragment();
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -132,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.feed:
-
+                tvTitle.setText("Feeds");
                 feedimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
@@ -149,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.discover:
+                tvTitle.setText("Discover");
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
@@ -167,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.profile:
+                tvTitle.setText("Profile");
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 profileimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
@@ -182,6 +186,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.friends:
+                tvTitle.setText("Friends");
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);

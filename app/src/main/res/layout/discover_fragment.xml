@@ -21,6 +21,7 @@
             android:background="#f6f7f7"
             android:drawableLeft="@drawable/search"
             android:focusable="true"
+            android:letterSpacing="0.1"
             android:gravity="center_vertical"
             android:hint="Discover Fitness Centers."
             android:inputType="textNoSuggestions" />

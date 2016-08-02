@@ -16,13 +16,61 @@
             android:layout_height="192dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:alpha="0.30"
             android:background="@drawable/ic_flight_24dp"
             android:scaleType="fitCenter" />
 
-
     </FrameLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlScreen1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_yoga_start"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_gym_start"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/img3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_martial_art"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/img4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_dance_start"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,25 +80,25 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
-        <com.ct.fitorto.custom.CustomTextViewBold
+        <com.ct.fitorto.custom.Typewriter
             android:id="@+id/section_label"
             style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
             android:layout_gravity="center"
+            android:textColor="@android:color/white"
             tools:text="Page One" />
 
-        <com.ct.fitorto.custom.CustomTextView
+        <com.ct.fitorto.custom.Typewriter
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:alpha="0.7"
             android:gravity="center"
-            android:visibility="gone"
             android:text="Add a long description here about your app's important feature."
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
 
     </LinearLayout>

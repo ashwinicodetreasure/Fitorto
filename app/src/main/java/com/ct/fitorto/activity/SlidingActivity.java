@@ -407,7 +407,7 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.Login:
                 // Create Object of Dialog class
-                login = new Dialog(this);
+                /*login = new Dialog(this);
                 login.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 // Set GUI of login screen
                 login.setContentView(R.layout.login_dialog);
@@ -426,17 +426,18 @@ public class SlidingActivity extends AppCompatActivity implements View.OnClickLi
 
                     }
                 });
-            /*btnCancel.setOnClickListener(new OnClickListener() {
+            *//*btnCancel.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     login.dismiss();
                 }
-            });*/
+            });*//*
 
                 // Make dialog box visible.\
                 login.show();
-                login.getWindow().setLayout(700, 500);
-
+                login.getWindow().setLayout(700, 500);*/
+                Intent i1 = new Intent(SlidingActivity.this, LoginActivity.class);
+                startActivity(i1);
                 break;
 
             case R.id.skip_button:

@@ -207,6 +207,12 @@ public class ApiClientMain {
         @POST("getNotifications.php")
         Call<JsonResponseNotification> getNotification(@Field("userID") String userID);
 
+        @FormUrlEncoded
+        @POST("registerUser.php")
+        Call<JsonResponseUser> registerUser(@Field("userName") String name, @Field("emailID") String email,
+                                         @Field("password") String pass, @Field("phoneNo") String phone,
+                                            @Field("androidRegKey") String androidRegKey, @Field("iosRegKey") String iosRegKey);
+
 
     }
 

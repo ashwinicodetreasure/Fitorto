@@ -19,7 +19,16 @@
     <string name="txt_intro_1">Connect with your Fitness centers.</string>
     <string name="txt_intro_2">Track your Fitness with Fitorto.</string>
     <string name="section_format">Page %1$d</string>
-    <string name="action_email_id">EMAIL ID</string>
-    <string name="action_password">PASSWORD</string>
-    <string name="action_txt_login">LOGIN</string>
+    <string name="action_email_id">Email address</string>
+    <string name="action_password">Password</string>
+    <string name="action_txt_login">Login</string>
+    <string name="error_invalid_password">Invalide password</string>
+    <string name="error_field_required">This Field Required.</string>
+    <string name="error_invalid_email">Invalide Email Id</string>
+    <string name="action_confirm_password">Confirm Password</string>
+    <string name="action_txt_signup">Sign Up</string>
+    <string name="action_user_name">Name</string>
+    <string name="error_pass_does_not_matched">Password does not matched.</string>
+    <string name="action_action_phone">Mobile Number</string>
+    <string name="error_invalid_phone">Invalide Mobile Number</string>
 </resources>
