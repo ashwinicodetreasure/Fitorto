@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="5dp"
+        android:visibility="invisible"
+        app:theme="@style/AppTheme.AppBarOverlay">
+
+        <ImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="3dp"
+            android:src="@drawable/ic_cancel" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_contact_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:transitionName="transition_reveal_contact"
+        app:backgroundTint="@color/button_pressed"
+        app:elevation="0dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="8dp" />
+
+    <LinearLayout
+        android:id="@+id/llShareContent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/container"
+        android:layout_marginTop="55dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivprofil"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile" />
+
+        <EditText
+            android:id="@+id/edFeed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ivprofil"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/ivprofil"
+            android:layout_toRightOf="@+id/ivprofil"
+            android:background="#FFFFFF"
+            android:gravity="top"
+            android:hint="Write something "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tvlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edFeed"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:linksClickable="true"
+            android:text=" "
+            android:textColor="#6367f4"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#FFFFFF"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/ivLink"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_link" />
+
+            <ImageView
+                android:id="@+id/ivcamera"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_camera" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/sharebtn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/checkinbtn"
+            android:gravity="center"
+            android:text="SHARE"
+            android:textColor="@color/colorText"
+            android:textSize="15sp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/container"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/ivimage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/ivRemove"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:padding="1dp"
+            android:src="@drawable/ic_cancel"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

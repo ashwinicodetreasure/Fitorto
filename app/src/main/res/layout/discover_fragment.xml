@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:background="#f6f7f7"
+            android:drawableLeft="@drawable/search"
+            android:focusable="true"
+            android:letterSpacing="0.1"
+            android:gravity="center_vertical"
+            android:hint="Discover Fitness Centers."
+            android:inputType="textNoSuggestions" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/discover_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/linearLayout"
+        android:background="#f6f7f7"
+        android:clipToPadding="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:scrollbars="vertical" />
+
+    <com.ct.fitorto.custom.CustomTextViewBold
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/margin_small"
+        android:gravity="center"
+        android:text="@string/feed_empty_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/ivNoInterNet"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/ic_signal_wifi_off_black_48dp"
+            android:tint="@color/colorPrimary" />
+
+        <com.ct.fitorto.custom.CustomTextViewBold
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:gravity="center"
+            android:text="@string/feed_empty_text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/ivRetry"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/ic_retry"
+            android:tint="#565656" />
+
+
+    </LinearLayout>
+</RelativeLayout>
+

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/button_default"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="5dp"
+        app:theme="@style/AppTheme.AppBarOverlay" />
+
+
+    <ImageView
+        android:id="@+id/ivname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/ic_user" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/v2"
+        android:layout_below="@+id/v1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@+id/ivname"
+        android:background="@color/button_default"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v2"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/ivname"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
+
+
+    <ImageView
+        android:id="@+id/ivstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivname"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_user" />
+
+    <EditText
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/v4"
+        android:layout_below="@+id/v2"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@+id/ivstatus"
+        android:background="@color/button_default"
+        android:maxLines="4"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v4"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/ivstatus"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v4"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="Roboto Regular"
+        android:text="PRIVATE INFORMATION"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/v5"
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:layout_below="@+id/info"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
+    <!--private information-->
+    <ImageView
+        android:id="@+id/ivmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v5"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/ic_user" />
+
+    <TextView
+        android:id="@+id/mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/v6"
+        android:layout_below="@+id/v5"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/ivmail"
+        android:background="@color/button_default"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v6"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/ivmail"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
+
+    <ImageView
+        android:id="@+id/ivphone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivmail"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_user" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/v7"
+        android:layout_below="@+id/v6"
+        android:layout_marginLeft="5dp"
+
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@+id/ivphone"
+        android:background="@color/button_default"
+        android:inputType="number"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v7"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/ivphone"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
+
+    <ImageView
+        android:id="@+id/ivgender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivphone"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_user" />
+
+    <EditText
+        android:id="@+id/gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/v8"
+        android:layout_below="@+id/v7"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="14dp"
+
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@+id/ivgender"
+        android:background="@color/button_default"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v8"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/ivgender"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
+
+
+</RelativeLayout>

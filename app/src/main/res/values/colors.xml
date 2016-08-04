@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#388E3C</color>
+    <color name="colorPrimaryDark">#247b28</color>-->
+    <color name="colorPrimary">#fafafa</color>
+    <color name="colorPrimaryDark">#b2b2b2</color>
+    <color name="link">#0000FF</color>
+    <color name="colorAccent">#c7c7c7</color>
+    <color name="text">#000000</color>
+    <color name="button_pressed">#388E3C</color>
+    <color name="button_focused">#388E3C</color>
+    <color name="button_default">#FFFFFF</color>
+    <color name="tint">#6c6c6d</color>
+    <color name="secondery_text">#909090</color>
+    <color name="search_layover_bg">#80000000</color>
+    <color name="separator_line">#ECECEC</color>
+    <color name="title">#222222</color>
+    <color name="subtitle">#999999</color>
+
+    <color name="post_color">#aaacaf</color>
+    <color name="title_color">#262626</color>
+    <color name="demo">#afb1b4</color>
+    <color name="card_border_color">#d1d3d4</color>
+    <color name="card_background_color">#f6f7f7</color>
+    <color name="image_border">#bbbbc4</color>
+
+
+    <color name="colorText">#262626</color>
+    <color name="colorBackGround">#f6f7f7</color>
+    <color name="unSelectedTab">#c7c7c7</color>
+    <color name="selectedTab">#262626</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="indicator_unselected">#4D000000</color>
+    <color name="black_trans80">#14000000</color>
+    <color name="orange">#FF9800</color>
+    <color name="green">#4CAF50</color>
+
+    <color name="color1">#9C27B0</color>
+    <color name="color2">#FF4081</color>
+    <color name="color3">#7B1FA2</color>
+    <color name="color4">#F8BBD0</color>
+    <color name="color5">#FF5252</color>
+    <color name="color6">#607D8B</color>
+    <color name="color7">#FF5722</color>
+    <color name="color8">#FFA000</color>
+</resources>

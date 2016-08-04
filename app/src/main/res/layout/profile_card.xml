@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/card_background_color"
+    android:padding="2dp">
+
+    <RelativeLayout
+        android:id="@+id/upar"
+        android:layout_width="280dp"
+        android:layout_height="170dp"
+        android:background="#3BCEBF">
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/tv_wh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="Roboto Regular"
+            android:text="Weight"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:textColor="@color/button_default"
+            android:textSize="@dimen/text_size_medium" />
+
+        <com.ct.fitorto.custom.CustomTextViewBold
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="Roboto Regular"
+            android:text="ADD"
+            android:letterSpacing="0.1"
+            android:textColor="@color/button_default"
+            android:textSize="@dimen/text_size_medium" />
+
+        <View
+            android:id="@+id/v"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/add"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:background="#fafafa" />
+
+        <!-- <TextView
+             android:id="@+id/current_w"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignTop="@+id/kg"
+             android:layout_toLeftOf="@+id/kg"
+             android:layout_toStartOf="@+id/kg"
+             android:fontFamily="Roboto Regular"
+             android:text="80"
+             android:textColor="@color/button_default"
+             android:textSize="30sp" />-->
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/current_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="Roboto Regular"
+            android:textColor="@color/button_default"
+            android:text="5ft"
+            android:letterSpacing="0.1"
+            android:textSize="30sp" />
+
+        <com.ct.fitorto.custom.CustomTextView
+            android:id="@+id/card_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="Roboto Regular"
+            android:text="Date 24.06.2016"
+            android:textColor="@color/button_default"
+            android:textSize="@dimen/text_size_small"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/current_w"
+            android:letterSpacing="0.1"
+            android:layout_centerHorizontal="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/card_date"
+            android:background="#FFFFFF">
+
+            <com.ct.fitorto.custom.CustomTextView
+                android:id="@+id/pre_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="Roboto Regular"
+                android:textColor="@color/colorText"
+                android:letterSpacing="0.1"
+                android:textSize="@dimen/text_size_small" />
+
+            <com.ct.fitorto.custom.CustomTextView
+                android:id="@+id/old_w"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:fontFamily="Roboto Regular"
+                android:textColor="@color/colorText"
+                android:letterSpacing="0.1"
+                android:textSize="@dimen/text_size_medium" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout><!--
+</RelativeLayout>-->
