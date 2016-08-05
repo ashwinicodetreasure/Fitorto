@@ -23,6 +23,7 @@ import java.util.ArrayList;
  * Created by Ashwini on 6/23/2016.
  */
 public class AboutFragment extends BaseFragment {
+
     private LinearLayoutManager llayout, llayout1;
     private ArrayList<Gym> data;
     private ArrayList<ProgressDetail> carddata = new ArrayList<>();

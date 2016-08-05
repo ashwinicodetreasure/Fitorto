@@ -161,7 +161,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 imgContainer.setVisibility(View.VISIBLE);
                 setGymImageList(gi);
             } else {
-                imgContainer.setVisibility(View.GONE);
+                imgContainer.setVisibility(View.INVISIBLE);
             }
 
 

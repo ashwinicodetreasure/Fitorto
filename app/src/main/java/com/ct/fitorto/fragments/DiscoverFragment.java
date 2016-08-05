@@ -1,6 +1,8 @@
 package com.ct.fitorto.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.activity.SearchActivity;
+import com.ct.fitorto.activity.SearchFriendActivity;
 import com.ct.fitorto.activity.SearchResultActivity;
 import com.ct.fitorto.adapter.DiscoverAdapter;
 import com.ct.fitorto.baseclass.BaseFragment;
@@ -53,7 +56,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.On
                              Bundle savedInstanceState) {
 
         preferenceManager = new PreferenceManager(getActivity());
-        View view = inflater.inflate(R.layout.discover_fragment, null);
+        final View view = inflater.inflate(R.layout.discover_fragment, null);
         getActivity().setTitle("");
         lLayout = new GridLayoutManager(getActivity(), 2);
         rView = (RecyclerView) view.findViewById(R.id.discover_recycler);
@@ -67,8 +70,16 @@ public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.On
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options =
+                            ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.linearLayout), view.findViewById(R.id.linearLayout).getTransitionName());
+                    startActivity(new Intent(getActivity(), SearchActivity.class),/* ApplicationData.FEED_REQUEST_CODE,*/ options.toBundle());
+                }else {
+                    Intent i = new Intent(getActivity(), SearchActivity.class);
+                    startActivity(i);
+                }
 
             }
         });

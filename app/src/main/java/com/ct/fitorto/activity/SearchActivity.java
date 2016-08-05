@@ -14,6 +14,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.ct.fitorto.HistoryOpenHelper;
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.AutoCompleteAdapter;
 import com.ct.fitorto.adapter.HistoryAdapter;
+import com.ct.fitorto.custom.CustomTextView;
 import com.ct.fitorto.model.JsonResponseKeywords;
 import com.ct.fitorto.model.JsonResponseSearch;
 import com.ct.fitorto.model.Search;
@@ -56,24 +59,20 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Button clear;
     private PreferenceManager preferenceManager;
     private TextView tvLocation;
-    private Toolbar toolbar;
+    private ImageButton ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Search");
-            //getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
         search = (AutoCompleteTextView) findViewById(R.id.edtitem);//searchthrough edittext
         search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        CustomTextView.applyFont(this, search, "Roboto-Regular.ttf");
         clear = (Button) findViewById(R.id.btn_clear);
-        tvLocation = (TextView) toolbar.findViewById(R.id.tvLocation);
-        //clear.setOnClickListener(this);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        ivBack = (ImageButton) findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(this);
         clear.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId,
@@ -98,12 +97,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        /*searchbtn = (Button) findViewById(R.id.btnSearch);
-        searchbtn.setOnClickListener(this);*/
-        // slist = (ListView) findViewById(R.id.search_list);
         preferenceManager = new PreferenceManager(SearchActivity.this);
         String address = preferenceManager.getPreferenceValues(preferenceManager.ADDRESS);
-
 
         if (!TextUtils.isEmpty(address)) {
             tvLocation.setText(address);
@@ -329,6 +324,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.btn_clear:
                 clearsearch();
+                break;
+            case R.id.ivBack:
+                onBackPressed();
                 break;
 
            /*case R.id.btnSearch:
