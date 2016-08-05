@@ -32,4 +32,6 @@
     <string name="action_action_phone">Mobile Number</string>
     <string name="error_invalid_phone">Invalide Mobile Number</string>
     <string name="activity_image_trans">feed_transition</string>
+    <string name="search_transition">Follower_transition</string>
+    <string name="profile_transition">profile_transiton</string>
 </resources>

@@ -76,7 +76,7 @@ public class FeedFragment extends BaseFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions options =
                             ActivityOptions.makeSceneTransitionAnimation(getActivity(), fab, fab.getTransitionName());
-                    startActivity(new Intent(getActivity(), ShareActivity.class),/* ApplicationData.FEED_REQUEST_CODE,*/ options.toBundle());
+                    getActivity().startActivityForResult(new Intent(getActivity(), ShareActivity.class), ApplicationData.FEED_REQUEST_CODE ,options.toBundle());
                 } else {
                     Intent intent = new Intent(getActivity(), ShareActivity.class);
                     startActivityForResult(intent, ApplicationData.FEED_REQUEST_CODE);

@@ -1,6 +1,8 @@
 package com.ct.fitorto.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,11 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.activity.FriendsProfileActivity;
 import com.ct.fitorto.activity.SearchFriendActivity;
+import com.ct.fitorto.activity.ShareActivity;
 import com.ct.fitorto.adapter.FollowingAdapter;
 import com.ct.fitorto.custom.MaterialSearchView;
 import com.ct.fitorto.model.Following;
@@ -33,8 +38,9 @@ public class FollowingFragment extends Fragment implements FollowingAdapter.OnIt
 
     private RecyclerView recycler_view;
     private ArrayList<Following> followings = new ArrayList<>();
-    private TextView searchViewLayout;
+    private EditText searchViewLayout;
     private TextView tvEmpty;
+    private LinearLayout linearLayout;
 
     public static FollowingFragment getInstance(ArrayList<Following> followers) {
         FollowingFragment fragment = new FollowingFragment();
@@ -65,11 +71,12 @@ public class FollowingFragment extends Fragment implements FollowingAdapter.OnIt
 
     private void initLayout(View view) {
         recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
-        searchViewLayout = (TextView) view.findViewById(R.id.search);
+        searchViewLayout = (EditText) view.findViewById(R.id.search);
         tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recycler_view.setLayoutManager(manager);
         followings = getArguments().getParcelableArrayList(ApplicationData.FOLLOWING_LIST);
+        linearLayout= (LinearLayout) view.findViewById(R.id.linearLayout);
         if (followings != null) {
             if (followings.size() > 0) {
                 tvEmpty.setVisibility(View.GONE);
@@ -84,8 +91,16 @@ public class FollowingFragment extends Fragment implements FollowingAdapter.OnIt
         searchViewLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), SearchFriendActivity.class);
-                startActivity(i);
+              /*  Intent i = new Intent(getActivity(), SearchFriendActivity.class);
+                startActivity(i);*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options =
+                            ActivityOptions.makeSceneTransitionAnimation(getActivity(), linearLayout, linearLayout.getTransitionName());
+                    startActivity(new Intent(getActivity(), SearchFriendActivity.class),/* ApplicationData.FEED_REQUEST_CODE,*/ options.toBundle());
+                }else {
+                    Intent i = new Intent(getActivity(), SearchFriendActivity.class);
+                    startActivity(i);
+                }
                 // startActivityForResult(i,ApplicationData.SEARCH_FRIEND_CODE);
             }
         });

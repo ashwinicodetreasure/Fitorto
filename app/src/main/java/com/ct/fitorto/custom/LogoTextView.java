@@ -28,7 +28,7 @@ public class LogoTextView extends TextView {
 
     private void style(Context context) {
         Typeface tf = Typeface.createFromAsset(context.getAssets(),
-                "Helvetica-Condensed.otf");
+                "Newgtbxc.ttf");
         setTypeface(tf);
 
     }

@@ -9,22 +9,27 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:transitionName="@string/search_transition"
+        android:background="@drawable/drawable_search"
         android:orientation="horizontal">
 
-        <com.ct.fitorto.custom.CustomTextView
-            android:id="@+id/search"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="0.5"
-            android:background="#FFFFFF"
-            android:drawableLeft="@drawable/search"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:hint="Search.."
-            android:textAllCaps="true"
-            android:inputType="textNoSuggestions" />
 
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_toLeftOf="@+id/btn_clear"
+            android:layout_toStartOf="@+id/btn_clear"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_action_action_search"
+            android:drawableTint="@color/tint"
+            android:hint="Search"
+            android:focusableInTouchMode="false"
+            android:editable="false"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textSize="18dp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

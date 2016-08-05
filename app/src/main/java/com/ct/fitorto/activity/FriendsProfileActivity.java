@@ -3,7 +3,10 @@ package com.ct.fitorto.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -212,6 +215,29 @@ public class FriendsProfileActivity extends BaseActivity {
 
             }
         });
+
+        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+            AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                boolean isShow = false;
+                int scrollRange = -1;
+
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout.getTotalScrollRange();
+                    }
+                    if (scrollRange + verticalOffset == 0) {
+                        collapsingToolbarLayout.setTitle("Fitorto");
+                        isShow = true;
+                    } else if(isShow) {
+                        collapsingToolbarLayout.setTitle("");
+                        isShow = false;
+                    }
+                }
+            });
+        }*/
     }
 
 
