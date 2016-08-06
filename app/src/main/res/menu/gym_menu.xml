@@ -2,15 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/like"
-        android:title="Like"
+    <item
+        android:id="@+id/like"
         android:icon="@drawable/hearts"
         android:orderInCategory="3"
+        android:title="Like"
 
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/share"
-        android:title="Share"
-        android:icon="@drawable/shares"
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share_black"
         android:orderInCategory="3"
+        android:title="Share"
         app:showAsAction="ifRoom" />
 </menu>

@@ -87,7 +87,7 @@ public class Gym implements Parcelable {
     private List<Package> packages = new ArrayList<Package>();
     @SerializedName("images")
     @Expose
-    private List<GynImages> images = new ArrayList<GynImages>();
+    private List<GymImages> images = new ArrayList<GymImages>();
 
     /**
      *
@@ -526,7 +526,7 @@ public class Gym implements Parcelable {
      * @return
      * The images
      */
-    public List<GynImages> getImages() {
+    public List<GymImages> getImages() {
         return images;
     }
 
@@ -535,7 +535,7 @@ public class Gym implements Parcelable {
      * @param images
      * The images
      */
-    public void setImages(List<GynImages> images) {
+    public void setImages(List<GymImages> images) {
         this.images = images;
     }
 
@@ -585,8 +585,8 @@ public class Gym implements Parcelable {
             packages = null;
         }
         if (in.readByte() == 0x01) {
-            images = new ArrayList<GynImages>();
-            in.readList(images, GynImages.class.getClassLoader());
+            images = new ArrayList<GymImages>();
+            in.readList(images, GymImages.class.getClassLoader());
         } else {
             images = null;
         }

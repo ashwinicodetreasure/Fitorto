@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ct.fitorto.R;
-import com.ct.fitorto.model.GynImages;
+import com.ct.fitorto.model.GymImages;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,12 +22,12 @@ import java.util.List;
 public class Membership_Slider_Adapter extends PagerAdapter {
 
 
-    private List<GynImages> IMAGES;
+    private List<GymImages> IMAGES;
     private LayoutInflater inflater;
     private Context context;
 
 
-    public Membership_Slider_Adapter(Context context, List<GynImages> IMAGES) {
+    public Membership_Slider_Adapter(Context context, List<GymImages> IMAGES) {
         this.context = context;
         this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
@@ -48,7 +48,7 @@ public class Membership_Slider_Adapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         View imageLayout = inflater.inflate(R.layout.membership_slider, view, false);
-        GynImages image = IMAGES.get(position);
+        GymImages image = IMAGES.get(position);
         assert imageLayout != null;
         final ImageView imageView = (ImageView) imageLayout
                 .findViewById(R.id.mem_image);

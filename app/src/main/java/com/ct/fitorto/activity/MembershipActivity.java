@@ -32,9 +32,19 @@ import android.widget.TextView;
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.Membership_Slider_Adapter;
 import com.ct.fitorto.flowlayout.FlowLayout;
+import com.ct.fitorto.model.Friday;
+import com.ct.fitorto.model.Monday;
 import com.ct.fitorto.model.Package;
+import com.ct.fitorto.model.Saturday;
 import com.ct.fitorto.model.Schedule;
 import com.ct.fitorto.model.Search;
+import com.ct.fitorto.model.Sunday;
+import com.ct.fitorto.model.Thursday;
+import com.ct.fitorto.model.Tuesday;
+import com.ct.fitorto.model.Wednesday;
+import com.ct.fitorto.utils.ApplicationData;
+import com.ct.fitorto.utils.DateTimeUtils;
+import com.github.aakira.expandablelayout.ExpandableLayoutListener;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.squareup.picasso.Picasso;
 import com.ct.fitorto.custom.CirclePageIndicator;
@@ -43,8 +53,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,11 +64,10 @@ import java.util.TimerTask;
 public class MembershipActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-
     private ViewPager mPager;
     private int currentPage = 0;
     private int NUM_PAGES = 0;
-    private Search testing;
+    private Search search;
     private Schedule schedule;
     private TextView expand, member;
     private TextView tvLoc;
@@ -66,57 +77,43 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout llEquipmentContainer;
     private LinearLayout llAmenitiContainer;
     private FlowLayout mFlowLayout;
-    private ProgressDialog pDialog;
 
     // private static final int MY_BUTTON = 9000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.membership_main_layout);
-
-
-        testing = (Search) getIntent().getParcelableExtra("memberItem");
-        setToolbar();
-        pDialog = new ProgressDialog(MembershipActivity.this);
-        pDialog.setMessage("loading ...");
-        pDialog.show();
-        init();
-        expandableWindow();
-       // setTime();
-        setPackage();
-        setAmenities();
-        setEquipment();
-        locationMap();
-        setflow();
-
-
-        if (testing != null) {
+        search = getIntent().getParcelableExtra(ApplicationData.FITNESS_CENTER_DETAILS);
+        if (search != null) {
+            initImageSlider();
+            setToolbar();
+            expandableWindow();
+            setScheduleLayout();
+            setPackageLayout();
+            setAmenities();
+            setEquipment();
+            locationMapLayout();
+            setInfoLayout();
             tvLoc = (TextView) findViewById(R.id.location);
-            tvLoc.setText(testing.getAddress());
+            tvLoc.setText(search.getAddress());
             TextView gender = (TextView) findViewById(R.id.tvgender);
-            gender.setText(testing.getGender());
+            gender.setText(search.getGender());
         }
-        pDialog.dismiss();
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void setflow() {
 
-        ArrayList aList = new ArrayList(Arrays.asList(testing.getCategory().split(",")));
-
-        if (aList.size() > 0) {
-            Log.d("Logs", "Schedule:" + aList);
-            setcategory(aList);
+    private void setInfoLayout() {
+        if (!TextUtils.isEmpty(search.getCategory())) {
+            ArrayList aList = new ArrayList(Arrays.asList(search.getCategory().split(",")));
+            if (aList.size() > 0) {
+                setCategory(aList);
+            }
         }
-
     }
 
-    private void setcategory(List<String> sizeArrayList) {
+    private void setCategory(List<String> sizeArrayList) {
         mFlowLayout = (FlowLayout) findViewById(R.id.flow);
         if (sizeArrayList != null && sizeArrayList.size() > 0) {
-
             for (String size : sizeArrayList) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final TextView equipment1 = (TextView) inflater.inflate(R.layout.category_list_item, mFlowLayout, false);
@@ -127,13 +124,13 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    private void locationMap() {
-        final String lat = testing.getLatitude().toString();
-        final String lag = testing.getLongitude().toString();
+    private void locationMapLayout() {
+        final String lat = search.getLatitude().toString();
+        final String lag = search.getLongitude().toString();
         String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lag + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lag + "&zoom=15&size=500x500&sensor=true";
-        ImageView loction = (ImageView) findViewById(R.id.location_image);
-        Picasso.with(MembershipActivity.this).load(url).into(loction);
-        loction.setScaleType(ImageView.ScaleType.FIT_XY);
+        ImageView location = (ImageView) findViewById(R.id.location_image);
+        Picasso.with(MembershipActivity.this).load(url).into(location);
+        location.setScaleType(ImageView.ScaleType.FIT_XY);
         ImageButton locbtn = (ImageButton) findViewById(R.id.locbtn);
         locbtn.setOnClickListener(new View.OnClickListener() {
 
@@ -151,7 +148,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         });
 
 
-        loction.setOnClickListener(new View.OnClickListener() {
+        location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -167,16 +164,16 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setEquipment() {
-        if (testing.getEquipments().size() > 0) {
-            setSizeOptionLayout(testing.getEquipments());
-
+        if (search.getEquipments() != null) {
+            if (search.getEquipments().size() > 0) {
+                setEquipmentLayout(search.getEquipments());
+            }
         }
     }
 
-    public void setAmenit(List<String> sizeArrayList) {
+    public void setAmentiesLayout(List<String> sizeArrayList) {
         llAmenitiContainer = (LinearLayout) findViewById(R.id.llAmenitiContainer);
         if (sizeArrayList != null && sizeArrayList.size() > 0) {
-
             for (String size : sizeArrayList) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout equipment = (LinearLayout) inflater.inflate(R.layout.amenites_list_item, llAmenitiContainer, false);
@@ -187,10 +184,9 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    public void setSizeOptionLayout(List<String> sizeArrayList) {
+    public void setEquipmentLayout(List<String> sizeArrayList) {
         llEquipmentContainer = (LinearLayout) findViewById(R.id.llEquipmentContainer);
         if (sizeArrayList != null && sizeArrayList.size() > 0) {
-
             for (String size : sizeArrayList) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout equipment = (LinearLayout) inflater.inflate(R.layout.equipment_list_item, llEquipmentContainer, false);
@@ -202,59 +198,251 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setAmenities() {
-
-        List<String> AmentiesList = testing.getAmenties();
-        if (AmentiesList.size() > 0) {
-            setAmenit(testing.getAmenties());
+        if (search.getAmenties() != null) {
+            if (search.getAmenties().size() > 0) {
+                setAmentiesLayout(search.getAmenties());
+            }
         }
-
-
     }
 
-    private void setPackage() {
+    private void setPackageLayout() {
         TextView monthly;
-        TextView tmonthly;
-        TextView smonthly;
-        TextView yyeraly = null;
-        List<Package> PackageList = testing.getPackages();
-        for (Package plist : PackageList) {
+        TextView threeMonth;
+        TextView sixMonth;
+        TextView yearly;
+        if (search.getPackages() != null) {
+            if (search.getPackages().size() > 0) {
+                List<Package> PackageList = search.getPackages();
+                for (Package plist : PackageList) {
 
-            if (!TextUtils.isEmpty(plist.getOneMonth())) {
-                monthly = (TextView) findViewById(R.id.oneMonth);
-                monthly.setText(plist.getOneMonth() + "/-");
-            } else {
-                TableRow year = (TableRow) findViewById(R.id.month);
-                year.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(plist.getOneMonth())) {
+                        monthly = (TextView) findViewById(R.id.oneMonth);
+                        monthly.setText(plist.getOneMonth() + "/-");
+                    } else {
+                        TableRow year = (TableRow) findViewById(R.id.month);
+                        year.setVisibility(View.GONE);
+                    }
+
+                    if (!TextUtils.isEmpty(plist.getThreeMonth())) {
+                        threeMonth = (TextView) findViewById(R.id.threMonths);
+                        threeMonth.setText(plist.getThreeMonth() + "/-");
+                    } else {
+                        TableRow year = (TableRow) findViewById(R.id.tmonth);
+                        year.setVisibility(View.GONE);
+                    }
+
+                    if (!TextUtils.isEmpty(plist.getSixMonth())) {
+                        sixMonth = (TextView) findViewById(R.id.sixMonth);
+                        sixMonth.setText(plist.getSixMonth() + "/-");
+                    } else {
+                        TableRow year = (TableRow) findViewById(R.id.smonth);
+                        year.setVisibility(View.GONE);
+                    }
+
+                    if (!TextUtils.isEmpty(plist.getOneYear())) {
+                        yearly = (TextView) findViewById(R.id.yeraly);
+                        yearly.setText(plist.getOneYear() + "/-");
+                    } else {
+                        TableRow year = (TableRow) findViewById(R.id.yearly);
+                        year.setVisibility(View.GONE);
+                    }
+                }
             }
-
-            if (!TextUtils.isEmpty(plist.getThreeMonth())) {
-                tmonthly = (TextView) findViewById(R.id.threMonths);
-                tmonthly.setText(plist.getThreeMonth() + "/-");
-            } else {
-                TableRow year = (TableRow) findViewById(R.id.tmonth);
-                year.setVisibility(View.GONE);
-            }
-
-            if (!TextUtils.isEmpty(plist.getSixMonth())) {
-                smonthly = (TextView) findViewById(R.id.sixMonth);
-                smonthly.setText(plist.getSixMonth() + "/-");
-            } else {
-                TableRow year = (TableRow) findViewById(R.id.smonth);
-                year.setVisibility(View.GONE);
-            }
-
-            if (!TextUtils.isEmpty(plist.getOneYear())) {
-                yyeraly = (TextView) findViewById(R.id.yeraly);
-                yyeraly.setText(plist.getOneYear() + "/-");
-            } else {
-                TableRow year = (TableRow) findViewById(R.id.yearly);
-                year.setVisibility(View.GONE);
-            }
-
         }
     }
 
-    private void setTime() {
+    private void setScheduleLayout() {
+        TextView todayDay = (TextView) findViewById(R.id.content);
+        TextView mon = (TextView) findViewById(R.id.tvMon);
+        TextView tue = (TextView) findViewById(R.id.tvTue);
+        TextView wed = (TextView) findViewById(R.id.tvWed);
+        TextView thu = (TextView) findViewById(R.id.tvThu);
+        TextView fri = (TextView) findViewById(R.id.tvFri);
+        TextView sat = (TextView) findViewById(R.id.tvSat);
+        TextView sun = (TextView) findViewById(R.id.tvSun);
+
+        LinearLayout llTodayContainer = (LinearLayout) findViewById(R.id.llTodayContainer);
+        LinearLayout llMonContainer = (LinearLayout) findViewById(R.id.llMonContainer);
+        LinearLayout llTueContainer = (LinearLayout) findViewById(R.id.llTueContainer);
+        LinearLayout llWedContainer = (LinearLayout) findViewById(R.id.llWedContainer);
+        LinearLayout llThuContainer = (LinearLayout) findViewById(R.id.llThuContainer);
+        LinearLayout llFriContainer = (LinearLayout) findViewById(R.id.llFriContainer);
+        LinearLayout llSatContainer = (LinearLayout) findViewById(R.id.llSatContainer);
+        LinearLayout llSunContainer = (LinearLayout) findViewById(R.id.llSunContainer);
+
+        if (search.getSchedule() != null) {
+            if (search.getSchedule().size() > 0) {
+                setMonLayout(todayDay, llTodayContainer, search.getSchedule().get(0));
+                setMonLayout(mon, llMonContainer, search.getSchedule().get(0));
+                setTueLayout(tue, llTueContainer, search.getSchedule().get(1));
+                setWedLayout(wed, llWedContainer, search.getSchedule().get(2));
+                setThuLayout(thu, llThuContainer, search.getSchedule().get(3));
+                setFriLayout(fri, llFriContainer, search.getSchedule().get(4));
+                setSatLayout(sat, llSatContainer, search.getSchedule().get(5));
+                setSunLayout(sun, llSunContainer, search.getSchedule().get(6));
+            }
+        }
+    }
+
+    private void setMonLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getMonday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Monday monday : schedule.getMonday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void setTueLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getTuesday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Tuesday monday : schedule.getTuesday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void setWedLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getWednesday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Wednesday monday : schedule.getWednesday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void setThuLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getThursday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Thursday monday : schedule.getThursday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void setFriLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getFriday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Friday monday : schedule.getFriday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+    private void setSatLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getSaturday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Saturday monday : schedule.getSaturday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+    private void setSunLayout(TextView todayDay, LinearLayout llTodayContainer, Schedule schedule) {
+        /*Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());*/
+        if (schedule != null && schedule.getSunday().size() > 0) {
+            todayDay.setVisibility(View.VISIBLE);
+            llTodayContainer.setVisibility(View.VISIBLE);
+            for (Sunday monday : schedule.getSunday()) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.list_item_timing, llTodayContainer, false);
+                TextView tvTiming = (TextView) layout.findViewById(R.id.tvTiming);
+                tvTiming.setText(DateTimeUtils.formatTime(monday.getFrom()) + " - " + DateTimeUtils.formatTime(monday.getTo()));
+                TextView tvCategory = (TextView) layout.findViewById(R.id.tvCategory);
+                tvCategory.setText(monday.getCategory());
+                llTodayContainer.addView(layout);
+            }
+        }else{
+            todayDay.setVisibility(View.GONE);
+            llTodayContainer.setVisibility(View.GONE);
+        }
+    }
+
+    /*private void setTime() {
         List<Schedule> ScheduleList = testing.getSchedule();
         for (Schedule slist : ScheduleList) {
             final String monTo = slist.getMonTo();
@@ -329,16 +517,45 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
             //Log.d("Logs", "Schedule:" + slist.getSatTo());
 
         }
-    }
+    }*/
 
     private void expandableWindow() {
         expand = (TextView) findViewById(R.id.expand);
+        expand_panel = (ExpandableRelativeLayout) findViewById(R.id.expanpanel);
         expand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expand_panel = (ExpandableRelativeLayout) findViewById(R.id.expanpanel);
                 expand_panel.toggle();
 
+            }
+        });
+        expand_panel.setListener(new ExpandableLayoutListener() {
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationEnd() {
+            }
+
+            // You can get notification that your expandable layout is going to open or close.
+            // So, you can set the animation synchronized with expanding animation.
+            @Override
+            public void onPreOpen() {
+            }
+
+            @Override
+            public void onPreClose() {
+            }
+
+            @Override
+            public void onOpened() {
+                expand.setText("Hide All Timing");
+            }
+
+            @Override
+            public void onClosed() {
+                expand.setText("Show All Timing");
             }
         });
        /* member = (TextView) findViewById(R.id.gym);
@@ -356,7 +573,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         Toolbar toolbar = (Toolbar) findViewById(R.id.gym_toolabar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(testing.getGymName());
+            getSupportActionBar().setTitle(search.getGymName());
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -368,18 +585,15 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void init() {
-
+    private void initImageSlider() {
         mPager = (ViewPager) findViewById(R.id.mem_pager);
-        if (testing.getImages().size() > 0) {
-
-            mPager.setAdapter(new Membership_Slider_Adapter(MembershipActivity.this, testing.getImages()));
+        if (search.getImages().size() > 0) {
+            mPager.setAdapter(new Membership_Slider_Adapter(MembershipActivity.this, search.getImages()));
             CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.mem_indicator);
             indicator.setViewPager(mPager);
             final float density = getResources().getDisplayMetrics().density;
             indicator.setRadius(5 * density);
-            NUM_PAGES = testing.getImages().size();
-
+            NUM_PAGES = search.getImages().size();
             // Auto start of viewpager
             final Handler handler = new Handler();
             final Runnable Update = new Runnable() {
@@ -397,7 +611,6 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                     handler.post(Update);
                 }
             }, 3000, 3000);
-
             // Pager listener over indicator
             indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -424,7 +637,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.gym_menu, menu);
-        MenuItem mi = (MenuItem)findViewById(R.id.like);
+        MenuItem mi = (MenuItem) findViewById(R.id.like);
        /* if(mi!=null){if (!testing.getIsFavorite().equals("0")) {
 
             mi.setIcon(R.drawable.rhearts);
@@ -454,8 +667,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.like:
                 item.setChecked(true);
-                if (!testing.getIsFavorite().equals("0")) {
-
+                if (!search.getIsFavorite().equals("0")) {
                     item.setIcon(R.drawable.rhearts);
                 } else {
                     item.setIcon(R.drawable.hearts);

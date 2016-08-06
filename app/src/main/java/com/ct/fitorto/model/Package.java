@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Ashwini on 5/27/2016.
  */
 public class Package implements Parcelable {
+
     @SerializedName("oneMonth")
     @Expose
     private String oneMonth;

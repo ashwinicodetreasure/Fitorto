@@ -71,8 +71,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <RelativeLayout
             android:id="@+id/address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -84,10 +83,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="10dp"
-                android:text="Info"
-                android:textColor="#000000"
                 android:letterSpacing="0.1"
+                android:text="Info"
                 android:textAllCaps="true"
+                android:textColor="#000000"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
@@ -128,12 +127,23 @@
                 android:layout_below="@+id/flowlayout"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="10dp"
-                android:text="Timing"
-                android:textColor="#000000"
                 android:letterSpacing="0.1"
+                android:text="Timing"
                 android:textAllCaps="true"
+                android:textColor="#000000"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/llTodayContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
 
             <com.ct.fitorto.custom.CustomTextView
                 android:id="@+id/content"
@@ -143,23 +153,22 @@
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:text="5:30 am - 11:30 am      |    5:30 pm - 10:30 pm"
-                android:textColor="#000000"
-                android:textStyle="bold" />
+                android:text=" "
+                android:textColor="@color/colorText" />
             <!-- Expandable section-->
             <com.ct.fitorto.custom.CustomTextViewBold
                 android:id="@+id/expand"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/content"
+                android:layout_below="@+id/llTodayContainer"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="Roboto bold"
+                android:letterSpacing="0.1"
                 android:text="Show All Timing"
                 android:textColor="#2B59A2"
                 android:textSize="16sp"
-                android:letterSpacing="0.1"
                 android:textStyle="bold" />
 
             <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -172,31 +181,137 @@
                 android:layout_marginTop="10dp">
 
                 <com.ct.fitorto.custom.CustomTextView
-                    android:id="@+id/allTime"
+                    android:id="@+id/tvMon"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="8dp"
+                    android:text="Monday"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:id="@+id/llMonContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMon"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
 
                 <com.ct.fitorto.custom.CustomTextView
-                    android:id="@+id/allTime1"
+                    android:id="@+id/tvTue"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/allTime"
+                    android:layout_below="@+id/llMonContainer"
                     android:layout_marginTop="8dp"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:text="Tuesday"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:id="@+id/llTueContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTue"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
 
                 <com.ct.fitorto.custom.CustomTextView
-                    android:id="@+id/allTime2"
+                    android:id="@+id/tvWed"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/allTime1"
+                    android:layout_below="@+id/llTueContainer"
                     android:layout_marginTop="8dp"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:text="Wednesday"
+                    android:textColor="@color/colorText" />
 
+                <LinearLayout
+                    android:id="@+id/llWedContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvWed"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
 
+                </LinearLayout>
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvThu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llWedContainer"
+                    android:layout_marginTop="8dp"
+                    android:text="Thursday"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:id="@+id/llThuContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvThu"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvFri"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llThuContainer"
+                    android:layout_marginTop="8dp"
+                    android:text="Friday"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:id="@+id/llFriContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvFri"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvSat"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llFriContainer"
+                    android:layout_marginTop="8dp"
+                    android:text="Friday"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:id="@+id/llSatContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSat"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvSun"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llSatContainer"
+                    android:layout_marginTop="8dp"
+                    android:text="Friday"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:id="@+id/llSunContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSun"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
             <View
@@ -224,11 +339,11 @@
                 android:layout_below="@+id/v"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="10dp"
+                android:letterSpacing="0.1"
                 android:text="Location"
+                android:textAllCaps="true"
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_medium"
-                android:letterSpacing="0.1"
-                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <com.ct.fitorto.custom.CustomTextView
@@ -287,11 +402,11 @@
                 android:layout_below="@id/view"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="15dp"
+                android:letterSpacing="0.1"
                 android:text="Membership and Services"
+                android:textAllCaps="true"
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_medium"
-                android:letterSpacing="0.1"
-                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <com.ct.fitorto.custom.CustomTextViewBold
@@ -303,10 +418,10 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="Roboto bold"
-                android:text="Gym Packages"
-                android:textColor="#2B59A2"
                 android:letterSpacing="0.1"
+                android:text="Gym Packages"
                 android:textAllCaps="true"
+                android:textColor="#2B59A2"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
@@ -329,10 +444,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
+                        android:letterSpacing="0.1"
                         android:text="1 Month"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
                     <com.ct.fitorto.custom.CustomTextView
@@ -340,9 +455,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
+                        android:letterSpacing="0.1"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -352,10 +467,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
+                        android:letterSpacing="0.1"
                         android:text="3 Months"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
                     <com.ct.fitorto.custom.CustomTextView
@@ -363,9 +478,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
+                        android:letterSpacing="0.1"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -375,10 +490,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
+                        android:letterSpacing="0.1"
                         android:text="6 Months"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
                     <com.ct.fitorto.custom.CustomTextView
@@ -386,9 +501,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
+                        android:letterSpacing="0.1"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -398,10 +513,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
+                        android:letterSpacing="0.1"
                         android:text="Yearly"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
 
                     <com.ct.fitorto.custom.CustomTextView
@@ -409,9 +524,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
+                        android:letterSpacing="0.1"
                         android:textColor="#000000"
                         android:textSize="@dimen/text_size_small"
-                        android:letterSpacing="0.1"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -466,8 +581,8 @@
                 android:layout_below="@+id/gender"
                 android:layout_marginLeft="85dp"
                 android:layout_marginTop="5dp"
-                android:orientation="vertical"
                 android:letterSpacing="0.1"
+                android:orientation="vertical"
                 android:textColor="#000000" />
 
             <View
@@ -498,10 +613,10 @@
                 android:layout_below="@id/vgender"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="10dp"
+                android:letterSpacing="0.1"
                 android:text="Amenities"
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_medium"
-                android:letterSpacing="0.1"
                 android:textStyle="bold" />
 
             <!-- <ListView
@@ -542,10 +657,10 @@
                 android:layout_below="@id/v1"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="15dp"
+                android:letterSpacing="0.1"
                 android:text="Equipments"
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_medium"
-                android:letterSpacing="0.1"
                 android:textStyle="bold" />
             <!-- <ListView
                  android:layout_width="fill_parent"
@@ -565,7 +680,7 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/button"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

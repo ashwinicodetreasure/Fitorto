@@ -34,4 +34,5 @@
     <string name="activity_image_trans">feed_transition</string>
     <string name="search_transition">Follower_transition</string>
     <string name="profile_transition">profile_transiton</string>
+    <string name="filter_transition">filter transition</string>
 </resources>

@@ -130,7 +130,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
     @Override
     public void onItemClick(Search item) {
         Intent link = new Intent(SearchResultActivity.this, MembershipActivity.class);
-        link.putExtra("memberItem", item);
+        link.putExtra(ApplicationData.FITNESS_CENTER_DETAILS, item);
         startActivity(link);
     }
 

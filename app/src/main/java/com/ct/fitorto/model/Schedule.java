@@ -3,323 +3,207 @@ package com.ct.fitorto.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Ashwini on 5/27/2016.
- */
+
 public class Schedule implements Parcelable {
-    @SerializedName("monFrom")
+
+    @SerializedName("Monday")
     @Expose
-    private String monFrom;
-    @SerializedName("monTo")
+    private List<Monday> monday = new ArrayList<Monday>();
+    @SerializedName("Tuesday")
     @Expose
-    private String monTo;
-    @SerializedName("tueFrom")
+    private List<Tuesday> tuesday = new ArrayList<Tuesday>();
+    @SerializedName("Wednesday")
     @Expose
-    private String tueFrom;
-    @SerializedName("tueTo")
+    private List<Wednesday> wednesday = new ArrayList<Wednesday>();
+    @SerializedName("Thursday")
     @Expose
-    private String tueTo;
-    @SerializedName("wedFrom")
+    private List<Thursday> thursday = new ArrayList<Thursday>();
+    @SerializedName("Friday")
     @Expose
-    private String wedFrom;
-    @SerializedName("wedTo")
+    private List<Friday> friday = new ArrayList<Friday>();
+    @SerializedName("Saturday")
     @Expose
-    private String wedTo;
-    @SerializedName("thuFrom")
+    private List<Saturday> saturday = new ArrayList<Saturday>();
+    @SerializedName("Sunday")
     @Expose
-    private String thuFrom;
-    @SerializedName("thuTo")
-    @Expose
-    private String thuTo;
-    @SerializedName("friFrom")
-    @Expose
-    private String friFrom;
-    @SerializedName("friTo")
-    @Expose
-    private String friTo;
-    @SerializedName("satFrom")
-    @Expose
-    private String satFrom;
-    @SerializedName("satTo")
-    @Expose
-    private String satTo;
-    @SerializedName("sunFrom")
-    @Expose
-    private String sunFrom;
-    @SerializedName("sunTo")
-    @Expose
-    private String sunTo;
+    private List<Sunday> sunday = new ArrayList<Sunday>();
 
     /**
      *
      * @return
-     * The monFrom
+     *     The monday
      */
-    public String getMonFrom() {
-        return monFrom;
+    public List<Monday> getMonday() {
+        return monday;
     }
 
     /**
      *
-     * @param monFrom
-     * The monFrom
+     * @param monday
+     *     The Monday
      */
-    public void setMonFrom(String monFrom) {
-        this.monFrom = monFrom;
+    public void setMonday(List<Monday> monday) {
+        this.monday = monday;
     }
 
     /**
      *
      * @return
-     * The monTo
+     *     The tuesday
      */
-    public String getMonTo() {
-        return monTo;
+    public List<Tuesday> getTuesday() {
+        return tuesday;
     }
 
     /**
      *
-     * @param monTo
-     * The monTo
+     * @param tuesday
+     *     The Tuesday
      */
-    public void setMonTo(String monTo) {
-        this.monTo = monTo;
-    }
-
-    /**
-     *
-     * @return
-     * The tueFrom
-     */
-    public String getTueFrom() {
-        return tueFrom;
-    }
-
-    /**
-     *
-     * @param tueFrom
-     * The tueFrom
-     */
-    public void setTueFrom(String tueFrom) {
-        this.tueFrom = tueFrom;
+    public void setTuesday(List<Tuesday> tuesday) {
+        this.tuesday = tuesday;
     }
 
     /**
      *
      * @return
-     * The tueTo
+     *     The wednesday
      */
-    public String getTueTo() {
-        return tueTo;
+    public List<Wednesday> getWednesday() {
+        return wednesday;
     }
 
     /**
      *
-     * @param tueTo
-     * The tueTo
+     * @param wednesday
+     *     The Wednesday
      */
-    public void setTueTo(String tueTo) {
-        this.tueTo = tueTo;
-    }
-
-    /**
-     *
-     * @return
-     * The wedFrom
-     */
-    public String getWedFrom() {
-        return wedFrom;
-    }
-
-    /**
-     *
-     * @param wedFrom
-     * The wedFrom
-     */
-    public void setWedFrom(String wedFrom) {
-        this.wedFrom = wedFrom;
+    public void setWednesday(List<Wednesday> wednesday) {
+        this.wednesday = wednesday;
     }
 
     /**
      *
      * @return
-     * The wedTo
+     *     The thursday
      */
-    public String getWedTo() {
-        return wedTo;
+    public List<Thursday> getThursday() {
+        return thursday;
     }
 
     /**
      *
-     * @param wedTo
-     * The wedTo
+     * @param thursday
+     *     The Thursday
      */
-    public void setWedTo(String wedTo) {
-        this.wedTo = wedTo;
-    }
-
-    /**
-     *
-     * @return
-     * The thuFrom
-     */
-    public String getThuFrom() {
-        return thuFrom;
-    }
-
-    /**
-     *
-     * @param thuFrom
-     * The thuFrom
-     */
-    public void setThuFrom(String thuFrom) {
-        this.thuFrom = thuFrom;
+    public void setThursday(List<Thursday> thursday) {
+        this.thursday = thursday;
     }
 
     /**
      *
      * @return
-     * The thuTo
+     *     The friday
      */
-    public String getThuTo() {
-        return thuTo;
+    public List<Friday> getFriday() {
+        return friday;
     }
 
     /**
      *
-     * @param thuTo
-     * The thuTo
+     * @param friday
+     *     The Friday
      */
-    public void setThuTo(String thuTo) {
-        this.thuTo = thuTo;
-    }
-
-    /**
-     *
-     * @return
-     * The friFrom
-     */
-    public String getFriFrom() {
-        return friFrom;
-    }
-
-    /**
-     *
-     * @param friFrom
-     * The friFrom
-     */
-    public void setFriFrom(String friFrom) {
-        this.friFrom = friFrom;
+    public void setFriday(List<Friday> friday) {
+        this.friday = friday;
     }
 
     /**
      *
      * @return
-     * The friTo
+     *     The saturday
      */
-    public String getFriTo() {
-        return friTo;
+    public List<Saturday> getSaturday() {
+        return saturday;
     }
 
     /**
      *
-     * @param friTo
-     * The friTo
+     * @param saturday
+     *     The Saturday
      */
-    public void setFriTo(String friTo) {
-        this.friTo = friTo;
-    }
-
-    /**
-     *
-     * @return
-     * The satFrom
-     */
-    public String getSatFrom() {
-        return satFrom;
-    }
-
-    /**
-     *
-     * @param satFrom
-     * The satFrom
-     */
-    public void setSatFrom(String satFrom) {
-        this.satFrom = satFrom;
+    public void setSaturday(List<Saturday> saturday) {
+        this.saturday = saturday;
     }
 
     /**
      *
      * @return
-     * The satTo
+     *     The sunday
      */
-    public String getSatTo() {
-        return satTo;
+    public List<Sunday> getSunday() {
+        return sunday;
     }
 
     /**
      *
-     * @param satTo
-     * The satTo
+     * @param sunday
+     *     The Sunday
      */
-    public void setSatTo(String satTo) {
-        this.satTo = satTo;
+    public void setSunday(List<Sunday> sunday) {
+        this.sunday = sunday;
     }
 
-    /**
-     *
-     * @return
-     * The sunFrom
-     */
-    public String getSunFrom() {
-        return sunFrom;
-    }
-
-    /**
-     *
-     * @param sunFrom
-     * The sunFrom
-     */
-    public void setSunFrom(String sunFrom) {
-        this.sunFrom = sunFrom;
-    }
-
-    /**
-     *
-     * @return
-     * The sunTo
-     */
-    public String getSunTo() {
-        return sunTo;
-    }
-
-    /**
-     *
-     * @param sunTo
-     * The sunTo
-     */
-    public void setSunTo(String sunTo) {
-        this.sunTo = sunTo;
-    }
 
     protected Schedule(Parcel in) {
-        monFrom = in.readString();
-        monTo = in.readString();
-        tueFrom = in.readString();
-        tueTo = in.readString();
-        wedFrom = in.readString();
-        wedTo = in.readString();
-        thuFrom = in.readString();
-        thuTo = in.readString();
-        friFrom = in.readString();
-        friTo = in.readString();
-        satFrom = in.readString();
-        satTo = in.readString();
-        sunFrom = in.readString();
-        sunTo = in.readString();
+        if (in.readByte() == 0x01) {
+            monday = new ArrayList<Monday>();
+            in.readList(monday, Monday.class.getClassLoader());
+        } else {
+            monday = null;
+        }
+        if (in.readByte() == 0x01) {
+            tuesday = new ArrayList<Tuesday>();
+            in.readList(tuesday, Tuesday.class.getClassLoader());
+        } else {
+            tuesday = null;
+        }
+        if (in.readByte() == 0x01) {
+            wednesday = new ArrayList<Wednesday>();
+            in.readList(wednesday, Wednesday.class.getClassLoader());
+        } else {
+            wednesday = null;
+        }
+        if (in.readByte() == 0x01) {
+            thursday = new ArrayList<Thursday>();
+            in.readList(thursday, Thursday.class.getClassLoader());
+        } else {
+            thursday = null;
+        }
+        if (in.readByte() == 0x01) {
+            friday = new ArrayList<Friday>();
+            in.readList(friday, Friday.class.getClassLoader());
+        } else {
+            friday = null;
+        }
+        if (in.readByte() == 0x01) {
+            saturday = new ArrayList<Saturday>();
+            in.readList(saturday, Saturday.class.getClassLoader());
+        } else {
+            saturday = null;
+        }
+        if (in.readByte() == 0x01) {
+            sunday = new ArrayList<Sunday>();
+            in.readList(sunday, Sunday.class.getClassLoader());
+        } else {
+            sunday = null;
+        }
     }
 
     @Override
@@ -329,20 +213,48 @@ public class Schedule implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(monFrom);
-        dest.writeString(monTo);
-        dest.writeString(tueFrom);
-        dest.writeString(tueTo);
-        dest.writeString(wedFrom);
-        dest.writeString(wedTo);
-        dest.writeString(thuFrom);
-        dest.writeString(thuTo);
-        dest.writeString(friFrom);
-        dest.writeString(friTo);
-        dest.writeString(satFrom);
-        dest.writeString(satTo);
-        dest.writeString(sunFrom);
-        dest.writeString(sunTo);
+        if (monday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(monday);
+        }
+        if (tuesday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(tuesday);
+        }
+        if (wednesday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(wednesday);
+        }
+        if (thursday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(thursday);
+        }
+        if (friday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(friday);
+        }
+        if (saturday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(saturday);
+        }
+        if (sunday == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(sunday);
+        }
     }
 
     @SuppressWarnings("unused")

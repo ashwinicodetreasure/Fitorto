@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.flowlayout.FlowLayout;
-import com.ct.fitorto.model.GynImages;
+import com.ct.fitorto.model.GymImages;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Search;
 import com.squareup.picasso.Picasso;
@@ -89,11 +89,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         }
 
 
-        private void setGymImageList(List<GynImages> sizeArrayList) {
+        private void setGymImageList(List<GymImages> sizeArrayList) {
             imgContainer.removeAllViews();
             if (sizeArrayList != null && sizeArrayList.size() > 0) {
                 int limit = 0;
-                for (GynImages images : sizeArrayList) {
+                for (GymImages images : sizeArrayList) {
                     if (limit < 3) {
                         LayoutInflater inflater = (LayoutInflater) itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         final ImageView imageView = (ImageView) inflater.inflate(R.layout.list_item_fitness_center_image, imgContainer, false);
@@ -119,7 +119,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
             List<Package> fu = new ArrayList<>();
             fu.addAll(item.getPackages());
-            List<GynImages> gi = new ArrayList<>();
+            List<GymImages> gi = new ArrayList<>();
             gi.addAll(item.getImages());
             ArrayList aList = new ArrayList(Arrays.asList(item.getCategory().split(",")));
             if (aList.size() > 0) {
@@ -147,10 +147,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             }
 
             if (item.getRating().equals("0")) {
-                imageButton.setImageResource(R.drawable.blank);
+                imageButton.setImageResource(R.drawable.ic_star_empty);
             } else {
-                imageButton.setImageResource(R.drawable.star);
-
+                imageButton.setImageResource(R.drawable.ic_star);
             }
             if (TextUtils.isEmpty(item.getRating())) {
             } else {

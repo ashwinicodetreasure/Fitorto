@@ -19,4 +19,5 @@ public class ApplicationData {
     public static final int FEED_REQUEST_CODE = 852;
     public static final String PREF_USER_FIRST_TIME = "pref_user_first_time";
     public static final String FEED = "feed";
+    public static final String FITNESS_CENTER_DETAILS = "fitness_center_details";
 }

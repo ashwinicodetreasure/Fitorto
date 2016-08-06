@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by Ashwini on 6/2/2016.
  */
-public class GynImages implements Parcelable {
+public class GymImages implements Parcelable {
     String imageLink;
 
     public String getImageLink() {
@@ -17,7 +17,7 @@ public class GynImages implements Parcelable {
         this.imageLink = imageLink;
     }
 
-    protected GynImages(Parcel in) {
+    protected GymImages(Parcel in) {
         imageLink = in.readString();
     }
 
@@ -32,15 +32,15 @@ public class GynImages implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<GynImages> CREATOR = new Parcelable.Creator<GynImages>() {
+    public static final Parcelable.Creator<GymImages> CREATOR = new Parcelable.Creator<GymImages>() {
         @Override
-        public GynImages createFromParcel(Parcel in) {
-            return new GynImages(in);
+        public GymImages createFromParcel(Parcel in) {
+            return new GymImages(in);
         }
 
         @Override
-        public GynImages[] newArray(int size) {
-            return new GynImages[size];
+        public GymImages[] newArray(int size) {
+            return new GymImages[size];
         }
     };
 }

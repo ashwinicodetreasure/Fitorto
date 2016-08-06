@@ -136,4 +136,20 @@ public class DateTimeUtils implements Runnable {
         String formatedDate = format.format(newDate);
         return formatedDate;
     }
+
+
+    public static String formatTime(String time){
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+        Date newDate = null;
+        try {
+            newDate = format.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        format = new SimpleDateFormat("hh:mm a");
+        String formatedDate = format.format(newDate);
+        return formatedDate;
+
+    }
 }
