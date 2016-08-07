@@ -20,4 +20,5 @@ public class ApplicationData {
     public static final String PREF_USER_FIRST_TIME = "pref_user_first_time";
     public static final String FEED = "feed";
     public static final String FITNESS_CENTER_DETAILS = "fitness_center_details";
+    public static final String NOTIFICATION_BADGE_COUNT = "notification_badge";
 }

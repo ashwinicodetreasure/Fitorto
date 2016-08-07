@@ -26,7 +26,15 @@ import com.ct.fitorto.fragments.DiscoverFragment;
 import com.ct.fitorto.fragments.FeedFragment;
 import com.ct.fitorto.fragments.FriendsFragment;
 import com.ct.fitorto.fragments.ProfileFragment;
+import com.ct.fitorto.model.JsonResponseNotification;
+import com.ct.fitorto.network.ApiClientMain;
+import com.ct.fitorto.network.ApplicationUtility;
+import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -51,7 +59,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment fr = null;
     private TextView tvTitle;
     private TextView tvNotificationBadge;
-    private int badgeNumber=123;
+    private int badgeNumber=0;
+    private PreferenceManager manager;
 
 
     @Override
@@ -72,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ft.replace(R.id.show_fragment, fr);
         ft.commit();
 
-
+        manager=new PreferenceManager(this);
         feed = (LinearLayout) findViewById(R.id.feed);
         feed.setOnClickListener(this);
 
@@ -108,6 +117,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
         tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
         tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+        getNotificationCount();
     }
 
     @Override
@@ -117,11 +127,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         MenuItem notification = menu.findItem(R.id.notification);
         View view =   MenuItemCompat.getActionView(notification);
         tvNotificationBadge = (TextView) view.findViewById(R.id.hotlist_hot);
-        updateHotCount(badgeNumber);
         new MyMenuItemStuffListener(view, "Show hot message") {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(HomeActivity.this, NotificationActivity.class);
+                startActivityForResult(i, ApplicationData.REQUEST_CODE_NOTIFICATION);
             }
         };
         return true;
@@ -143,6 +153,36 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
+
+    private void getNotificationCount() {
+        if (ApplicationUtility.checkConnection(this)) {
+            String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
+            Call<JsonResponseNotification> call = ApiClientMain.getApiClient().getNotification(userId);
+            call.enqueue(new Callback<JsonResponseNotification>() {
+                @Override
+                public void onResponse(Call<JsonResponseNotification> call, Response<JsonResponseNotification> response) {
+                    if (response.body() != null) {
+                         updateNotificationCount(response.body().getCount());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonResponseNotification> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    private void updateNotificationCount(int count) {
+        int previousCount=manager.getPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT);
+        int notificationCount=count-previousCount;
+        manager.putPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT,notificationCount);
+        badgeNumber=notificationCount;
+        updateHotCount(badgeNumber);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
