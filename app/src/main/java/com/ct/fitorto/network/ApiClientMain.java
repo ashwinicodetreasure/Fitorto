@@ -210,8 +210,15 @@ public class ApiClientMain {
         @FormUrlEncoded
         @POST("registerUser.php")
         Call<JsonResponseUser> registerUser(@Field("userName") String name, @Field("emailID") String email,
-                                         @Field("password") String pass, @Field("phoneNo") String phone,
+                                            @Field("password") String pass, @Field("phoneNo") String phone,
                                             @Field("androidRegKey") String androidRegKey, @Field("iosRegKey") String iosRegKey);
+
+
+        @FormUrlEncoded
+        @POST("setFavorite.php")
+        Call<JsonResponseFollow> setFavorite(@Field("userID") String userID,
+                                                   @Field("gymID") String gymID,
+                                                   @Field("flag") String flag);
 
 
     }

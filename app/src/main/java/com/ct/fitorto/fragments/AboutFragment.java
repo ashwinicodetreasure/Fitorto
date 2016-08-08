@@ -57,7 +57,7 @@ public class AboutFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pro_about_fragment, null);
         preferenceManager = new PreferenceManager(getActivity());
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
         initView(view);
         setFitnessCenterList();
         setProgressCardData();

@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void updateNotificationCount(int count) {
         int previousCount=manager.getPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT);
         int notificationCount=count-previousCount;
-        manager.putPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT,notificationCount);
+        manager.putPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT,count);
         badgeNumber=notificationCount;
         updateHotCount(badgeNumber);
     }

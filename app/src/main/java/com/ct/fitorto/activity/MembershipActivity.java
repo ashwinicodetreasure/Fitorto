@@ -33,6 +33,8 @@ import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.Membership_Slider_Adapter;
 import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.Friday;
+import com.ct.fitorto.model.JsonResponseFollow;
+import com.ct.fitorto.model.JsonResponseUser;
 import com.ct.fitorto.model.Monday;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Saturday;
@@ -42,6 +44,8 @@ import com.ct.fitorto.model.Sunday;
 import com.ct.fitorto.model.Thursday;
 import com.ct.fitorto.model.Tuesday;
 import com.ct.fitorto.model.Wednesday;
+import com.ct.fitorto.network.ApiClientMain;
+import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.DateTimeUtils;
 import com.github.aakira.expandablelayout.ExpandableLayoutListener;
@@ -60,6 +64,10 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class MembershipActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -77,6 +85,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout llEquipmentContainer;
     private LinearLayout llAmenitiContainer;
     private FlowLayout mFlowLayout;
+    private PreferenceManager manager;
 
     // private static final int MY_BUTTON = 9000;
     @Override
@@ -84,6 +93,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.membership_main_layout);
         search = getIntent().getParcelableExtra(ApplicationData.FITNESS_CENTER_DETAILS);
+        manager = new PreferenceManager(this);
         if (search != null) {
             initImageSlider();
             setToolbar();
@@ -300,7 +310,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -323,7 +333,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -346,7 +356,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -369,7 +379,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -392,7 +402,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -414,7 +424,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -436,7 +446,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 tvCategory.setText(monday.getCategory());
                 llTodayContainer.addView(layout);
             }
-        }else{
+        } else {
             todayDay.setVisibility(View.GONE);
             llTodayContainer.setVisibility(View.GONE);
         }
@@ -637,15 +647,12 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.gym_menu, menu);
-        MenuItem mi = (MenuItem) findViewById(R.id.like);
-       /* if(mi!=null){if (!testing.getIsFavorite().equals("0")) {
-
+        MenuItem mi = (MenuItem) menu.findItem(R.id.like);
+        if (search.getIsFavorite().equals("1")) {
             mi.setIcon(R.drawable.rhearts);
-        } }*//*else {
-
+        } else {
             mi.setIcon(R.drawable.hearts);
-        }*//*
-        //mi.setIcon(R.drawable.rhearts);*/
+        }
         return true;
     }
 
@@ -666,11 +673,15 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.like:
-                item.setChecked(true);
-                if (!search.getIsFavorite().equals("0")) {
+                // item.setChecked(true);
+                if (search.getIsFavorite().equals("0")) {
                     item.setIcon(R.drawable.rhearts);
+                    search.setIsFavorite("1");
+                    markFitnessCenterFavourite(search.getGymID(), "1", item);
                 } else {
                     item.setIcon(R.drawable.hearts);
+                    search.setIsFavorite("0");
+                    markFitnessCenterFavourite(search.getGymID(), "0", item);
                 }
                 break;
 
@@ -681,6 +692,30 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+
+    }
+
+
+    public void markFitnessCenterFavourite(String gymId, String flag, final MenuItem item) {
+        String userID = manager.getPreferenceValues(manager.PREF_USER_UserId);
+        Call<JsonResponseFollow> response = ApiClientMain.getApiClient().setFavorite(userID, gymId, flag);
+        response.enqueue(new Callback<JsonResponseFollow>() {
+            @Override
+            public void onResponse(Call<JsonResponseFollow> call, Response<JsonResponseFollow> response) {
+                if (response.body() != null) {
+                    if (response.body().getMsg().contains("Marked as Favorite!")) {
+                        item.setChecked(true);
+                    } else {
+                        item.setChecked(false);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponseFollow> call, Throwable t) {
+
+            }
+        });
 
     }
 }
