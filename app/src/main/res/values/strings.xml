@@ -35,4 +35,32 @@
     <string name="search_transition">Follower_transition</string>
     <string name="profile_transition">profile_transiton</string>
     <string name="filter_transition">filter transition</string>
+    <string name="text_label_apply">Apply</string>
+    <string name="txt_package">Select Package</string>
+    <string name="txt_price">Select Duration</string>
+
+    <array name="package_months">
+        <item>One Month</item>
+        <item>Three Month</item>
+        <item>Six Month</item>
+        <item>Yearly</item>
+    </array>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string-array name="selectAction">
+        <item>Resend OTP</item>
+        <item>Enter OTP Manually</item>
+    </string-array>
+    <string name="title_activity_initial">CCAvenueMobile</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="pay_button">Pay</string>
+    <string name="merchant_id">Merchant Id</string>
+    <string name="currency">Currency</string>
+    <string name="amount">Amount</string>
+    <string name="redirect_url">Redirect Url</string>
+    <string name="cancel_url">Cancel Url</string>
+    <string name="rsa_url">RSA Key Url</string>
+    <string name="access_code">Access Code</string>
+    <string name="title_activity_status">CCAvenueMobile</string>
 </resources>

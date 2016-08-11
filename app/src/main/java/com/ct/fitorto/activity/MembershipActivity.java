@@ -4,25 +4,21 @@ package com.ct.fitorto.activity;
  * Created by Ashwini on 5/17/2016.
  */
 
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +27,7 @@ import android.widget.TextView;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.Membership_Slider_Adapter;
+import com.ct.fitorto.ccavanue.InitialActivity;
 import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.Friday;
 import com.ct.fitorto.model.JsonResponseFollow;
@@ -53,14 +50,9 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.squareup.picasso.Picasso;
 import com.ct.fitorto.custom.CirclePageIndicator;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -107,6 +99,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
             tvLoc = (TextView) findViewById(R.id.location);
             tvLoc.setText(search.getAddress());
             TextView gender = (TextView) findViewById(R.id.tvgender);
+            findViewById(R.id.buy_mem).setOnClickListener(this);
             gender.setText(search.getGender());
         }
     }
@@ -692,7 +685,10 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.buy_mem) {
+            Intent intent = new Intent(this, InitialActivity.class);
+            startActivity(intent);
+        }
     }
 
 

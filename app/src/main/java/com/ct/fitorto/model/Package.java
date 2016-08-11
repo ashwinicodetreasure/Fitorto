@@ -11,6 +11,10 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Package implements Parcelable {
 
+
+    @SerializedName("packageName")
+    @Expose
+    private String packageName;
     @SerializedName("oneMonth")
     @Expose
     private String oneMonth;
@@ -23,6 +27,26 @@ public class Package implements Parcelable {
     @SerializedName("oneYear")
     @Expose
     private String oneYear;
+
+
+    /**
+     *
+     * @return
+     * The packageName
+     */
+    public String getPackageName() {
+        return packageName;
+    }
+
+    /**
+     *
+     * @param packageName
+     * The packageName
+     */
+    public void setPackageName(String packageName) {
+        this.packageName   = packageName;
+    }
+
 
     /**
      *
@@ -97,6 +121,7 @@ public class Package implements Parcelable {
     }
 
     protected Package(Parcel in) {
+        packageName = in.readString();
         oneMonth = in.readString();
         threeMonth = in.readString();
         sixMonth = in.readString();
@@ -110,6 +135,7 @@ public class Package implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(packageName);
         dest.writeString(oneMonth);
         dest.writeString(threeMonth);
         dest.writeString(sixMonth);
@@ -128,4 +154,10 @@ public class Package implements Parcelable {
             return new Package[size];
         }
     };
+
+
+    @Override
+    public String toString() {
+        return this.packageName;
+    }
 }

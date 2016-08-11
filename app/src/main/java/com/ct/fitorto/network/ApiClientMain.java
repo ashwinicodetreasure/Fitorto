@@ -217,9 +217,17 @@ public class ApiClientMain {
         @FormUrlEncoded
         @POST("setFavorite.php")
         Call<JsonResponseFollow> setFavorite(@Field("userID") String userID,
-                                                   @Field("gymID") String gymID,
-                                                   @Field("flag") String flag);
+                                             @Field("gymID") String gymID,
+                                             @Field("flag") String flag);
 
+        @FormUrlEncoded
+        @POST("book.php")
+        Call<JsonResponseFollow> bookGym(@Field("userID") String userID,
+                                         @Field("gymID") String gymID,
+                                         @Field("packageID") String packageID,
+                                         @Field("duration") String duration,
+                                         @Field("ammount") String amount,
+                                         @Field("joiningDate") String joiningDate);
 
     }
 

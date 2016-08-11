@@ -85,7 +85,7 @@ public class Search implements Parcelable {
     private List<Schedule> schedule = new ArrayList<Schedule>();
     @SerializedName("packages")
     @Expose
-    private List<Package> packages = new ArrayList<Package>();
+    private ArrayList<Package> packages = new ArrayList<Package>();
     @SerializedName("images")
     @Expose
     private List<GymImages> images = new ArrayList<GymImages>();
@@ -509,7 +509,7 @@ public class Search implements Parcelable {
      * @return
      * The packages
      */
-    public List<Package> getPackages() {
+    public ArrayList<Package> getPackages() {
         return packages;
     }
 
@@ -518,7 +518,7 @@ public class Search implements Parcelable {
      * @param packages
      * The packages
      */
-    public void setPackages(List<Package> packages) {
+    public void setPackages(ArrayList<Package> packages) {
         this.packages = packages;
     }
 
