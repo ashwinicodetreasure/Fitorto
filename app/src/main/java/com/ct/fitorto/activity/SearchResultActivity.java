@@ -288,7 +288,13 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
     public class FeesComparator implements Comparator<Search> {
         @Override
         public int compare(Search o1, Search o2) {
-            return o1.getPackages().get(0).getOneMonth().compareTo(o2.getPackages().get(0).getOneMonth());
+            // TODO: 09/12/16 Solve crash problem.
+            if(o1!=null&&o2!=null){
+                return o1.getPackages().get(0).getOneMonth().compareTo(o2.getPackages().get(0).getOneMonth());
+            }else {
+                return 0;
+            }
+
         }
     }
 

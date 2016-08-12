@@ -2,24 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
-    
+    android:orientation="horizontal">
+
     <!-- Single ListItem -->
-    
+
     <!-- Product Name -->
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/history"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="17dp"
-        android:scaleType="centerCrop"
-        />
-    <TextView android:id="@+id/searchitem"
+        android:background="@drawable/ic_history"
+        android:scaleType="centerCrop" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/searchitem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="10dip"
-        android:textSize="16dip"
-        android:textStyle="bold"/>    
+        android:textSize="16dp"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginTop="17dp"
+        android:letterSpacing="0.05"
+        android:text="k11 gym"
+        android:textStyle="bold" />
 
 </LinearLayout>

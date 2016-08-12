@@ -38,8 +38,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="16dp"
                 android:text="Maurice Moss"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
+                android:letterSpacing="0.05"
                 android:singleLine="true"
                 android:textColor="@color/title"
                 android:textStyle="bold" />
@@ -50,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:paddingRight="16dp"
-                android:text="Oh, four, I mean five, I mean fire!"
+                android:text="FiTORTO! Slow and steady is the key."
                 android:textColor="@color/subtitle" />
 
         </LinearLayout>

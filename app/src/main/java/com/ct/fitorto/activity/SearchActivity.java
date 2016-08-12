@@ -1,5 +1,6 @@
 package com.ct.fitorto.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,10 +21,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ct.fitorto.CommonFunction;
 import com.ct.fitorto.HistoryOpenHelper;
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.AutoCompleteAdapter;
 import com.ct.fitorto.adapter.HistoryAdapter;
+import com.ct.fitorto.baseclass.BaseActivity;
 import com.ct.fitorto.custom.CustomTextView;
 import com.ct.fitorto.model.JsonResponseKeywords;
 import com.ct.fitorto.model.JsonResponseSearch;
@@ -43,7 +46,7 @@ import retrofit2.Response;
 /**
  * Created by Ashwini on 5/26/2016.
  */
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchActivity extends BaseActivity implements View.OnClickListener {
     // private EditText search;
     private ListView slist;
     // private Button searchbtn;
@@ -73,6 +76,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         ivBack = (ImageButton) findViewById(R.id.ivBack);
         ivBack.setOnClickListener(this);
+
         clear.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId,
@@ -86,23 +90,21 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return false;
             }
         });
-        autosearch();
+        autoSearch();
         // autoComplete();
         displayHistory();
         search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 categoryName str = (categoryName) parent.getItemAtPosition(position);
-                autocompleteOnlcick(str.getCategoryName());
+                autoCompleteOnClick(str.getCategoryName());
             }
         });
 
         preferenceManager = new PreferenceManager(SearchActivity.this);
         String address = preferenceManager.getPreferenceValues(preferenceManager.ADDRESS);
-
         if (!TextUtils.isEmpty(address)) {
             tvLocation.setText(address);
-
             tvLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -114,14 +116,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void autocompleteOnlcick(String str) {
-
-
+    private void autoCompleteOnClick(String str) {
         String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
         String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
         String Area = preferenceManager.getPreferenceValues(preferenceManager.PREF_AREA);
         //  String str = search.getText().toString().trim();
         if (!TextUtils.isEmpty(str)) {
+
             Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search(userId, Area, city, str);
             call.enqueue(new Callback<JsonResponseSearch>() {
                 @Override
@@ -134,7 +135,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                             link.putParcelableArrayListExtra("searchItem", (ArrayList<? extends Parcelable>) lp);
                             startActivity(link);
                             lp.clear();
-
                         }
                     }
                 }
@@ -151,12 +151,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void clearsearch() {
-
+    private void clearSearch() {
         search.setText("");
     }
 
-    private void autosearch() {
+    private void autoSearch() {
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId,
@@ -210,32 +209,32 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private void setDataResultActivity() {
         preferenceManager = new PreferenceManager(SearchActivity.this);
-
         String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
         String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
         String Area = preferenceManager.getPreferenceValues(preferenceManager.PREF_AREA);
         String str = search.getText().toString().trim();
         if (!TextUtils.isEmpty(str)) {
+            showProgressDialog("Please Wait...", false);
             Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search(userId, Area, city, str);
             call.enqueue(new Callback<JsonResponseSearch>() {
                 @Override
                 public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
+                    cancelProgressDialog();
                     if (response.isSuccessful()) {
                         //if(response.body().getData().size()>0) {
                         lp.addAll(response.body().getData());//Always addall for arraylist
-                        if (lp.size() > 0) {
-                            Intent link = new Intent(SearchActivity.this, SearchResultActivity.class);
-                            link.putParcelableArrayListExtra("searchItem", (ArrayList<? extends Parcelable>) lp);
-                            startActivity(link);
-                            lp.clear();
-
-                        }
+                        // if (lp.size() > 0) {
+                        Intent link = new Intent(SearchActivity.this, SearchResultActivity.class);
+                        link.putParcelableArrayListExtra(ApplicationData.SEARCH_RESULT, (ArrayList<? extends Parcelable>) lp);
+                        startActivity(link);
+                        lp.clear();
+                        // }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<JsonResponseSearch> call, Throwable t) {
-
+                    cancelProgressDialog();
                 }
             });
         } else {
@@ -248,7 +247,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void insert() {
         adapter = new HistoryAdapter(this);
         String history = search.getText().toString();
-
         if (!TextUtils.isEmpty(history)) {
             long val = adapter.insertDetails(history);
             //  Toast.makeText(getApplicationContext(), Long.toString(val), Toast.LENGTH_SHORT).show();
@@ -282,26 +280,27 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 String Area = preferenceManager.getPreferenceValues(preferenceManager.PREF_AREA);
 
                 if (!TextUtils.isEmpty(str)) {
+                    showProgressDialog("Please Wait...", false);
                     Call<JsonResponseSearch> call = ApiClientMain.getApiClient().search(userId, Area, city, str);
                     call.enqueue(new Callback<JsonResponseSearch>() {
                         @Override
                         public void onResponse(Call<JsonResponseSearch> call, final Response<JsonResponseSearch> response) {
+                            cancelProgressDialog();
                             if (response.isSuccessful()) {
                                 //if(response.body().getData().size()>0) {
                                 lp.addAll(response.body().getData());//Always addall for arraylist
-                                if (lp.size() > 0) {
-                                    Intent link = new Intent(SearchActivity.this, SearchResultActivity.class);
-                                    link.putParcelableArrayListExtra("searchItem", (ArrayList<? extends Parcelable>) lp);
-                                    startActivity(link);
-                                    lp.clear();
-
-                                }
+                                //if (lp.size() > 0) {
+                                Intent link = new Intent(SearchActivity.this, SearchResultActivity.class);
+                                link.putParcelableArrayListExtra(ApplicationData.SEARCH_RESULT, (ArrayList<? extends Parcelable>) lp);
+                                startActivity(link);
+                                lp.clear();
+                                // }
                             }
                         }
 
                         @Override
                         public void onFailure(Call<JsonResponseSearch> call, Throwable t) {
-
+                            cancelProgressDialog();
                         }
                     });
                 } else {
@@ -323,7 +322,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_clear:
-                clearsearch();
+                clearSearch();
                 break;
             case R.id.ivBack:
                 onBackPressed();

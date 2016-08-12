@@ -1,6 +1,7 @@
 package com.ct.fitorto;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.IntentCompat;
@@ -42,5 +43,26 @@ public class CommonFunction {
     public boolean checkFirstRun() {
         boolean isFirstRun = activity.getSharedPreferences("myPreference", activity.MODE_PRIVATE).getBoolean("isFirstRun", true);
         return isFirstRun;
+    }
+
+    public static void showProgressDialog(ProgressDialog mProgressDialog,Activity activity,String message,Boolean cancelable){
+        mProgressDialog = new ProgressDialog(activity);
+        mProgressDialog.setMessage(String.valueOf(message));
+        mProgressDialog.setCancelable(cancelable);
+        mProgressDialog.show();
+    }
+
+    public static void cancelProgressDialog(ProgressDialog mProgressDialog){
+        try {
+            if ((mProgressDialog != null) &&mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            mProgressDialog = null;
+        }
     }
 }

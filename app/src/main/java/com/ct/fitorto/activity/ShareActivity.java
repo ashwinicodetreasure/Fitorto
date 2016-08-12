@@ -257,7 +257,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
                     new OnRevealAnimationListener() {
                         @Override
                         public void onRevealHide() {
-                            //  finishThis();
+                               finishThis();
                         }
 
                         @Override

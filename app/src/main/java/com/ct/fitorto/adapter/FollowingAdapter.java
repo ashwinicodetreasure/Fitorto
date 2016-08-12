@@ -161,7 +161,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.View
                     } catch (final Exception e) {
                         // Handle or log or ignore
                     } finally {
-                        mProgressDialog = null;
+                        //mProgressDialog = null;
                     }
                     if (response.body() != null) {
                         if (response.body().getStatus().equals("1")) {

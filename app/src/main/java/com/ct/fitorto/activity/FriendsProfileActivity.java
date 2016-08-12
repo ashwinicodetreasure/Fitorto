@@ -55,12 +55,12 @@ public class FriendsProfileActivity extends BaseActivity {
     private ArrayList<Feed> feed = new ArrayList<>();
     private String str = "";
     private String friendID;
+    private FitortoUser user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.friends_profile);
         initToolbar(true);
         preferenceManager = new PreferenceManager(FriendsProfileActivity.this);
@@ -73,18 +73,21 @@ public class FriendsProfileActivity extends BaseActivity {
     /*Feed*/
     private void FeedData() {
 
-        Call<JsonResponseFeed> response = ApiClientMain.getApiClient().getResponseFedd(friendID);
+        Call<JsonResponseFeed> response = ApiClientMain.getApiClient().getUserFeed(friendID);
         response.enqueue(new Callback<JsonResponseFeed>() {
             @Override
             public void onResponse(Call<JsonResponseFeed> call, Response<JsonResponseFeed> response) {
                 if (response.isSuccessful()) {
                     JsonResponseFeed jsonResponse = response.body();
-                    feed = new ArrayList<>(jsonResponse.getData());
-                    adapter = new FeedAdapter(FriendsProfileActivity.this, feed);
-                    rview.setAdapter(adapter);
-                    pDialog.dismiss();
+                    if (jsonResponse != null) {
+                        if (jsonResponse.getData().size() > 0) {
+                            feed = new ArrayList<>(jsonResponse.getData());
+                            adapter = new FeedAdapter(FriendsProfileActivity.this, feed);
+                            rview.setAdapter(adapter);
+                        }
+                    }
                 } else {
-                    Toast.makeText(FriendsProfileActivity.this, "Error darim else onresponse", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FriendsProfileActivity.this, "Error darim else onresponse", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -97,26 +100,25 @@ public class FriendsProfileActivity extends BaseActivity {
 
     /*User data to be display*/
     private void displayProfileData() {
-
+        showProgressDialog("Please Wait...",false);
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);            //stored userid replace with static data
         Call<JsonResponseFriendsProfile> response = ApiClientMain.getApiClient().getResponseFriendProfile(userid, friendID);
-
         response.enqueue(new Callback<JsonResponseFriendsProfile>() {
 
             @Override
             public void onResponse(Call<JsonResponseFriendsProfile> call, Response<JsonResponseFriendsProfile> response) {
+                cancelProgressDialog();
                 JsonResponseFriendsProfile resp = response.body();
                 if (resp != null) {
                     updateFriendProfile(resp);
                     //checking if response is not null
-
                 }
             }
 
             @Override
             public void onFailure(Call<JsonResponseFriendsProfile> call, Throwable t) {
-                Log.d("Error", "failed");
-                Toast.makeText(FriendsProfileActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                cancelProgressDialog();
+                Toast.makeText(FriendsProfileActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -124,7 +126,7 @@ public class FriendsProfileActivity extends BaseActivity {
 
     private void updateFriendProfile(JsonResponseFriendsProfile resp) {
         if (resp.getData().size() > 0) {
-            FitortoUser user = resp.getData().get(0);           //retrieving user data
+            user = resp.getData().get(0);           //retrieving user data
             if (user != null) {
                 if (!TextUtils.isEmpty(user.getProfilePic())) {
                     Picasso.with(getApplicationContext())
@@ -204,10 +206,10 @@ public class FriendsProfileActivity extends BaseActivity {
         rview = (RecyclerView) findViewById(R.id.discover_recycler);
         rview.setHasFixedSize(true);
         rview.setLayoutManager(llayout);
-        pDialog = new ProgressDialog(FriendsProfileActivity.this);
+       /* pDialog = new ProgressDialog(FriendsProfileActivity.this);
 
         pDialog.setMessage("loading ...");
-        pDialog.show();
+        pDialog.show();*/
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,10 +247,9 @@ public class FriendsProfileActivity extends BaseActivity {
     private void follow() {
         showProgressDialog("Please wait..", false);
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
-        String str1 = edit.getText().toString();
-        if (str1.equals("follow")) {
+        if (user.getIsFollowing().equals("1")) {
             str = "0";
-        } else {
+        } else if (user.getIsFollowing().equals("0")) {
             str = "1";
         }
         Call<JsonResponseFollow> response = ApiClientMain.getApiClient().getResponseFollow(userid, friendID, str);
@@ -258,11 +259,16 @@ public class FriendsProfileActivity extends BaseActivity {
                 cancelProgressDialog();
                 JsonResponseFollow resp = response.body();
                 if (resp != null) {
-                    if (!resp.getStatus().equals("1")) {
+                    if (resp.getMsg().contains("unfollowed")) {
+                        edit.setText("Follow");
+                    } else {
+                        edit.setText("Unfollow");
+                    }
+                   /* if (!resp.getStatus().equals("1")) {
                         edit.setText("Follow");
                     } else if (!resp.getStatus().equals("0")) {
                         edit.setText("unFollow");
-                    }
+                    }*/
                 }
             }
 
