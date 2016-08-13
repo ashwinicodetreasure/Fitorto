@@ -33,10 +33,7 @@
         app:elevation="0dp"
         app:fabSize="normal"
         app:pressedTranslationZ="8dp" />
-<ScrollView
-    android:layout_width="match_parent"
 
-    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/llShareContent"
@@ -87,7 +84,6 @@
     </LinearLayout>
 
 
-</ScrollView>
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="fill_parent"

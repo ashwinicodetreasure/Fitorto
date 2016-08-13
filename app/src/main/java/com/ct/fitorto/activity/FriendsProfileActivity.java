@@ -56,6 +56,7 @@ public class FriendsProfileActivity extends BaseActivity {
     private String str = "";
     private String friendID;
     private FitortoUser user;
+    private TextView post;
 
 
     @Override
@@ -81,6 +82,7 @@ public class FriendsProfileActivity extends BaseActivity {
                     JsonResponseFeed jsonResponse = response.body();
                     if (jsonResponse != null) {
                         if (jsonResponse.getData().size() > 0) {
+                            post.setText(""+jsonResponse.getCount());
                             feed = new ArrayList<>(jsonResponse.getData());
                             adapter = new FeedAdapter(FriendsProfileActivity.this, feed);
                             rview.setAdapter(adapter);
@@ -152,23 +154,23 @@ public class FriendsProfileActivity extends BaseActivity {
                     userstatus.setText("No Status");
                 }
 
-                if (!TextUtils.isEmpty(String.valueOf(user.getFollowersCount()))) {
-                    String str = String.valueOf(user.getFollowersCount());
+                if (!TextUtils.isEmpty(String.valueOf(resp.getFollowersCount()))) {
+                    String str = String.valueOf(resp.getFollowersCount());
                     if (str.equals("null")) {
                         followers.setText("0");
                     } else {
-                        followers.setText(String.valueOf(user.getFollowersCount()));
+                        followers.setText(String.valueOf(resp.getFollowersCount()));
                     }
                 } else {
                     followers.setText("0");
                 }
 
-                if (!TextUtils.isEmpty(String.valueOf(user.getFollowingCount()))) {
-                    String str = String.valueOf(user.getFollowingCount());
+                if (!TextUtils.isEmpty(String.valueOf(resp.getFollowingCount()))) {
+                    String str = String.valueOf(resp.getFollowingCount());
                     if (str.equals("null")) {
                         following.setText("0");
                     } else {
-                        following.setText(String.valueOf(user.getFollowingCount()));
+                        following.setText(String.valueOf(resp.getFollowingCount()));
                     }
                 } else {
                     following.setText("0");
@@ -189,13 +191,13 @@ public class FriendsProfileActivity extends BaseActivity {
 
     /*All Register componets*/
     private void initView() {
-        followers = (TextView) findViewById(R.id.followers);
-        following = (TextView) findViewById(R.id.following);
         profile = (CircleImageView) findViewById(R.id.profile_image);
         username = (TextView) findViewById(R.id.user_name);
         userstatus = (TextView) findViewById(R.id.user_status);
         edit = (TextView) findViewById(R.id.editbtn);
-
+        post = (TextView) findViewById(R.id.post);
+        followers= (TextView) findViewById(R.id.followers);
+        following= (TextView) findViewById(R.id.following);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

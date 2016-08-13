@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Ashwini on 6/28/2016.
  */
 public class JsonResponseFriendsProfile {
+
     @SerializedName("status")
     @Expose
     private String status;
@@ -21,7 +22,7 @@ public class JsonResponseFriendsProfile {
     private int count;
     @SerializedName("data")
     @Expose
-    private List<FitortoUser> data = new ArrayList<FitortoUser>();
+    private ArrayList<FitortoUser> data = new ArrayList<FitortoUser>();
     @SerializedName("followersCount")
     @Expose
     private int followersCount;
@@ -80,14 +81,14 @@ public class JsonResponseFriendsProfile {
     /**
      * @return The data
      */
-    public List<FitortoUser> getData() {
+    public ArrayList<FitortoUser> getData() {
         return data;
     }
 
     /**
      * @param data The data
      */
-    public void setData(List<FitortoUser> data) {
+    public void setData(ArrayList<FitortoUser> data) {
         this.data = data;
     }
 

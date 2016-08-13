@@ -319,6 +319,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         //Toast.makeText(MainActivity.this, response.getName(), Toast.LENGTH_LONG).show();
                         if (response != null) {
+                            String imagelink = "https://graph.facebook.com/" + response.getId() + "/picture?type=large";
                             if (!TextUtils.isEmpty(response.getEmail())) {
                                 preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL, response.getEmail());
                             }
@@ -329,7 +330,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_GENDER, response.getGender());
                             }
                             if (!TextUtils.isEmpty(response.getPicture())) {
-                                preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK, response.getPicture().toString());
+                                preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK, imagelink);
                             }
                             socialLogin();
                         }

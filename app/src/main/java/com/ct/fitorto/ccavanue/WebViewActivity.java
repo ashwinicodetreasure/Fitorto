@@ -85,7 +85,7 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair(AvenuesParams.ACCESS_CODE, mainIntent.getStringExtra(AvenuesParams.ACCESS_CODE)));
                 params.add(new BasicNameValuePair(AvenuesParams.ORDER_ID, mainIntent.getStringExtra(AvenuesParams.ORDER_ID)));
-
+                params.add(new BasicNameValuePair("Merchant_Id", "102491"));
                 String vResponse = sh.makeServiceCall(mainIntent.getStringExtra(AvenuesParams.RSA_KEY_URL), ServiceHandler.POST, params);
                 System.out.println(vResponse);
                 if (!ServiceUtility.chkNull(vResponse).equals("")
@@ -153,7 +153,7 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(myBrowser, url);
 
-                    if(url.indexOf("/ccavResponseHandler.jsp")!=-1){
+                    if(url.indexOf("/ccavResponseHandler.php")!=-1){
                         myBrowser.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     }
 

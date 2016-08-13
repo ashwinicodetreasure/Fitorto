@@ -257,7 +257,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
                     new OnRevealAnimationListener() {
                         @Override
                         public void onRevealHide() {
-                               finishThis();
+                            finishThis();
                         }
 
                         @Override
@@ -322,8 +322,14 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
             RequestBody link = ApiClientMain.getStringRequestBody(this.link);
 
             RequestBody flag = ApiClientMain.getStringRequestBody("1");
+            RequestBody image = null;
+            if (!TextUtils.isEmpty(picturePath)) {
+                image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
+            } else {
+//                image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), "");
+                image = null;
+            }
 
-            RequestBody image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
             Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseFeed(id, content, link, flag, image);
             response.enqueue(new Callback<JsonResponseAddFeed>() {
                 @Override
