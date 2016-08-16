@@ -21,4 +21,6 @@ public class ApplicationData {
     public static final String FEED = "feed";
     public static final String FITNESS_CENTER_DETAILS = "fitness_center_details";
     public static final String NOTIFICATION_BADGE_COUNT = "notification_badge";
+    public static final String STATUS = "status";
+    public static final int REQUEST_CODE_STATUS = 769;
 }

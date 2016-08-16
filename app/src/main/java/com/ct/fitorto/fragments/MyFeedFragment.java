@@ -40,14 +40,13 @@ public class MyFeedFragment extends BaseFragment {
     private FloatingActionButton fab;
     private FeedAdapter adapter;
     private RecyclerView rview;
-    private ProgressDialog pDialog;
     private PreferenceManager preferenceManager;
     private ArrayList<Feed> feed = new ArrayList<>();
     private LinearLayout empty_view;
     private ImageView ivNoInterNet;
     private TextView tvEmpty;
     private ImageButton ivRetry;
-
+    private Call<JsonResponseFeed> response;
     public MyFeedFragment() {
         // Required empty public constructor
     }
@@ -100,7 +99,7 @@ public class MyFeedFragment extends BaseFragment {
                 tvEmpty.setVisibility(View.GONE);
                 ivNoInterNet.setVisibility(View.GONE);
 
-                Call<JsonResponseFeed> response = ApiClientMain.getApiClient().getUserFeed(userId);
+                response = ApiClientMain.getApiClient().getUserFeed(userId);
                 response.enqueue(new Callback<JsonResponseFeed>() {
                     @Override
                     public void onResponse(Call<JsonResponseFeed> call, Response<JsonResponseFeed> response) {
@@ -123,7 +122,6 @@ public class MyFeedFragment extends BaseFragment {
                     }
                     @Override
                     public void onFailure(Call<JsonResponseFeed> call, Throwable t) {
-                        pDialog.dismiss();
                         empty_view.setVisibility(View.VISIBLE);
                         tvEmpty.setVisibility(View.VISIBLE);
                         tvEmpty.setText("Something went wrong.Please try again");
@@ -150,6 +148,15 @@ public class MyFeedFragment extends BaseFragment {
                     }
                 });
             }
+        }
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(response!=null){
+            response.cancel();
         }
     }
 }

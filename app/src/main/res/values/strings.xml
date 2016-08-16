@@ -63,4 +63,6 @@
     <string name="rsa_url">RSA Key Url</string>
     <string name="access_code">Access Code</string>
     <string name="title_activity_status">CCAvenueMobile</string>
+    <string name="action_status">Status</string>
+    <string name="txt_current_status">Your Current Status</string>
 </resources>

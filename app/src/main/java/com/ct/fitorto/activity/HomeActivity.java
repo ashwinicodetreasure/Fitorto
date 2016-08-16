@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment fr = null;
     private TextView tvTitle;
     private TextView tvNotificationBadge;
-    private int badgeNumber=0;
+    private int badgeNumber = 0;
     private PreferenceManager manager;
 
 
@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        tvTitle= (TextView) toolbar.findViewById(R.id.tvTitle);
+        tvTitle = (TextView) toolbar.findViewById(R.id.tvTitle);
         tvTitle.setText("Discover");
         fr = new DiscoverFragment();
         fm = getSupportFragmentManager();
@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ft.replace(R.id.show_fragment, fr);
         ft.commit();
 
-        manager=new PreferenceManager(this);
+        manager = new PreferenceManager(this);
         feed = (LinearLayout) findViewById(R.id.feed);
         feed.setOnClickListener(this);
 
@@ -125,7 +125,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.discover_menu, menu);
         MenuItem notification = menu.findItem(R.id.notification);
-        View view =   MenuItemCompat.getActionView(notification);
+        View view = MenuItemCompat.getActionView(notification);
         tvNotificationBadge = (TextView) view.findViewById(R.id.hotlist_hot);
         new MyMenuItemStuffListener(view, "Show hot message") {
             @Override
@@ -136,6 +136,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         };
         return true;
     }
+
     // call the updating code on the main thread,
 // so we can call this asynchronously
     public void updateHotCount(final int new_badgeNumber) {
@@ -163,7 +164,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onResponse(Call<JsonResponseNotification> call, Response<JsonResponseNotification> response) {
                     if (response.body() != null) {
-                         updateNotificationCount(response.body().getCount());
+                        updateNotificationCount(response.body().getCount());
                     }
                 }
 
@@ -176,10 +177,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateNotificationCount(int count) {
-        int previousCount=manager.getPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT);
-        int notificationCount=count-previousCount;
-        manager.putPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT,count);
-        badgeNumber=notificationCount;
+        int previousCount = manager.getPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT);
+        int notificationCount = count - previousCount;
+        manager.putPreferenceIntValues(ApplicationData.NOTIFICATION_BADGE_COUNT, count);
+        badgeNumber = notificationCount;
         updateHotCount(badgeNumber);
     }
 
@@ -191,12 +192,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-
-        if (id == R.id.notification) {
-            Intent i = new Intent(HomeActivity.this, NotificationActivity.class);
-            startActivityForResult(i, ApplicationData.REQUEST_CODE_NOTIFICATION);
+        switch (id) {
+            case R.id.notification:
+                Intent i = new Intent(HomeActivity.this, NotificationActivity.class);
+                startActivityForResult(i, ApplicationData.REQUEST_CODE_NOTIFICATION);
+                break;
+            case R.id.action_status:
+                Intent intent = new Intent(HomeActivity.this, ChangeStatusActivity.class);
+                startActivityForResult(intent, ApplicationData.REQUEST_CODE_STATUS);
+                break;
+            case R.id.action_setting:
+                /*Intent intent1 = new Intent(HomeActivity.this, ChangeStatusActivity.class);
+                startActivityForResult(intent1, ApplicationData.REQUEST_CODE_STATUS);*/
+                break;
 
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -294,7 +305,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     static abstract class MyMenuItemStuffListener implements View.OnClickListener, View.OnLongClickListener {
         private String hint;
         private View view;
@@ -306,9 +316,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             view.setOnLongClickListener(this);
         }
 
-        @Override abstract public void onClick(View v);
+        @Override
+        abstract public void onClick(View v);
 
-        @Override public boolean onLongClick(View v) {
+        @Override
+        public boolean onLongClick(View v) {
             final int[] screenPos = new int[2];
             final Rect displayFrame = new Rect();
             view.getLocationOnScreen(screenPos);

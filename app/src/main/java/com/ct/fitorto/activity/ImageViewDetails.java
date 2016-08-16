@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -95,7 +96,21 @@ public class ImageViewDetails extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        onBackPressed();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        onBackPressed();
+                        break;
+                }
+                return true;
 
+            }
+        });
     }
 
     private void initView() {
