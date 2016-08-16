@@ -3,26 +3,28 @@
     <item
         android:id="@+id/notification"
         android:icon="@drawable/ic_action_notification"
-        app:actionLayout="@layout/action_bar_notification_icon"
         android:orderInCategory="3"
         android:title="Notification"
+        app:actionLayout="@layout/action_bar_notification_icon"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_more"
         android:orderInCategory="100"
-        app:showAsAction="never" >
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom">
 
         <menu>
-            <item android:id="@+id/action_status"
-                android:icon="@android:drawable/ic_menu_preferences"
-                app:showAsAction="ifRoom"
-                android:title="@string/action_status" />
+            <item
+                android:id="@+id/action_status"
+                android:title="@string/action_status"
+                app:showAsAction="ifRoom" />
 
-            <item android:id="@+id/action_setting"
-                android:icon="@android:drawable/ic_menu_help"
-                app:showAsAction="ifRoom"
-                android:title="@string/action_settings" />
+            <item
+                android:id="@+id/action_setting"
+                android:title="@string/action_settings"
+                app:showAsAction="ifRoom" />
 
         </menu>
     </item>

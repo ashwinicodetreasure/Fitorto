@@ -39,18 +39,24 @@
     <string name="txt_package">Select Package</string>
     <string name="txt_price">Select Duration</string>
 
-    <array name="package_months">
+    <string-array name="package_months">
         <item>One Month</item>
         <item>Three Month</item>
         <item>Six Month</item>
         <item>Yearly</item>
-    </array>
+    </string-array>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string-array name="selectAction">
         <item>Resend OTP</item>
         <item>Enter OTP Manually</item>
+    </string-array>
+
+    <string-array name="selectGender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Not Specified</item>
     </string-array>
     <string name="title_activity_initial">CCAvenueMobile</string>
     <string name="title_activity_web_view">WebViewActivity</string>
@@ -65,4 +71,5 @@
     <string name="title_activity_status">CCAvenueMobile</string>
     <string name="action_status">Status</string>
     <string name="txt_current_status">Your Current Status</string>
+    <string name="txt_gender">Select Gender</string>
 </resources>

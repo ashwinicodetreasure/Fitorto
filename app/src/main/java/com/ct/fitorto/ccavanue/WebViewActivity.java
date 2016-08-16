@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,9 +43,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-
-
-public class WebViewActivity extends ActionBarActivity implements  Communicator {
+public class WebViewActivity extends AppCompatActivity implements  Communicator {
 
     WebView myBrowser;
     WebSettings webSettings;

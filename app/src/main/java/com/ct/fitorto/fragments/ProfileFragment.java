@@ -38,6 +38,7 @@ import com.ct.fitorto.model.JsonResponseUserProfile;
 import com.ct.fitorto.model.ProgressDetail;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -189,6 +190,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 }
 
                 if (!TextUtils.isEmpty(user.getStatus())) {
+                    preferenceManager.putPreferenceValues(ApplicationData.STATUS,user.getStatus());
                     userstatus.setText(user.getStatus());
                 } else {
                     userstatus.setText("No Status");

@@ -11,14 +11,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.baseclass.BaseActivity;
 import com.ct.fitorto.model.FitortoUser;
 import com.ct.fitorto.model.JsonResponseUserProfile;
 import com.ct.fitorto.model.JsonResponseUserUpdate;
+import com.ct.fitorto.model.Package;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
 
@@ -29,113 +34,86 @@ import retrofit2.Response;
 /**
  * Created by Ashwini on 6/27/2016.
  */
-public class EditUserProfileActivity extends AppCompatActivity {
+public class EditUserProfileActivity extends BaseActivity {
     // private Spinner genderspinner;
     private PreferenceManager preferenceManager;
-    private EditText edname, edstatus, edphone, edgender;
+    private EditText edtName, edstatus, edphone;
+    private Spinner spGender;
     private TextView edemail;
+    private String gender;
 
     //private String[] state = {"Male", "Female"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.edit_user_profile);
-        setToolabar();
+        initToolbar(true);
         preferenceManager = new PreferenceManager(EditUserProfileActivity.this);
-        RegisterComponent();
-        // genderSelection();
-        displaydata();
-        //updatedata();
-
-
+        initView();
+        initDataSet();
+        genderSelection();
     }
 
-    private void updatedata() {
+    private void updateData() {
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
-        //String fullname=edfullname.getText().toString();
-        String name = edname.getText().toString();
-//            String url=edurl.getText().toString();
+        String name = edtName.getText().toString();
         String status = edstatus.getText().toString();
-        //String mail=edemail.getText().toString();
         String phone = edphone.getText().toString();
-        String gender = edgender.getText().toString();
-
-
+        showProgressDialog("Please Wait...", false);
         Call<JsonResponseUserUpdate> response = ApiClientMain.getApiClient().getResponseUserUpdate(userid, name, phone, "", gender, "", "", status);
-
         response.enqueue(new Callback<JsonResponseUserUpdate>() {
-
             @Override
             public void onResponse(Call<JsonResponseUserUpdate> call, Response<JsonResponseUserUpdate> response) {
                 JsonResponseUserUpdate resp = response.body();
+                cancelProgressDialog();
                 //for (FitortoUser user : resp.getData())  this code check for each
                 if (resp != null) {
                     if (resp.equals(1)) {
-
-                        Toast.makeText(EditUserProfileActivity.this, "Udated Sucessfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditUserProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(EditUserProfileActivity.this, resp.getMsg(), Toast.LENGTH_SHORT).show();
-
                     }
                 }
-
             }
 
             @Override
             public void onFailure(Call<JsonResponseUserUpdate> call, Throwable t) {
-
-
-                Log.d("Error", "failed");
-                Toast.makeText(EditUserProfileActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-
+                cancelProgressDialog();
             }
         });
-
-
     }
 
 
-    private void RegisterComponent() {
-        edgender = (EditText) findViewById(R.id.gender);
-        //edfullname=(EditText)findViewById(R.id.fullname);
-        edname = (EditText) findViewById(R.id.name);
-        //edurl=(EditText)findViewById(R.id.link);
+    private void initView() {
+        spGender = (Spinner) findViewById(R.id.gender);
+        edtName = (EditText) findViewById(R.id.name);
         edstatus = (EditText) findViewById(R.id.status);
         edemail = (TextView) findViewById(R.id.mail);
         edphone = (EditText) findViewById(R.id.phone);
     }
 
-    private void displaydata() {
-
+    private void initDataSet() {
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        showProgressDialog("Please Wait...", false);
         Call<JsonResponseUserProfile> response = ApiClientMain.getApiClient().getResponseUserprofile(userid);
-
         response.enqueue(new Callback<JsonResponseUserProfile>() {
-
             @Override
             public void onResponse(Call<JsonResponseUserProfile> call, Response<JsonResponseUserProfile> response) {
+                cancelProgressDialog();
                 JsonResponseUserProfile resp = response.body();
                 //for (FitortoUser user : resp.getData())  this code check for each
-
                 if (resp != null) {        //checking if response is not null
                     if (resp.getData().size() > 0) {
                         FitortoUser user = resp.getData().get(0);           //retrieving user data
-
                         if (user != null) {
-
-
                           /*  if (!TextUtils.isEmpty(user.getName())) {
                                 edfullname.setText(user.getName());
                             }*/
-
                             if (!TextUtils.isEmpty(user.getName())) {
-                                edname.setText(user.getName());
-
+                                edtName.setText(user.getName());
                             } else {
-                                edname.setText("No name");
+                                edtName.setText("No name");
 
                             }
 
@@ -158,117 +136,65 @@ public class EditUserProfileActivity extends AppCompatActivity {
                             }
 
                             if (!TextUtils.isEmpty(user.getGender())) {
-                                edgender.setText(user.getGender());
-                            } else {
-                                edgender.setText("update");
+                                setGenderDropDown(user.getGender());
                             }
                         }
-
                     }
-
-
                 }
-
             }
 
             @Override
             public void onFailure(Call<JsonResponseUserProfile> call, Throwable t) {
+                cancelProgressDialog();
+                //  Log.d("Error", "failed");
+                // Toast.makeText(EditUserProfileActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    private void genderSelection() {
+        ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(EditUserProfileActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.selectGender));
+        adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spGender.setAdapter(adapter_state);
+        spGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gender = (String) spGender.getSelectedItem();
+            }
 
-                Log.d("Error", "failed");
-                Toast.makeText(EditUserProfileActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
-
-
     }
 
-   /* private void genderSelection() {
-        ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(EditUserProfileActivity.this, android.R.layout.simple_spinner_item, state);
-        adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genderspinner.setAdapter(adapter_state);
-
-    }*/
-
-    private void setToolabar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Edit Profile");
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+    public void setGenderDropDown(String gender) {
+        if (gender.equalsIgnoreCase("Male")) {
+            spGender.setSelection(0);
+        } else if (gender.equalsIgnoreCase("Female")) {
+            spGender.setSelection(1);
+        } else {
+            spGender.setSelection(2);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_update, menu);
-        MenuItem mi = (MenuItem) findViewById(R.id.edit);
-
+        MenuItem mi = (MenuItem) findViewById(R.id.action_done);
         return true;
     }
 
-    public void dailog() {
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditUserProfileActivity.this);
-
-        // Setting Dialog Title
-        alertDialog.setTitle("Update Profile...");
-
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want update!");
-
-        // Setting Icon to Dialog
-        //  alertDialog.setIcon(R.drawable.ic_yes);
-
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Write your code here to invoke YES event
-
-            }
-        });
-
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                // Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
-                dialog.cancel();
-            }
-        });
-
-        // Showing Alert Message
-        alertDialog.show();
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         switch (item.getItemId()) {
-
-            case R.id.edit:
-                //dailog();
-                updatedata();
+            case R.id.action_done:
+                updateData();
                 break;
-
-
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

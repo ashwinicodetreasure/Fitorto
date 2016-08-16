@@ -1,12 +1,14 @@
 package com.ct.fitorto.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -69,6 +71,10 @@ public class ChangeStatusActivity extends BaseActivity implements AdapterView.On
         ibEdit= (ImageButton) findViewById(R.id.ibEdit);
         lvStatus= (ListView) findViewById(R.id.lvStatus);
         manager=new PreferenceManager(this);
+        ibEdit.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil));
+        edtStatus.setFocusable(false);
+        edtStatus.setFocusableInTouchMode(false);
+        edtStatus.setClickable(false);
     }
 
     @Override
@@ -95,6 +101,12 @@ public class ChangeStatusActivity extends BaseActivity implements AdapterView.On
         }else {
             String status=edtStatus.getText().toString();
             if(!TextUtils.isEmpty(status)){
+                View focusView = this.getCurrentFocus();
+                if (focusView != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                }
+                edtStatus.setText(status);
                 manager.putPreferenceValues(ApplicationData.STATUS,status);
                 ibEdit.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil));
                 edtStatus.setFocusable(false);
