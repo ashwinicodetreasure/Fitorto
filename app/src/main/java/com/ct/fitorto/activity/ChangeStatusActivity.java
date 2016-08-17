@@ -13,14 +13,21 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.StatusAdapter;
 import com.ct.fitorto.baseclass.BaseActivity;
 import com.ct.fitorto.model.FitortoStatus;
+import com.ct.fitorto.model.JsonResponseFollow;
+import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -80,8 +87,7 @@ public class ChangeStatusActivity extends BaseActivity implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         FitortoStatus status=statusArrayList.get(i);
-        manager.putPreferenceValues(ApplicationData.STATUS,status.getStatus());
-        finishThis();
+        updateStatus(status.getStatus());
     }
 
     private void finishThis() {
@@ -107,15 +113,41 @@ public class ChangeStatusActivity extends BaseActivity implements AdapterView.On
                     imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
                 }
                 edtStatus.setText(status);
-                manager.putPreferenceValues(ApplicationData.STATUS,status);
+                //manager.putPreferenceValues(ApplicationData.STATUS,status);
                 ibEdit.setImageDrawable(getResources().getDrawable(R.drawable.ic_pencil));
                 edtStatus.setFocusable(false);
                 edtStatus.setFocusableInTouchMode(false);
                 edtStatus.setClickable(false);
                 isEditable= false;
+                updateStatus(status);
             }else{
                 edtStatus.setError("Please write something");
             }
         }
+    }
+
+
+    public void updateStatus(final String status){
+        showProgressDialog("Please wait..",false);
+        String userId=manager.getPreferenceValues(manager.PREF_USER_UserId);
+        Call<JsonResponseFollow> call=ApiClientMain.getApiClient().updateStatus(userId,status);
+        call.enqueue(new Callback<JsonResponseFollow>() {
+            @Override
+            public void onResponse(Call<JsonResponseFollow> call, Response<JsonResponseFollow> response) {
+                cancelProgressDialog();
+                if(response.body()!=null){
+                    if(response.body().getStatus().equals("1")){
+                        manager.putPreferenceValues(ApplicationData.STATUS,status);
+                        finishThis();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponseFollow> call, Throwable t) {
+                cancelProgressDialog();
+                Toast.makeText(ChangeStatusActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

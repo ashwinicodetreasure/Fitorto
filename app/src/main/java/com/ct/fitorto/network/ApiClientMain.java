@@ -229,6 +229,18 @@ public class ApiClientMain {
                                          @Field("ammount") String amount,
                                          @Field("joiningDate") String joiningDate);
 
+        @FormUrlEncoded
+        @POST("updateStatus.php")
+        Call<JsonResponseFollow> updateStatus(@Field("userID") String userID,
+                                              @Field("status") String status);
+
+        @FormUrlEncoded
+        @POST("addProgress.php")
+        Call<JsonResponseFollow> addProgress(@Field("userID") String userID,
+                                             @Field("category") String category,
+                                             @Field("value") String value,
+                                             @Field("unit") String unit);
+
     }
 
     public static RequestBody getStringRequestBody(String s) {

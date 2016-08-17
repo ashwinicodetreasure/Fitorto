@@ -62,7 +62,7 @@ public class FriendsFragment extends BaseFragment {
         if (ApplicationUtility.checkConnection(getActivity())) {
             showProgressDialog("Please wait...", false);
             String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
-            Call<JsonResponseFriends> response = ApiClientMain.getApiClient().getFriendsList(userId); // TODO Replace dummy data
+            Call<JsonResponseFriends> response = ApiClientMain.getApiClient().getFriendsList(userId);
             response.enqueue(new Callback<JsonResponseFriends>() {
                 @Override
                 public void onResponse(Call<JsonResponseFriends> call, Response<JsonResponseFriends> response) {

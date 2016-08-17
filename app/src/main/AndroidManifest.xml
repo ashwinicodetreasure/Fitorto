@@ -136,6 +136,13 @@
         </activity>
 
         <activity
+            android:name=".activity.FollowersActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
             android:name=".ccavanue.StatusActivity"
             android:label="@string/title_activity_status" >
         </activity>

@@ -116,9 +116,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-
         return (position == cardlist.size()) ? Footer : Normal;
-
     }
 
 

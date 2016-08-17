@@ -58,6 +58,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.ViewHo
             tvUserName = (TextView) v.findViewById(R.id.tvUserName);
             ivUserPics = (ImageView) v.findViewById(R.id.ivUserPics);
             btnFollow = (Button) v.findViewById(R.id.btnFollow);
+            tvStatus= (TextView) v.findViewById(R.id.tvStatus);
         }
 
 

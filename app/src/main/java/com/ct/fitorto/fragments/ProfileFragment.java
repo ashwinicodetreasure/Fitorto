@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.ct.fitorto.R;
 
 import com.ct.fitorto.activity.EditUserProfileActivity;
+import com.ct.fitorto.activity.FollowersActivity;
 import com.ct.fitorto.activity.LoginActivity;
 import com.ct.fitorto.baseclass.BaseFragment;
 import com.ct.fitorto.model.Detail;
@@ -84,6 +85,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     public RelativeLayout rlEmptyView;
     private AppBarLayout appbar;
     private TextView btnLogin;
+    private FitortoUser user;
+    private JsonResponseUserProfile resp;
 
 
     public ProfileFragment() {
@@ -102,7 +105,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
         View view = inflater.inflate(R.layout.new_profile_fragment, null);
         initView(view);
-        setUserData();
+        setUserData(true);
         return view;
     }
 
@@ -112,7 +115,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         preferenceManager = new PreferenceManager(getActivity());
         //setupViewPager(viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-
         followers = (TextView) view.findViewById(R.id.followers);
         following = (TextView) view.findViewById(R.id.following);
         username = (TextView) view.findViewById(R.id.user_name);
@@ -124,12 +126,17 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         edit.setOnClickListener(this);
         profile = (CircleImageView) view.findViewById(R.id.profile_image);
         profile.setOnClickListener(this);
+        view.findViewById(R.id.llFollowing).setOnClickListener(this);
+        view.findViewById(R.id.llFollowers).setOnClickListener(this);
+
     }
 
-    public void setUserData() {     //to displaying user data
+    public void setUserData(final boolean showDialog) {     //to displaying user data
         final String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
         if (!userId.equals("0")) {
-            showProgressDialog("Please wait...", false);
+            if (showDialog) {
+                showProgressDialog("Please wait...", false);
+            }
             rlEmptyView.setVisibility(View.GONE);
             viewPager.setVisibility(View.VISIBLE);
             appbar.setVisibility(View.VISIBLE);
@@ -138,7 +145,10 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 @Override
                 public void onResponse(Call<JsonResponseUserProfile> call, Response<JsonResponseUserProfile> response) {
                     JsonResponseUserProfile resp = response.body();
-                    cancelProgressDialog();
+                    if (showDialog) {
+                        cancelProgressDialog();
+                    }
+
                     if (resp != null) {
                         updateUserData(resp);
                     }
@@ -146,9 +156,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
                 @Override
                 public void onFailure(Call<JsonResponseUserProfile> call, Throwable t) {
-                    cancelProgressDialog();
-                    //  Log.d("Error", "failed");
-                    Toast.makeText(getActivity(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    if (showDialog) {
+                        cancelProgressDialog();
+                    }
                 }
             });
         } else {
@@ -169,8 +179,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void updateUserData(JsonResponseUserProfile resp) {
+        this.resp = resp;
         if (resp.getData().size() > 0) {
-            FitortoUser user = resp.getData().get(0);           //retrieving user data
+            user = resp.getData().get(0);           //retrieving user data
             if (user != null) {
                 if (!TextUtils.isEmpty(user.getProfilePic())) {
                     Picasso.with(getActivity())
@@ -190,7 +201,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 }
 
                 if (!TextUtils.isEmpty(user.getStatus())) {
-                    preferenceManager.putPreferenceValues(ApplicationData.STATUS,user.getStatus());
+                    preferenceManager.putPreferenceValues(ApplicationData.STATUS, user.getStatus());
                     userstatus.setText(user.getStatus());
                 } else {
                     userstatus.setText("No Status");
@@ -208,13 +219,13 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     following.setText("0");
                 }
 
-                setupViewPager(viewPager,resp.getGyms(),resp.getProgress());
+                setupViewPager(viewPager, resp.getGyms(), resp.getProgress());
             }
         }
     }
 
     private void setupViewPager(ViewPager viewPager, ArrayList<Gym> gyms, ArrayList<ProgressDetail> progress) {
-        adapter.addFragment(AboutFragment.getInstance(gyms,progress), "About");
+        adapter.addFragment(AboutFragment.getInstance(gyms, progress), "About");
         adapter.addFragment(new MyFeedFragment(), "Feed");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -293,10 +304,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == b) {
-
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 Cursor c = getContext().getContentResolver().query(selectedImage, filePath, null, null, null);
@@ -306,13 +315,15 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 // Log.w("path of image from gallery......******************.........", picturePath+"");
-
                 profile.setImageBitmap(thumbnail);
                 uploadData(picturePath);
-            }
-            // onSelectFromGalleryResult(data);
-            else if (requestCode == a)
+            } else if (requestCode == a) {
                 onCaptureImageResult(data);
+            } else if (requestCode == ApplicationData.REQUEST_CODE_EDIT_PROFILE) {
+                setUserData(false);
+            } else if (requestCode == ApplicationData.REQUEST_CODE_STATUS) {
+                setUserData(false);
+            }
         }
     }
 
@@ -320,11 +331,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
         destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
-        Log.d("path", destination.toString());
-
+        //Log.d("path", destination.toString());
         FileOutputStream fo;
         try {
             destination.createNewFile();
@@ -336,7 +345,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         profile.setImageBitmap(thumbnail);
         uploadData(destination.toString());
     }
@@ -372,11 +380,20 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.editbtn:
                 Intent i = new Intent(getActivity(), EditUserProfileActivity.class);
-                startActivity(i);
+                startActivityForResult(i, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
                 break;
-
             case R.id.profile_image:
                 selectImage();
+                break;
+            case R.id.llFollowing:
+                Intent intent = new Intent(getActivity(), FollowersActivity.class);
+                intent.putExtra(ApplicationData.IS_FOLLOWER, false);
+                startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
+                break;
+            case R.id.llFollowers:
+                Intent intent1 = new Intent(getActivity(), FollowersActivity.class);
+                intent1.putExtra(ApplicationData.IS_FOLLOWER, true);
+                startActivityForResult(intent1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
                 break;
         }
     }

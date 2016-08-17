@@ -12,9 +12,7 @@ import com.ct.fitorto.R;
  * Created by Ashwini on 11/20/2015.
  */
 public class BaseActivity extends AppCompatActivity {
-
-
-
+    
     private ProgressDialog mProgressDialog;
 
     protected Toolbar initToolbar(boolean homeAsUpEnabled) {

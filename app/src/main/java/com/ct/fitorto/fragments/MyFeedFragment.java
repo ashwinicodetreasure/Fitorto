@@ -1,7 +1,9 @@
 package com.ct.fitorto.fragments;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import com.ct.fitorto.model.JsonResponseFeed;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.network.ApplicationUtility;
 import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 
 import java.util.ArrayList;
 
@@ -78,8 +81,16 @@ public class MyFeedFragment extends BaseFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ShareActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getActivity(), ShareActivity.class);
+                startActivity(intent);*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options =
+                            ActivityOptions.makeSceneTransitionAnimation(getActivity(), fab, fab.getTransitionName());
+                    getActivity().startActivityForResult(new Intent(getActivity(), ShareActivity.class), ApplicationData.FEED_REQUEST_CODE ,options.toBundle());
+                } else {
+                    Intent intent = new Intent(getActivity(), ShareActivity.class);
+                    startActivityForResult(intent, ApplicationData.FEED_REQUEST_CODE);
+                }
             }
         });
         getFeedData();

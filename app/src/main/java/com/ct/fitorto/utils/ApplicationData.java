@@ -23,4 +23,6 @@ public class ApplicationData {
     public static final String NOTIFICATION_BADGE_COUNT = "notification_badge";
     public static final String STATUS = "status";
     public static final int REQUEST_CODE_STATUS = 769;
+    public static final int REQUEST_CODE_EDIT_PROFILE = 232;
+    public static final String IS_FOLLOWER = "is_follower";
 }

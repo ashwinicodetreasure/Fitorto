@@ -1,6 +1,8 @@
 package com.ct.fitorto.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,7 @@ import com.ct.fitorto.model.JsonResponseUserUpdate;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,14 +38,13 @@ import retrofit2.Response;
  * Created by Ashwini on 6/27/2016.
  */
 public class EditUserProfileActivity extends BaseActivity {
-    // private Spinner genderspinner;
+
     private PreferenceManager preferenceManager;
-    private EditText edtName, edstatus, edphone;
+    private EditText edtName, edphone;
     private Spinner spGender;
     private TextView edemail;
     private String gender;
 
-    //private String[] state = {"Male", "Female"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,8 @@ public class EditUserProfileActivity extends BaseActivity {
 
     private void updateData() {
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        String status=preferenceManager.getPreferenceValues(ApplicationData.STATUS);
         String name = edtName.getText().toString();
-        String status = edstatus.getText().toString();
         String phone = edphone.getText().toString();
         showProgressDialog("Please Wait...", false);
         Call<JsonResponseUserUpdate> response = ApiClientMain.getApiClient().getResponseUserUpdate(userid, name, phone, "", gender, "", "", status);
@@ -69,8 +71,9 @@ public class EditUserProfileActivity extends BaseActivity {
                 cancelProgressDialog();
                 //for (FitortoUser user : resp.getData())  this code check for each
                 if (resp != null) {
-                    if (resp.equals(1)) {
+                    if (resp.getStatus()==1) {
                         Toast.makeText(EditUserProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                        finishThis();
                     } else {
                         Toast.makeText(EditUserProfileActivity.this, resp.getMsg(), Toast.LENGTH_SHORT).show();
                     }
@@ -84,11 +87,15 @@ public class EditUserProfileActivity extends BaseActivity {
         });
     }
 
+    private void finishThis() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
 
     private void initView() {
         spGender = (Spinner) findViewById(R.id.gender);
         edtName = (EditText) findViewById(R.id.name);
-        edstatus = (EditText) findViewById(R.id.status);
         edemail = (TextView) findViewById(R.id.mail);
         edphone = (EditText) findViewById(R.id.phone);
     }
@@ -115,12 +122,6 @@ public class EditUserProfileActivity extends BaseActivity {
                             } else {
                                 edtName.setText("No name");
 
-                            }
-
-                            if (!TextUtils.isEmpty(user.getStatus())) {
-                                edstatus.setText(user.getStatus());
-                            } else {
-                                edstatus.setText("No Status");
                             }
 
                             if (!TextUtils.isEmpty(user.getEmailID())) {

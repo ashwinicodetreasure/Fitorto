@@ -29,4 +29,10 @@
         <item name="android:textColorHint">@android:color/black</item>
         <item name="android:hint">@string/search_hint</item>
     </style>
+
+    <!-- Dalog styles -->
+    <style name="dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/anim_up</item>
+        <item name="android:windowExitAnimation">@anim/anim_down</item>
+    </style>
 </resources>

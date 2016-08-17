@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,30 +11,35 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:theme="@style/AppTheme.PopupOverlay" />
 
-
-    <ImageView
-        android:id="@+id/ivname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/ic_user" />
-
-    <EditText
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/v2"
-        android:layout_below="@+id/v1"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="11dp"
-        android:layout_toRightOf="@+id/ivname"
-        android:background="@color/button_default"
-        android:textSize="14sp" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:src="@drawable/ic_user" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="14dp"
+            android:background="@color/button_default"
+            android:text=" "
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+
 
     <View
         android:id="@+id/v2"
@@ -47,39 +52,6 @@
         android:background="#dbdbdb" />
 
 
-   <!-- <ImageView
-        android:id="@+id/ivstatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivname"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_user" />
-
-    <EditText
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/v4"
-        android:layout_below="@+id/v2"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="11dp"
-        android:layout_toRightOf="@+id/ivstatus"
-        android:background="@color/button_default"
-        android:maxLines="4"
-        android:textSize="14sp" />-->
-
-<!--    <View
-        android:id="@+id/v4"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_below="@+id/ivstatus"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="12dp"
-        android:background="#dbdbdb" />-->
-
     <com.ct.fitorto.custom.CustomTextView
         android:id="@+id/info"
         android:layout_width="match_parent"
@@ -88,10 +60,10 @@
         android:layout_marginLeft="18dp"
         android:layout_marginTop="22dp"
         android:fontFamily="Roboto Regular"
-        android:text="PRIVATE INFORMATION"
         android:letterSpacing="0.05"
+        android:text="PRIVATE INFORMATION"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18dp" />
 
     <View
         android:id="@+id/v5"
@@ -103,30 +75,39 @@
         android:layout_marginTop="12dp"
         android:background="#dbdbdb" />
     <!--private information-->
-    <ImageView
-        android:id="@+id/ivmail"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/v5"
-        android:layout_marginLeft="18dp"
-        android:tint="@android:color/black"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/ic_email" />
 
-    <TextView
-        android:id="@+id/mail"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/v6"
-        android:layout_below="@+id/v5"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="18dp"
-        android:layout_toRightOf="@+id/ivmail"
-        android:background="@color/button_default"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/text"
-        android:textSize="14sp" />
+        android:layout_marginTop="@dimen/margin_small"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivmail"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/v5"
+            android:layout_marginLeft="18dp"
+            android:src="@drawable/ic_email"
+            android:tint="@android:color/black" />
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/v6"
+            android:layout_below="@+id/v5"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="14dp"
+            android:layout_toRightOf="@+id/ivmail"
+            android:background="@color/button_default"
+            android:inputType="textEmailAddress"
+            android:text=" "
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+
 
     <View
         android:id="@+id/v6"
@@ -138,29 +119,37 @@
         android:layout_marginTop="12dp"
         android:background="#dbdbdb" />
 
-    <ImageView
-        android:id="@+id/ivphone"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/ivmail"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_phone_black" />
-
-    <EditText
-        android:id="@+id/phone"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/v7"
-        android:layout_below="@+id/v6"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="12dp"
-        android:layout_toRightOf="@+id/ivphone"
-        android:background="@color/button_default"
-        android:inputType="number"
-        android:textColor="@color/text"
-        android:textSize="14sp" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivphone"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/ivmail"
+            android:layout_marginLeft="18dp"
+            android:src="@drawable/ic_phone_black" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/v7"
+            android:layout_below="@+id/v6"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="14dp"
+            android:layout_toRightOf="@+id/ivphone"
+            android:background="@color/button_default"
+            android:inputType="number"
+            android:text=" "
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+
 
     <View
         android:id="@+id/v7"
@@ -172,40 +161,43 @@
         android:layout_marginTop="12dp"
         android:background="#dbdbdb" />
 
-    <ImageView
-        android:id="@+id/ivgender"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/ivphone"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_gender" />
-
-    <Spinner
-        android:id="@+id/gender"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/v8"
-        android:layout_below="@+id/v7"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="12dp"
-        android:layout_toRightOf="@+id/ivgender"
-        android:background="@color/button_default"
-        android:textColor="@color/text"
-        android:entries="@array/selectGender"
-        android:prompt="@string/txt_gender"
-        android:gravity="left"
-        android:textSize="14sp" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:orientation="horizontal">
 
-    <View
+        <ImageView
+            android:id="@+id/ivgender"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/ivphone"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="18dp"
+            android:src="@drawable/ic_gender" />
+
+        <Spinner
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="14dp"
+            android:layout_toRightOf="@+id/ivgender"
+            android:background="@color/button_default"
+            android:entries="@array/selectGender"
+            android:gravity="left"
+            android:prompt="@string/txt_gender"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+  <!--  <View
         android:id="@+id/v8"
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_below="@+id/ivgender"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:layout_marginTop="12dp"
-        android:background="#dbdbdb" />
+        android:background="#dbdbdb" />-->
 
-</RelativeLayout>
+</LinearLayout>
