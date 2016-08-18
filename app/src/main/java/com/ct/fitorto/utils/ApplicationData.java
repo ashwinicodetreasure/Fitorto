@@ -25,4 +25,8 @@ public class ApplicationData {
     public static final int REQUEST_CODE_STATUS = 769;
     public static final int REQUEST_CODE_EDIT_PROFILE = 232;
     public static final String IS_FOLLOWER = "is_follower";
+    public static final String PROGRESS_CODE = "progress_code";
+    public static final String PROGRESS_UNIT = "unit";
+    public static final String PROGRESS_CATEGORY = "Progress_category";
+    public static final int REQUEST_CODE_PROGRESS = 248;
 }

@@ -225,6 +225,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void setupViewPager(ViewPager viewPager, ArrayList<Gym> gyms, ArrayList<ProgressDetail> progress) {
+        if (adapter != null) {
+            adapter.clearAll();
+        }
         adapter.addFragment(AboutFragment.getInstance(gyms, progress), "About");
         adapter.addFragment(new MyFeedFragment(), "Feed");
         viewPager.setAdapter(adapter);
@@ -234,9 +237,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
+        private FragmentManager fragMan;
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
+            fragMan = manager;
         }
 
         @Override
@@ -258,6 +263,13 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+        public void clearAll() {
+            for (int i = 0; i < mFragmentList.size(); i++)
+                fragMan.beginTransaction().remove(mFragmentList.get(i)).commit();
+            mFragmentList.clear();
+        }
+
     }
 
     /*Selection picture from gallery and camera*/
