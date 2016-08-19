@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ct.fitorto.HistoryOpenHelper;
+import com.ct.fitorto.utils.HistoryOpenHelper;
 
 public class HistoryAdapter {
 	SQLiteDatabase database_ob;

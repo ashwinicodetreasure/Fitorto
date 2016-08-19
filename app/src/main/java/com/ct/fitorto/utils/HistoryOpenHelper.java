@@ -1,4 +1,4 @@
-package com.ct.fitorto;
+package com.ct.fitorto.utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

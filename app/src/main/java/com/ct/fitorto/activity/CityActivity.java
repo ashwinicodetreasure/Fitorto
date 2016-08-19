@@ -6,12 +6,11 @@ import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ct.fitorto.CommonFunction;
+import com.ct.fitorto.utils.CommonFunction;
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.CityAdapter;
 import com.ct.fitorto.model.City;

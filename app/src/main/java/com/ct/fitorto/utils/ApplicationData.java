@@ -31,4 +31,5 @@ public class ApplicationData {
     public static final int REQUEST_CODE_PROGRESS = 248;
     public static final String POSITION = "position";
     public static final String PROGRESS_VALUE = "progress_value";
+    public static final int REQUEST_CODE_ADD_PROGRESS = 254;
 }

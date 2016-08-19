@@ -1,4 +1,4 @@
-package com.ct.fitorto;
+package com.ct.fitorto.utils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

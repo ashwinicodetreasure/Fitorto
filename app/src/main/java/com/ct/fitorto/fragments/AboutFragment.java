@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by Ashwini on 6/23/2016.
  */
-public class AboutFragment extends BaseFragment {
+public class AboutFragment extends BaseFragment implements ProgressAdapter.OnItemClickListener {
 
     private LinearLayoutManager llayout, llayout1;
     private ArrayList<Gym> data;
@@ -102,6 +102,7 @@ public class AboutFragment extends BaseFragment {
             //tvEmpty.setVisibility(View.GONE);
             adapter = new ProgressAdapter(this, getActivity(), carddata);
             rcard.setAdapter(adapter);
+            adapter.setOnItemClickListener(this);
         } else {
             //tvEmpty.setVisibility(View.VISIBLE);
         }
@@ -117,7 +118,26 @@ public class AboutFragment extends BaseFragment {
             String category = data.getStringExtra(ApplicationData.PROGRESS_CATEGORY);
             String unit = data.getStringExtra(ApplicationData.PROGRESS_UNIT);
             updateProgressList(position, value, category, unit);
+        } else if (requestCode == ApplicationData.REQUEST_CODE_ADD_PROGRESS) {
+            String value = data.getStringExtra(ApplicationData.PROGRESS_VALUE);
+            String category = data.getStringExtra(ApplicationData.PROGRESS_CATEGORY);
+            String unit = data.getStringExtra(ApplicationData.PROGRESS_UNIT);
+            addProgressCategory(value, category, unit);
         }
+    }
+
+    private void addProgressCategory(String value, String category, String unit) {
+        ProgressDetail progressDetail = new ProgressDetail();
+        progressDetail.setCategory(category);
+        ArrayList<Detail> details = new ArrayList<>();
+        Detail detail = new Detail();
+        detail.setValue(value);
+        detail.setCategory(category);
+        detail.setUnit(unit);
+        details.add(detail);
+        progressDetail.setDetails(details);
+        carddata.add(progressDetail);
+        adapter.notifyDataSetChanged();
     }
 
     private void updateProgressList(int position, String value, String category, String unit) {
@@ -127,8 +147,13 @@ public class AboutFragment extends BaseFragment {
         detail.setValue(value);
         detail.setCategory(category);
         detail.setUnit(unit);
-       // progressDetail.setDetails(detail);
+        // progressDetail.setDetails(detail);
         //carddata.add(0,progressDetail);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(View view, ProgressDetail category) {
+        //Todo Add progress Click listener
     }
 }

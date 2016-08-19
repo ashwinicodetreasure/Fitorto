@@ -1,13 +1,10 @@
 package com.ct.fitorto.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,19 +13,15 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ct.fitorto.CommonFunction;
-import com.ct.fitorto.HistoryOpenHelper;
+import com.ct.fitorto.utils.HistoryOpenHelper;
 import com.ct.fitorto.R;
-import com.ct.fitorto.adapter.AutoCompleteAdapter;
 import com.ct.fitorto.adapter.HistoryAdapter;
 import com.ct.fitorto.baseclass.BaseActivity;
 import com.ct.fitorto.custom.CustomTextView;
-import com.ct.fitorto.model.JsonResponseKeywords;
 import com.ct.fitorto.model.JsonResponseSearch;
 import com.ct.fitorto.model.Search;
 import com.ct.fitorto.model.categoryName;
