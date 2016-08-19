@@ -1,11 +1,14 @@
 package com.ct.fitorto.fragments;
 
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +40,7 @@ public class AddProgressDialogFragment extends DialogFragment implements View.On
     private TextView tvUnit;
     private Button btnSave;
     private PreferenceManager manager;
+    private int position;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,13 +54,15 @@ public class AddProgressDialogFragment extends DialogFragment implements View.On
         return dialog;
     }
 
-    public static AddProgressDialogFragment newInstance(Fragment fragment, String category, String unit) {
+    public static AddProgressDialogFragment newInstance(FragmentActivity activity, Fragment fragment, String category, String unit, int position) {
         AddProgressDialogFragment f = new AddProgressDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ApplicationData.PROGRESS_CATEGORY, category);
         bundle.putString(ApplicationData.PROGRESS_UNIT, unit);
+        bundle.putInt(ApplicationData.POSITION, position);
         f.setTargetFragment(fragment, ApplicationData.REQUEST_CODE_PROGRESS);
         f.setArguments(bundle);
+        f.show(activity.getSupportFragmentManager().beginTransaction(), "MyProgressDialog");
         return f;
     }
 
@@ -65,7 +71,7 @@ public class AddProgressDialogFragment extends DialogFragment implements View.On
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
 
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View rootView = inflater.inflate(R.layout.activity_add_progress, container, false);
         initView(rootView);
         initDataSet();
@@ -75,6 +81,7 @@ public class AddProgressDialogFragment extends DialogFragment implements View.On
     private void initDataSet() {
         String category = getArguments().getString(ApplicationData.PROGRESS_CATEGORY);
         String unit = getArguments().getString(ApplicationData.PROGRESS_UNIT);
+        position = getArguments().getInt(ApplicationData.POSITION);
         if (!TextUtils.isEmpty(category)) {
             tvCategory.setText(category);
         }
@@ -107,13 +114,13 @@ public class AddProgressDialogFragment extends DialogFragment implements View.On
         }
     }
 
-    public void uploadProgress(String value, String category, String unit) {
+    public void uploadProgress(final String value, final String category, final String unit) {
         String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
         Call<JsonResponseFollow> call = ApiClientMain.getApiClient().addProgress(userId, category, value, unit);
         call.enqueue(new Callback<JsonResponseFollow>() {
             @Override
             public void onResponse(Call<JsonResponseFollow> call, Response<JsonResponseFollow> response) {
-                dismiss();
+                sendResult(ApplicationData.REQUEST_CODE_PROGRESS, value, category, unit);
             }
 
             @Override
@@ -124,9 +131,13 @@ public class AddProgressDialogFragment extends DialogFragment implements View.On
     }
 
 
-    private void sendResult(int REQUEST_CODE) {
+    private void sendResult(int REQUEST_CODE, String value, String category, String unit) {
         Intent intent = new Intent();
-        intent.putExtra(ApplicationData.PROGRESS_CODE, "Refresh");
+        intent.putExtra(ApplicationData.PROGRESS_VALUE, value);
+        intent.putExtra(ApplicationData.PROGRESS_CATEGORY, category);
+        intent.putExtra(ApplicationData.PROGRESS_UNIT, unit);
+        intent.putExtra(ApplicationData.POSITION, position);
         getTargetFragment().onActivityResult(getTargetRequestCode(), REQUEST_CODE, intent);
+        dismiss();
     }
 }

@@ -117,7 +117,9 @@ public class Detail implements Parcelable {
         this.dateTime = dateTime;
     }
 
+    public Detail() {
 
+    }
 
     protected Detail(Parcel in) {
         progressID = in.readString();

@@ -1,5 +1,6 @@
 package com.ct.fitorto.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.ProgressAdapter;
 import com.ct.fitorto.adapter.FitnessCentersAdapter;
 import com.ct.fitorto.baseclass.BaseFragment;
+import com.ct.fitorto.model.Detail;
 import com.ct.fitorto.model.Gym;
 import com.ct.fitorto.model.ProgressDetail;
 import com.ct.fitorto.preferences.PreferenceManager;
@@ -33,6 +35,7 @@ public class AboutFragment extends BaseFragment {
     private PreferenceManager preferenceManager;
     private TextView tvEmpty;
     ArrayList<Gym> gymArrayList = new ArrayList<>();
+    private ProgressAdapter adapter;
 
     public static AboutFragment getInstance(ArrayList<Gym> gymArrayList, ArrayList<ProgressDetail> progress) {
         AboutFragment fragment = new AboutFragment();
@@ -57,7 +60,7 @@ public class AboutFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pro_about_fragment, null);
         preferenceManager = new PreferenceManager(getActivity());
-       // setHasOptionsMenu(true);
+        // setHasOptionsMenu(true);
         initView(view);
         setFitnessCenterList();
         setProgressCardData();
@@ -92,15 +95,40 @@ public class AboutFragment extends BaseFragment {
     }
 
     public void setProgressCardData() {
-        ProgressDetail detail=new ProgressDetail();
+        ProgressDetail detail = new ProgressDetail();
 
         carddata = getArguments().getParcelableArrayList(ApplicationData.PROGRESS_LIST);
         if (carddata != null) {
             //tvEmpty.setVisibility(View.GONE);
-            ProgressAdapter adapter = new ProgressAdapter(getActivity(), carddata);
+            adapter = new ProgressAdapter(this, getActivity(), carddata);
             rcard.setAdapter(adapter);
         } else {
             //tvEmpty.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //setProgressCardData();
+        if (requestCode == ApplicationData.REQUEST_CODE_PROGRESS) {
+            int position = data.getIntExtra(ApplicationData.POSITION, 0);
+            String value = data.getStringExtra(ApplicationData.PROGRESS_VALUE);
+            String category = data.getStringExtra(ApplicationData.PROGRESS_CATEGORY);
+            String unit = data.getStringExtra(ApplicationData.PROGRESS_UNIT);
+            updateProgressList(position, value, category, unit);
+        }
+    }
+
+    private void updateProgressList(int position, String value, String category, String unit) {
+        ProgressDetail progressDetail = carddata.get(position);
+        Detail detail = progressDetail.getDetails().get(0);
+        //Detail detail=new Detail();
+        detail.setValue(value);
+        detail.setCategory(category);
+        detail.setUnit(unit);
+       // progressDetail.setDetails(detail);
+        //carddata.add(0,progressDetail);
+        adapter.notifyDataSetChanged();
     }
 }

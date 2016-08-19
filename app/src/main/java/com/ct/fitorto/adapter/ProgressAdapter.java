@@ -1,6 +1,8 @@
 package com.ct.fitorto.adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.fragments.AddProgressDialogFragment;
 import com.ct.fitorto.model.Detail;
 import com.ct.fitorto.model.ProgressDetail;
 import com.ct.fitorto.recycler_holder.CardHolder;
@@ -24,19 +27,21 @@ import java.util.List;
  */
 public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ProgressDetail> cardlist;
-    private Context context;
+    private FragmentActivity context;
     public static final int Normal = 1;
     public static final int Footer = 2;
     public static final int Header = 3;
+    public Fragment fragment;
 
-    public ProgressAdapter(Context context, List<ProgressDetail> cardlist) {
+    public ProgressAdapter(Fragment fragment, FragmentActivity context, List<ProgressDetail> cardlist) {
+        this.fragment = fragment;
         this.context = context;
         this.cardlist = cardlist;
     }
 
     public static class FooterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public Button btnAddProgress;
 
+        public Button btnAddProgress;
 
         public FooterHolder(View itemView) {
             super(itemView);
@@ -66,7 +71,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder.getItemViewType() == Footer) {
             FooterHolder mHolder = (FooterHolder) holder;
             mHolder.btnAddProgress.setOnClickListener(new View.OnClickListener() {
@@ -77,11 +82,11 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         } else {
             CardHolder mHolder = (CardHolder) holder;
-            ProgressDetail progressDetail = cardlist.get(position);
-            Detail previousDetail=null;
+            final ProgressDetail progressDetail = cardlist.get(position);
+            Detail previousDetail = null;
             if (progressDetail != null) {
-                Detail detail = progressDetail.getDetails().get(0);
-                if(progressDetail.getDetails().size()>1){
+                final Detail detail = progressDetail.getDetails().get(0);
+                if (progressDetail.getDetails().size() > 1) {
                     previousDetail = progressDetail.getDetails().get(1);
                 }
 
@@ -95,7 +100,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         mHolder.currentd.setText(DateTimeUtils.formateDate(detail.getDateTime()));
                     }
 
-                    if(previousDetail!=null){
+                    if (previousDetail != null) {
                         if (!TextUtils.isEmpty(detail.getDateTime())) {
                             mHolder.oldd.setText(DateTimeUtils.formateDate(previousDetail.getDateTime()));
                         }
@@ -109,6 +114,14 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     if (!TextUtils.isEmpty(progressDetail.getCategory())) {
                         mHolder.tvwh.setText(progressDetail.getCategory());
                     }
+
+                    final Detail finalPreviousDetail = previousDetail;
+                    mHolder.add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AddProgressDialogFragment.newInstance(context,fragment, progressDetail.getCategory(), detail.getUnit(),position);
+                        }
+                    });
                 }
             }
         }

@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.ct.fitorto.R;
 
+import org.w3c.dom.Text;
+
 
 /**
  * Created by Ashwini on 5/21/2016.
@@ -16,6 +18,7 @@ public class CardHolder extends RecyclerView.ViewHolder  implements View.OnClick
     public TextView oldd;
     public TextView oldw;
     public TextView tvwh;
+    public TextView add;
 
 
     public CardHolder(View itemView) {
@@ -26,6 +29,7 @@ public class CardHolder extends RecyclerView.ViewHolder  implements View.OnClick
         oldd=(TextView)itemView.findViewById((R.id.pre_date));
         oldw=(TextView)itemView.findViewById((R.id.old_w));
         tvwh=(TextView)itemView.findViewById((R.id.tv_wh));
+        add= (TextView) itemView.findViewById(R.id.add);
 
     }
 

@@ -29,4 +29,6 @@ public class ApplicationData {
     public static final String PROGRESS_UNIT = "unit";
     public static final String PROGRESS_CATEGORY = "Progress_category";
     public static final int REQUEST_CODE_PROGRESS = 248;
+    public static final String POSITION = "position";
+    public static final String PROGRESS_VALUE = "progress_value";
 }
