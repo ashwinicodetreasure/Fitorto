@@ -3,12 +3,14 @@ package com.ct.fitorto.adapter;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
@@ -93,6 +95,12 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         } else {
             CardHolder mHolder = (CardHolder) holder;
+            if (position % 2 == 1) {
+                mHolder.upar.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.card_bg1));
+            } else {
+                mHolder.upar.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.card_bg2));
+            }
+
             final ProgressDetail progressDetail = cardlist.get(position);
             Detail previousDetail = null;
             if (progressDetail != null) {
@@ -170,6 +178,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView oldw;
         public TextView tvwh;
         public TextView add;
+        private RelativeLayout upar;
 
 
         public CardHolder(View itemView) {
@@ -181,7 +190,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             oldw = (TextView) itemView.findViewById((R.id.old_w));
             tvwh = (TextView) itemView.findViewById((R.id.tv_wh));
             add = (TextView) itemView.findViewById(R.id.add);
-
+            upar = (RelativeLayout) itemView.findViewById(R.id.upar);
         }
 
 

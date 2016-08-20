@@ -58,308 +58,262 @@ public class FitortoUser {
     @SerializedName("iosRegKey")
     @Expose
     private String iosRegKey;
+    @SerializedName("fitortoID")
+    @Expose
+    private String fitortoID;
+    @SerializedName("feedCount")
+    @Expose
+    private String feedCount;
+
+    public String getFeedCount() {
+        return feedCount;
+    }
+
+    public void setFeedCount(String feedCount) {
+        this.feedCount = feedCount;
+    }
+
+    public String getFitortoID() {
+        return fitortoID;
+    }
+
+    public void setFitortoID(String fitortoID) {
+        this.fitortoID = fitortoID;
+    }
 
     /**
-     *
-     * @return
-     * The userID
+     * @return The userID
      */
     public String getUserID() {
         return userID;
     }
 
     /**
-     *
-     * @param userID
-     * The userID
+     * @param userID The userID
      */
     public void setUserID(String userID) {
         this.userID = userID;
     }
 
     /**
-     *
-     * @return
-     * The name
+     * @return The name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
-     * The Name
+     * @param name The Name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
-     * The emailID
+     * @return The emailID
      */
     public String getEmailID() {
         return emailID;
     }
 
     /**
-     *
-     * @param emailID
-     * The EmailID
+     * @param emailID The EmailID
      */
     public void setEmailID(String emailID) {
         this.emailID = emailID;
     }
 
     /**
-     *
-     * @return
-     * The phoneNo
+     * @return The phoneNo
      */
     public String getPhoneNo() {
         return phoneNo;
     }
 
     /**
-     *
-     * @param phoneNo
-     * The PhoneNo
+     * @param phoneNo The PhoneNo
      */
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 
     /**
-     *
-     * @return
-     * The profilePic
+     * @return The profilePic
      */
     public String getProfilePic() {
         return profilePic;
     }
 
     /**
-     *
-     * @param profilePic
-     * The ProfilePic
+     * @param profilePic The ProfilePic
      */
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
 
     /**
-     *
-     * @return
-     * The gender
+     * @return The gender
      */
     public String getGender() {
         return gender;
     }
 
     /**
-     *
-     * @param gender
-     * The gender
+     * @param gender The gender
      */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
     /**
-     *
-     * @return
-     * The dob
+     * @return The dob
      */
     public String getDob() {
         return dob;
     }
 
     /**
-     *
-     * @param dob
-     * The dob
+     * @param dob The dob
      */
     public void setDob(String dob) {
         this.dob = dob;
     }
 
     /**
-     *
-     * @return
-     * The address
+     * @return The address
      */
     public String getAddress() {
         return address;
     }
 
     /**
-     *
-     * @param address
-     * The address
+     * @param address The address
      */
     public void setAddress(String address) {
         this.address = address;
     }
 
     /**
-     *
-     * @return
-     * The height
+     * @return The height
      */
     public String getHeight() {
         return height;
     }
 
     /**
-     *
-     * @param height
-     * The height
+     * @param height The height
      */
     public void setHeight(String height) {
         this.height = height;
     }
 
     /**
-     *
-     * @return
-     * The weight
+     * @return The weight
      */
     public String getWeight() {
         return weight;
     }
 
     /**
-     *
-     * @param weight
-     * The weight
+     * @param weight The weight
      */
     public void setWeight(String weight) {
         this.weight = weight;
     }
 
     /**
-     *
-     * @return
-     * The bloodGroup
+     * @return The bloodGroup
      */
     public String getBloodGroup() {
         return bloodGroup;
     }
 
     /**
-     *
-     * @param bloodGroup
-     * The bloodGroup
+     * @param bloodGroup The bloodGroup
      */
     public void setBloodGroup(String bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
     /**
-     *
-     * @return
-     * The status
+     * @return The status
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     *
-     * @param status
-     * The status
+     * @param status The status
      */
     public void setStatus(String status) {
         this.status = status;
     }
 
     /**
-     *
-     * @return
-     * The isFollowing
+     * @return The isFollowing
      */
     public String getIsFollowing() {
         return isFollowing;
     }
 
     /**
-     *
-     * @param isFollowing
-     * The isFollowing
+     * @param isFollowing The isFollowing
      */
     public void setIsFollowing(String isFollowing) {
         this.isFollowing = isFollowing;
     }
 
     /**
-     *
-     * @return
-     * The followingCount
+     * @return The followingCount
      */
     public String getFollowingCount() {
         return followingCount;
     }
 
     /**
-     *
-     * @param followingCount
-     * The followingCount
+     * @param followingCount The followingCount
      */
     public void setFollowingCount(String followingCount) {
         this.followingCount = followingCount;
     }
 
     /**
-     *
-     * @return
-     * The followersCount
+     * @return The followersCount
      */
     public String getFollowersCount() {
         return followersCount;
     }
 
     /**
-     *
-     * @param followersCount
-     * The followersCount
+     * @param followersCount The followersCount
      */
     public void setFollowersCount(String followersCount) {
         this.followersCount = followersCount;
     }
 
     /**
-     *
-     * @return
-     * The androidRegKey
+     * @return The androidRegKey
      */
     public String getAndroidRegKey() {
         return androidRegKey;
     }
 
     /**
-     *
-     * @param androidRegKey
-     * The AndroidRegKey
+     * @param androidRegKey The AndroidRegKey
      */
     public void setAndroidRegKey(String androidRegKey) {
         this.androidRegKey = androidRegKey;
     }
 
     /**
-     *
-     * @return
-     * The iosRegKey
+     * @return The iosRegKey
      */
     public String getIosRegKey() {
         return iosRegKey;
     }
 
     /**
-     *
-     * @param iosRegKey
-     * The iosRegKey
+     * @param iosRegKey The iosRegKey
      */
     public void setIosRegKey(String iosRegKey) {
         this.iosRegKey = iosRegKey;

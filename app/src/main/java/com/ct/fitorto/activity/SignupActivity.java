@@ -18,6 +18,7 @@ import com.ct.fitorto.model.FitortoUser;
 import com.ct.fitorto.model.JsonResponseUser;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.PatternUtil;
 
 import java.util.List;
@@ -167,6 +168,7 @@ public class SignupActivity extends Activity implements View.OnClickListener {
                         if (resp.getData().size() > 0) {
                             saveUserDetails(resp.getData());
                             Intent i = new Intent(SignupActivity.this, CityActivity.class);
+                            i.putExtra(ApplicationData.IS_INITIAL,true);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i);
                         } else {

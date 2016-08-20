@@ -1,0 +1,105 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:fitsSystemWindows="true"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:theme="@style/AppTheme.PopupOverlay">
+
+        <!-- <android.support.design.widget.CollapsingToolbarLayout
+             android:id="@+id/collapsing_toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:fitsSystemWindows="true"
+             app:contentScrim="?attr/colorPrimary"
+             app:expandedTitleMarginEnd="64dp"
+             app:expandedTitleMarginStart="48dp"
+             app:expandedTitleTextAppearance="@android:color/transparent"
+             app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/AppTheme.PopupOverlay" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            app:cardBackgroundColor="@color/button_focused"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvLabelPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:padding="@dimen/margin_small"
+                    android:text="Current Points"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvLabelPoint"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="28dp" />
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/margin_small"
+                    android:shadowColor="#7F000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:text="Ashwini kumar shukla"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/margin_small"
+                    android:src="@drawable/ic_logo_full" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/discover_recycler"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackGround"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

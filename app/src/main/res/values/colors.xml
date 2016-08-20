@@ -31,7 +31,7 @@
     <color name="selectedTab">#262626</color>
     <color name="cyan">#00BCD4</color>
     <color name="indicator_unselected">#4D000000</color>
-    <color name="black_trans80">#14000000</color>
+    <color name="black_trans80">#4f000000</color>
     <color name="orange">#FF9800</color>
     <color name="green">#4CAF50</color>
 

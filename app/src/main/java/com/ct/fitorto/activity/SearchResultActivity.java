@@ -46,6 +46,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
     private TextView mEmptyView;
     private String title;
     private ArrayList<Search> temp_arraylist = new ArrayList<Search>();
+    private Menu menu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_result_menu, menu);
         preferenceManager = new PreferenceManager(SearchResultActivity.this);
@@ -120,8 +122,8 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cityname:
-                Intent i = new Intent(SearchResultActivity.this, CityActivity.class);
-                startActivity(i);
+                Intent i = new Intent(SearchResultActivity.this, ChangeLocationActivity.class);
+                startActivityForResult(i, ApplicationData.ACTIVITY_RESULT_LOCATION);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -168,6 +170,18 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
                 }
                 if (filter != 0) {
                     caseHandleFilter(filterFees);
+                }
+            }
+        } else if (requestCode == ApplicationData.ACTIVITY_RESULT_LOCATION) {
+            String address = preferenceManager.getPreferenceValues(preferenceManager.ADDRESS);
+            if (!TextUtils.isEmpty(address)) {
+                preferenceManager = new PreferenceManager(SearchResultActivity.this);
+                String city = preferenceManager.getPreferenceValues(preferenceManager.ADDRESS);
+                if (!TextUtils.isEmpty(city)) {
+                    MenuItem item = menu.getItem(0);
+                    SpannableString s = new SpannableString(city);
+                    s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
+                    item.setTitle(s);
                 }
             }
         }
@@ -223,9 +237,11 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         ArrayList<Search> arraylist = new ArrayList<Search>();
         Collections.sort(temp_arraylist, new FeesComparator());
         for (int i = 0; i < temp_arraylist.size(); i++) {
-            int price = (Integer.parseInt(temp_arraylist.get(i).getPackages().get(0).getOneMonth()));
-            if (price >= objMin && price <= objMax) {
-                arraylist.add(temp_arraylist.get(i));
+            if (temp_arraylist.get(i).getPackages().size() > 0) {
+                int price = (Integer.parseInt(temp_arraylist.get(i).getPackages().get(0).getOneMonth()));
+                if (price >= objMin && price <= objMax) {
+                    arraylist.add(temp_arraylist.get(i));
+                }
             }
         }
         if (arraylist.size() > 0) {
@@ -289,9 +305,9 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         @Override
         public int compare(Search o1, Search o2) {
             // TODO: 09/12/16 Solve crash problem.
-            if(o1!=null&&o2!=null){
+            if (o1.getPackages().size() > 0 && o2.getPackages().size() > 0) {
                 return o1.getPackages().get(0).getOneMonth().compareTo(o2.getPackages().get(0).getOneMonth());
-            }else {
+            } else {
                 return 0;
             }
 

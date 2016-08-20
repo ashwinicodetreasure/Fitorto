@@ -12,22 +12,27 @@ import com.ct.fitorto.R;
  * Created by Ashwini on 11/20/2015.
  */
 public class BaseActivity extends AppCompatActivity {
-    
+
     private ProgressDialog mProgressDialog;
+    private Toolbar toolbar;
 
     protected Toolbar initToolbar(boolean homeAsUpEnabled) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (homeAsUpEnabled) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return toolbar;
     }
 
+    protected void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-               return true;
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -36,14 +41,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void showProgressDialog(String message,Boolean cancelable){
+    protected void showProgressDialog(String message, Boolean cancelable) {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(String.valueOf(message));
         mProgressDialog.setCancelable(cancelable);
         mProgressDialog.show();
     }
 
-    protected void cancelProgressDialog(){
+    protected void cancelProgressDialog() {
         try {
             if ((this.mProgressDialog != null) && this.mProgressDialog.isShowing()) {
                 this.mProgressDialog.dismiss();

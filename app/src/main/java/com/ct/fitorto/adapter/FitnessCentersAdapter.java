@@ -43,6 +43,10 @@ public class FitnessCentersAdapter extends RecyclerView.Adapter<ProfileHolders> 
             Picasso.with(context)
                     .load(gym.getLogo())
                     .into(holder.gymimage);
+        }else {
+            Picasso.with(context)
+                    .load(R.drawable.logo_placeholder)
+                    .into(holder.gymimage);
         }
         //holder.gymimage.setImageResource(profilelist.get(position).getGym_photo());
         if (!TextUtils.isEmpty(gym.getGymName())) {

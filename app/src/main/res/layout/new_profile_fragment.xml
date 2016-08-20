@@ -128,10 +128,10 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/margin_small"
                             android:layout_toRightOf="@+id/followers"
+                            android:letterSpacing="0.05"
                             android:text="0"
                             android:textColor="#000000"
                             android:textSize="18sp"
-                            android:letterSpacing="0.05"
                             android:textStyle="bold" />
 
                         <com.ct.fitorto.custom.CustomTextView
@@ -186,13 +186,26 @@
                     android:id="@+id/user_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_name"
+                    android:layout_below="@+id/tvFitortoID"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:fontFamily="Roboto Regular"
                     android:letterSpacing="0.05"
                     android:text=" "
                     android:textColor="@color/demo"
+                    android:textSize="13sp" />
+
+                <com.ct.fitorto.custom.CustomTextView
+                    android:id="@+id/tvFitortoID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_name"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="Roboto Regular"
+                    android:letterSpacing="0.05"
+                    android:text=" "
+                    android:textColor="@color/title_color"
                     android:textSize="13sp" />
 
                 <RelativeLayout

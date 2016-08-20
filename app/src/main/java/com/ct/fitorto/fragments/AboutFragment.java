@@ -10,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.activity.ProgressDetailActivity;
 import com.ct.fitorto.adapter.ProgressAdapter;
 import com.ct.fitorto.adapter.FitnessCentersAdapter;
 import com.ct.fitorto.baseclass.BaseFragment;
+import com.ct.fitorto.custom.DividerItemDecoration;
+import com.ct.fitorto.custom.SpacesItemDecoration;
 import com.ct.fitorto.model.Detail;
 import com.ct.fitorto.model.Gym;
 import com.ct.fitorto.model.ProgressDetail;
@@ -102,6 +105,7 @@ public class AboutFragment extends BaseFragment implements ProgressAdapter.OnIte
             //tvEmpty.setVisibility(View.GONE);
             adapter = new ProgressAdapter(this, getActivity(), carddata);
             rcard.setAdapter(adapter);
+            rcard.addItemDecoration(new SpacesItemDecoration(5));
             adapter.setOnItemClickListener(this);
         } else {
             //tvEmpty.setVisibility(View.VISIBLE);
@@ -154,6 +158,8 @@ public class AboutFragment extends BaseFragment implements ProgressAdapter.OnIte
 
     @Override
     public void onItemClick(View view, ProgressDetail category) {
-        //Todo Add progress Click listener
+        Intent intent = new Intent(getActivity(), ProgressDetailActivity.class);
+        intent.putExtra(ApplicationData.PROGRESS_LIST, category);
+        startActivity(intent);
     }
 }

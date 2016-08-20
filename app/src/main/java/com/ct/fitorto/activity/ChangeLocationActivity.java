@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.ct.fitorto.R;
+import com.ct.fitorto.adapter.LocationAdapter;
 import com.ct.fitorto.baseclass.BaseActivity;
 import com.ct.fitorto.model.JsonResponseKeywords;
 import com.ct.fitorto.model.Location;

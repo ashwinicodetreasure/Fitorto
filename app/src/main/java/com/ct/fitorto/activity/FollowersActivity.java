@@ -36,7 +36,7 @@ import retrofit2.Response;
 /**
  * Created by codetreasure on 8/17/16.
  */
-public class FollowersActivity extends BaseActivity implements FollowingAdapter.OnItemClickListener,FollowerAdapter.OnItemClickListener {
+public class FollowersActivity extends BaseActivity implements FollowingAdapter.OnItemClickListener, FollowerAdapter.OnItemClickListener {
 
     private PreferenceManager manager;
     private RecyclerView mRecyclerView;
@@ -47,6 +47,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
     private ArrayList<Following> followings = new ArrayList<>();
     private ArrayList<Follower> followers = new ArrayList<>();
     private boolean isFollower;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
     }
 
     private void initDataSet() {
-        isFollower=getIntent().getBooleanExtra(ApplicationData.IS_FOLLOWER,false);
+        isFollower = getIntent().getBooleanExtra(ApplicationData.IS_FOLLOWER, false);
         if (ApplicationUtility.checkConnection(this)) {
             showProgressDialog("Please wait...", false);
             String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
@@ -71,21 +72,21 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
                             if (response.body().getFollowers().size() > 0) {
                                 tvEmptyView.setVisibility(View.GONE);
                                 followers.addAll(response.body().getFollowers());
-                            }else {
+                            } else {
                                 mRecyclerView.setVisibility(View.GONE);
                                 tvEmptyView.setVisibility(View.VISIBLE);
                             }
                             if (response.body().getFollowing().size() > 0) {
                                 tvEmptyView.setVisibility(View.GONE);
                                 followings.addAll(response.body().getFollowing());
-                            }else {
+                            } else {
                                 mRecyclerView.setVisibility(View.GONE);
                                 tvEmptyView.setVisibility(View.VISIBLE);
                             }
 
-                            if(isFollower){
+                            if (isFollower) {
                                 updateFollowerData(followers);
-                            }else {
+                            } else {
                                 updateFollowingData(followings);
                             }
                         }
@@ -107,7 +108,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
                     initDataSet();
                 }
             });
-         }
+        }
 
     /*    if (ApplicationUtility.checkConnection(this)) {
             empty_view.setVisibility(View.GONE);
@@ -148,17 +149,18 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
     }
 
     private void updateFollowingData(ArrayList<Following> followings) {
+        setTitle("Following");
         mRecyclerView.setVisibility(View.VISIBLE);
         followingAdapter = new FollowingAdapter(this, followings);
         mRecyclerView.setAdapter(followingAdapter);
     }
 
     private void updateFollowerData(ArrayList<Follower> followers) {
+        setTitle("Followers");
         mRecyclerView.setVisibility(View.VISIBLE);
         followerAdapter = new FollowerAdapter(this, followers);
         mRecyclerView.setAdapter(followerAdapter);
     }
-
 
 
     private void initView() {
@@ -199,12 +201,11 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
     }
 
 
-
     @Override
     public void onItemClick(View view, Follower position) {
-        Intent i=new Intent(FollowersActivity.this,FriendsProfileActivity.class);
-        i.putExtra(ApplicationData.FRIEND_ID,position.getUserID());
-        startActivityForResult(i,ApplicationData.RESULT_CODE_FRIEND);
+        Intent i = new Intent(FollowersActivity.this, FriendsProfileActivity.class);
+        i.putExtra(ApplicationData.FRIEND_ID, position.getUserID());
+        startActivityForResult(i, ApplicationData.RESULT_CODE_FRIEND);
     }
 
 }

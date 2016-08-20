@@ -29,6 +29,7 @@ import com.ct.fitorto.model.JsonResponseSocial;
 import com.ct.fitorto.model.JsonResponseUser;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -269,6 +270,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (resp.getStatus().equals("1")) {
                             saveUserDetails(resp.getData());
                             Intent link = new Intent(LoginActivity.this, CityActivity.class);
+                            link.putExtra(ApplicationData.IS_INITIAL,true);
                             link.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(link);
                             login.dismiss();
@@ -425,6 +427,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (resp.getStatus().equals("1")) {
                         saveUserDetails(resp.getData());
                         Intent i = new Intent(LoginActivity.this, CityActivity.class);
+                        i.putExtra(ApplicationData.IS_INITIAL,true);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     } else {

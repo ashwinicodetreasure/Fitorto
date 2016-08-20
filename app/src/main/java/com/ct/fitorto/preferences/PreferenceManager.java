@@ -19,6 +19,7 @@ public class PreferenceManager {
     public static final String GCM_TOKEN = "gcm_token";
     public static final String PREF_AREA = "pref_area";
     public static final String ADDRESS = "address";
+    public static final String FITORTO_ID = "fitorto_id";
     public final String MY_PREFS_NAME = "myPreference";
 
     private Context context;

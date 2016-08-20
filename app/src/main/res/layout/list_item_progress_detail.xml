@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/margin_medium"
+        android:singleLine="true"
+        android:text="26"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/margin_medium"
+        android:singleLine="true"
+        android:text="26 Aug, 2016"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/tvValue"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:background="@color/image_border" />
+</RelativeLayout>

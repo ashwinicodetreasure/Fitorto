@@ -253,7 +253,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         adapter_ob = new HistoryAdapter(this);
         String[] from = {helper_ob.FNAME};
         int[] to = {R.id.searchitem};
+
         cursor = adapter_ob.queryName();
+        if(cursor.getCount()>0){
+            findViewById(R.id.tvRecentHistory).setVisibility(View.VISIBLE);
+        }else{
+            findViewById(R.id.tvRecentHistory).setVisibility(View.INVISIBLE);
+        }
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this,
                 R.layout.suggestion_list_item, cursor, from, to);
         slist.setAdapter(cursorAdapter);

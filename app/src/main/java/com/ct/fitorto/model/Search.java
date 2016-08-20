@@ -384,7 +384,7 @@ public class Search implements Parcelable {
      * The rating
      */
     public String getRating() {
-        return rating;
+        return rating==null?"0":rating;
     }
 
     /**

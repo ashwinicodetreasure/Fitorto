@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.CommonFunction;
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.CityAdapter;
@@ -35,6 +36,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     List<City> citylist = new ArrayList<City>();
     private PreferenceManager preferenceManager;
     CityAdapter adapt;
+    private boolean isInitial=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,15 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
             //getSupportActionBar().setHomeButtonEnabled(true);
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        isInitial=getIntent().getBooleanExtra(ApplicationData.IS_INITIAL,false);
         preferenceManager = new PreferenceManager(CityActivity.this);
-        String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
-        if (!TextUtils.isEmpty(city)) {
-            Intent intent = new Intent(CityActivity.this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+        if(isInitial){
+            String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+            if (!TextUtils.isEmpty(city)) {
+                Intent intent = new Intent(CityActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
         }
 
         clist = (ListView) findViewById(R.id.city_listview);

@@ -72,4 +72,6 @@
     <string name="action_status">Status</string>
     <string name="txt_current_status">Your Current Status</string>
     <string name="txt_gender">Select Gender</string>
+    <string name="txt_redeem">Redeem</string>
+    <string name="txt_redeem_msg">Your Request is sent to your fitness center. Please contact your fitness center.</string>
 </resources>

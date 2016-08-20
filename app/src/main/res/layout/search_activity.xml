@@ -86,6 +86,7 @@
         android:background="#dbdbdb" />
 
     <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvRecentHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#dbdbdb"

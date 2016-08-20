@@ -86,8 +86,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private AppBarLayout appbar;
     private TextView btnLogin;
     private FitortoUser user;
+    private TextView post;
     private JsonResponseUserProfile resp;
-
+    private TextView tvFitortoID;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -123,6 +124,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         rlEmptyView = (RelativeLayout) view.findViewById(R.id.rlEmptyView);
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         btnLogin = (TextView) view.findViewById(R.id.tvLogin);
+        post = (TextView) view.findViewById(R.id.post);
+        tvFitortoID = (TextView) view.findViewById(R.id.tvFitortoID);
         edit.setOnClickListener(this);
         profile = (CircleImageView) view.findViewById(R.id.profile_image);
         profile.setOnClickListener(this);
@@ -195,9 +198,14 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                             .placeholder(R.drawable.ic_profile)
                             .into(profile);
                 }
-
                 if (!TextUtils.isEmpty(user.getName())) {
                     username.setText(user.getName());
+                }
+                if (!TextUtils.isEmpty(user.getFitortoID())) {
+                    tvFitortoID.setText("FiTORTO ID: "+user.getFitortoID());
+                }
+                if (!TextUtils.isEmpty(user.getFeedCount())) {
+                    post.setText(user.getFeedCount());
                 }
 
                 if (!TextUtils.isEmpty(user.getStatus())) {

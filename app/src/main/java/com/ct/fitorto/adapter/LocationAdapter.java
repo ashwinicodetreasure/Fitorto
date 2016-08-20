@@ -1,4 +1,4 @@
-package com.ct.fitorto.activity;
+package com.ct.fitorto.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

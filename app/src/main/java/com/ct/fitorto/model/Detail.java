@@ -28,90 +28,70 @@ public class Detail implements Parcelable {
     private String dateTime;
 
     /**
-     *
-     * @return
-     * The progressID
+     * @return The progressID
      */
     public String getProgressID() {
         return progressID;
     }
 
     /**
-     *
-     * @param progressID
-     * The progressID
+     * @param progressID The progressID
      */
     public void setProgressID(String progressID) {
         this.progressID = progressID;
     }
 
     /**
-     *
-     * @return
-     * The category
+     * @return The category
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     *
-     * @param category
-     * The category
+     * @param category The category
      */
     public void setCategory(String category) {
         this.category = category;
     }
 
     /**
-     *
-     * @return
-     * The value
+     * @return The value
      */
     public String getValue() {
         return value;
     }
 
     /**
-     *
-     * @param value
-     * The value
+     * @param value The value
      */
     public void setValue(String value) {
         this.value = value;
     }
 
     /**
-     *
-     * @return
-     * The unit
+     * @return The unit
      */
     public String getUnit() {
         return unit;
     }
 
     /**
-     *
-     * @param unit
-     * The unit
+     * @param unit The unit
      */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
     /**
-     *
-     * @return
-     * The dateTime
+     * @return The dateTime
      */
     public String getDateTime() {
         return dateTime;
     }
 
     /**
-     *
-     * @param dateTime
-     * The dateTime
+     * @param dateTime The dateTime
      */
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
@@ -144,15 +124,16 @@ public class Detail implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<ProgressDetail> CREATOR = new Parcelable.Creator<ProgressDetail>() {
+    public static final Parcelable.Creator<Detail> CREATOR = new Parcelable.Creator<Detail>() {
         @Override
-        public ProgressDetail createFromParcel(Parcel in) {
-            return new ProgressDetail(in);
+        public Detail createFromParcel(Parcel in) {
+            return new Detail(in);
         }
 
         @Override
-        public ProgressDetail[] newArray(int size) {
-            return new ProgressDetail[size];
+        public Detail[] newArray(int size) {
+            return new Detail[size];
         }
     };
+
 }

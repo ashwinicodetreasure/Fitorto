@@ -35,7 +35,7 @@ public class Package implements Parcelable {
      * The packageName
      */
     public String getPackageName() {
-        return packageName;
+        return packageName==null?"":packageName;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Package implements Parcelable {
      * The oneMonth
      */
     public String getOneMonth() {
-        return oneMonth;
+        return oneMonth==null?"":oneMonth;
     }
 
     /**
@@ -72,7 +72,7 @@ public class Package implements Parcelable {
      * The threeMonth
      */
     public String getThreeMonth() {
-        return threeMonth;
+        return threeMonth==null?"":threeMonth;
     }
 
     /**
@@ -90,7 +90,7 @@ public class Package implements Parcelable {
      * The sixMonth
      */
     public String getSixMonth() {
-        return sixMonth;
+        return sixMonth==null?"":sixMonth;
     }
 
     /**
@@ -108,7 +108,7 @@ public class Package implements Parcelable {
      * The oneYear
      */
     public String getOneYear() {
-        return oneYear;
+        return oneYear==null?"":oneYear;
     }
 
     /**
