@@ -1,10 +1,5 @@
 package com.ct.fitorto.activity;
 
-/**
- * Created by Ashwini on 5/17/2016.
- */
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,16 +18,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.adapter.Membership_Slider_Adapter;
-import com.ct.fitorto.ccavanue.InitialActivity;
+import com.ct.fitorto.baseclass.BaseActivity;
+import com.ct.fitorto.custom.CirclePageIndicator;
 import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.Friday;
+import com.ct.fitorto.model.Gym;
 import com.ct.fitorto.model.JsonResponseFollow;
-import com.ct.fitorto.model.JsonResponseUser;
 import com.ct.fitorto.model.Monday;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Saturday;
@@ -49,7 +44,6 @@ import com.ct.fitorto.utils.DateTimeUtils;
 import com.github.aakira.expandablelayout.ExpandableLayoutListener;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.squareup.picasso.Picasso;
-import com.ct.fitorto.custom.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,14 +55,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class MembershipActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Created by codetreasure on 8/21/16.
+ */
+public class MyGymActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private ViewPager mPager;
     private int currentPage = 0;
     private int NUM_PAGES = 0;
-    private Search search;
+    private Gym search;
     private Schedule schedule;
     private TextView expand, member;
     private TextView tvLoc;
@@ -149,7 +145,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
         final String lag = search.getLongitude().toString();
         String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lag + "&markers=icon:http://tinyurl.com/2ftvtt6|" + lat + "," + lag + "&zoom=15&size=500x500&sensor=true";
         ImageView location = (ImageView) findViewById(R.id.location_image);
-        Picasso.with(MembershipActivity.this).load(url).into(location);
+        Picasso.with(MyGymActivity.this).load(url).into(location);
         location.setScaleType(ImageView.ScaleType.FIT_XY);
         ImageButton locbtn = (ImageButton) findViewById(R.id.locbtn);
         locbtn.setOnClickListener(new View.OnClickListener() {
@@ -608,7 +604,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     private void initImageSlider() {
         mPager = (ViewPager) findViewById(R.id.mem_pager);
         if (search.getImages().size() > 0) {
-            mPager.setAdapter(new Membership_Slider_Adapter(MembershipActivity.this, search.getImages()));
+            mPager.setAdapter(new Membership_Slider_Adapter(MyGymActivity.this, search.getImages()));
             CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.mem_indicator);
             indicator.setViewPager(mPager);
             final float density = getResources().getDisplayMetrics().density;

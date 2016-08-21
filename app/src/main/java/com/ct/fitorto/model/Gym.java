@@ -12,7 +12,9 @@ import java.util.List;
 /**
  * Created by Ashwini on 6/24/2016.
  */
+
 public class Gym implements Parcelable {
+
     @SerializedName("gymID")
     @Expose
     private String gymID;
@@ -63,7 +65,10 @@ public class Gym implements Parcelable {
     private String reviews;
     @SerializedName("rating")
     @Expose
-    private float rating;
+    private double rating;
+    @SerializedName("isCheckOut")
+    @Expose
+    private int isCheckOut;
     @SerializedName("amenties")
     @Expose
     private List<String> amenties = new ArrayList<String>();
@@ -85,6 +90,9 @@ public class Gym implements Parcelable {
     @SerializedName("packages")
     @Expose
     private List<Package> packages = new ArrayList<Package>();
+    @SerializedName("myPackages")
+    @Expose
+    private List<MyPackage> myPackages = new ArrayList<MyPackage>();
     @SerializedName("images")
     @Expose
     private List<GymImages> images = new ArrayList<GymImages>();
@@ -92,7 +100,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The gymID
+     *     The gymID
      */
     public String getGymID() {
         return gymID;
@@ -101,7 +109,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param gymID
-     * The gymID
+     *     The gymID
      */
     public void setGymID(String gymID) {
         this.gymID = gymID;
@@ -110,7 +118,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The gymName
+     *     The gymName
      */
     public String getGymName() {
         return gymName;
@@ -119,7 +127,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param gymName
-     * The gymName
+     *     The gymName
      */
     public void setGymName(String gymName) {
         this.gymName = gymName;
@@ -128,7 +136,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The address
+     *     The address
      */
     public String getAddress() {
         return address;
@@ -137,7 +145,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param address
-     * The address
+     *     The address
      */
     public void setAddress(String address) {
         this.address = address;
@@ -146,7 +154,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The area
+     *     The area
      */
     public String getArea() {
         return area;
@@ -155,7 +163,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param area
-     * The area
+     *     The area
      */
     public void setArea(String area) {
         this.area = area;
@@ -164,7 +172,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The city
+     *     The city
      */
     public String getCity() {
         return city;
@@ -173,7 +181,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param city
-     * The city
+     *     The city
      */
     public void setCity(String city) {
         this.city = city;
@@ -182,7 +190,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The state
+     *     The state
      */
     public String getState() {
         return state;
@@ -191,7 +199,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param state
-     * The state
+     *     The state
      */
     public void setState(String state) {
         this.state = state;
@@ -200,7 +208,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The country
+     *     The country
      */
     public String getCountry() {
         return country;
@@ -209,7 +217,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param country
-     * The country
+     *     The country
      */
     public void setCountry(String country) {
         this.country = country;
@@ -218,7 +226,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The logo
+     *     The logo
      */
     public String getLogo() {
         return logo;
@@ -227,7 +235,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param logo
-     * The logo
+     *     The logo
      */
     public void setLogo(String logo) {
         this.logo = logo;
@@ -236,7 +244,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The contactNo
+     *     The contactNo
      */
     public String getContactNo() {
         return contactNo;
@@ -245,7 +253,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param contactNo
-     * The contactNo
+     *     The contactNo
      */
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
@@ -254,7 +262,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The emailID
+     *     The emailID
      */
     public String getEmailID() {
         return emailID;
@@ -263,7 +271,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param emailID
-     * The emailID
+     *     The emailID
      */
     public void setEmailID(String emailID) {
         this.emailID = emailID;
@@ -272,7 +280,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The website
+     *     The website
      */
     public String getWebsite() {
         return website;
@@ -281,7 +289,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param website
-     * The website
+     *     The website
      */
     public void setWebsite(String website) {
         this.website = website;
@@ -290,7 +298,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The capacity
+     *     The capacity
      */
     public String getCapacity() {
         return capacity;
@@ -299,7 +307,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param capacity
-     * The capacity
+     *     The capacity
      */
     public void setCapacity(String capacity) {
         this.capacity = capacity;
@@ -308,7 +316,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The description
+     *     The description
      */
     public String getDescription() {
         return description;
@@ -317,7 +325,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param description
-     * The description
+     *     The description
      */
     public void setDescription(String description) {
         this.description = description;
@@ -326,7 +334,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The category
+     *     The category
      */
     public String getCategory() {
         return category;
@@ -335,7 +343,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param category
-     * The category
+     *     The category
      */
     public void setCategory(String category) {
         this.category = category;
@@ -344,7 +352,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The isFavorite
+     *     The isFavorite
      */
     public String getIsFavorite() {
         return isFavorite;
@@ -353,7 +361,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param isFavorite
-     * The isFavorite
+     *     The isFavorite
      */
     public void setIsFavorite(String isFavorite) {
         this.isFavorite = isFavorite;
@@ -362,7 +370,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The reviews
+     *     The reviews
      */
     public String getReviews() {
         return reviews;
@@ -371,7 +379,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param reviews
-     * The reviews
+     *     The reviews
      */
     public void setReviews(String reviews) {
         this.reviews = reviews;
@@ -380,25 +388,43 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The rating
+     *     The rating
      */
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
     /**
      *
      * @param rating
-     * The rating
+     *     The rating
      */
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
     /**
      *
      * @return
-     * The amenties
+     *     The isCheckOut
+     */
+    public int getIsCheckOut() {
+        return isCheckOut;
+    }
+
+    /**
+     *
+     * @param isCheckOut
+     *     The isCheckOut
+     */
+    public void setIsCheckOut(int isCheckOut) {
+        this.isCheckOut = isCheckOut;
+    }
+
+    /**
+     *
+     * @return
+     *     The amenties
      */
     public List<String> getAmenties() {
         return amenties;
@@ -407,7 +433,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param amenties
-     * The amenties
+     *     The amenties
      */
     public void setAmenties(List<String> amenties) {
         this.amenties = amenties;
@@ -416,7 +442,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The equipments
+     *     The equipments
      */
     public List<String> getEquipments() {
         return equipments;
@@ -425,7 +451,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param equipments
-     * The equipments
+     *     The equipments
      */
     public void setEquipments(List<String> equipments) {
         this.equipments = equipments;
@@ -434,7 +460,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The gender
+     *     The gender
      */
     public String getGender() {
         return gender;
@@ -443,7 +469,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param gender
-     * The gender
+     *     The gender
      */
     public void setGender(String gender) {
         this.gender = gender;
@@ -452,7 +478,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The latitude
+     *     The latitude
      */
     public String getLatitude() {
         return latitude;
@@ -461,7 +487,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param latitude
-     * The latitude
+     *     The latitude
      */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -470,7 +496,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The longitude
+     *     The longitude
      */
     public String getLongitude() {
         return longitude;
@@ -479,7 +505,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param longitude
-     * The longitude
+     *     The longitude
      */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
@@ -488,7 +514,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The schedule
+     *     The schedule
      */
     public List<Schedule> getSchedule() {
         return schedule;
@@ -497,7 +523,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param schedule
-     * The schedule
+     *     The schedule
      */
     public void setSchedule(List<Schedule> schedule) {
         this.schedule = schedule;
@@ -506,7 +532,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The packages
+     *     The packages
      */
     public List<Package> getPackages() {
         return packages;
@@ -515,7 +541,7 @@ public class Gym implements Parcelable {
     /**
      *
      * @param packages
-     * The packages
+     *     The packages
      */
     public void setPackages(List<Package> packages) {
         this.packages = packages;
@@ -524,7 +550,25 @@ public class Gym implements Parcelable {
     /**
      *
      * @return
-     * The images
+     *     The myPackages
+     */
+    public List<MyPackage> getMyPackages() {
+        return myPackages;
+    }
+
+    /**
+     *
+     * @param myPackages
+     *     The myPackages
+     */
+    public void setMyPackages(List<MyPackage> myPackages) {
+        this.myPackages = myPackages;
+    }
+
+    /**
+     *
+     * @return
+     *     The images
      */
     public List<GymImages> getImages() {
         return images;
@@ -533,11 +577,12 @@ public class Gym implements Parcelable {
     /**
      *
      * @param images
-     * The images
+     *     The images
      */
     public void setImages(List<GymImages> images) {
         this.images = images;
     }
+
 
     protected Gym(Parcel in) {
         gymID = in.readString();
@@ -556,7 +601,8 @@ public class Gym implements Parcelable {
         category = in.readString();
         isFavorite = in.readString();
         reviews = in.readString();
-        rating = in.readFloat();
+        rating = in.readDouble();
+        isCheckOut = in.readInt();
         if (in.readByte() == 0x01) {
             amenties = new ArrayList<String>();
             in.readList(amenties, String.class.getClassLoader());
@@ -583,6 +629,12 @@ public class Gym implements Parcelable {
             in.readList(packages, Package.class.getClassLoader());
         } else {
             packages = null;
+        }
+        if (in.readByte() == 0x01) {
+            myPackages = new ArrayList<MyPackage>();
+            in.readList(myPackages, MyPackage.class.getClassLoader());
+        } else {
+            myPackages = null;
         }
         if (in.readByte() == 0x01) {
             images = new ArrayList<GymImages>();
@@ -615,7 +667,8 @@ public class Gym implements Parcelable {
         dest.writeString(category);
         dest.writeString(isFavorite);
         dest.writeString(reviews);
-        dest.writeFloat(rating);
+        dest.writeDouble(rating);
+        dest.writeInt(isCheckOut);
         if (amenties == null) {
             dest.writeByte((byte) (0x00));
         } else {
@@ -642,6 +695,12 @@ public class Gym implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(packages);
+        }
+        if (myPackages == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(myPackages);
         }
         if (images == null) {
             dest.writeByte((byte) (0x00));

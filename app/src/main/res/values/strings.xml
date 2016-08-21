@@ -74,4 +74,6 @@
     <string name="txt_gender">Select Gender</string>
     <string name="txt_redeem">Redeem</string>
     <string name="txt_redeem_msg">Your Request is sent to your fitness center. Please contact your fitness center.</string>
+    <string name="action_reference">Reference</string>
+    <string name="filter_activity">Filter</string>
 </resources>

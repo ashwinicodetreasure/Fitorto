@@ -79,6 +79,7 @@
                 android:layout_below="@+id/view1"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="Roboto Meduim"
                 android:text="Daily Updates"
                 android:textAllCaps="true"
@@ -91,16 +92,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:paddingBottom="@dimen/margin_medium"
                 android:background="@color/card_background_color"
                 android:clipToPadding="false"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp" />
-
-
-
         </RelativeLayout>
-
-
     </RelativeLayout>
-
 </android.support.v4.widget.NestedScrollView>

@@ -65,7 +65,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
 
     private PreferenceManager preferenceManager;
-
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView followers;
@@ -202,7 +201,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     username.setText(user.getName());
                 }
                 if (!TextUtils.isEmpty(user.getFitortoID())) {
-                    tvFitortoID.setText("FiTORTO ID: "+user.getFitortoID());
+                    tvFitortoID.setText("FiTORTO ID: " + user.getFitortoID());
+                    preferenceManager.putPreferenceValues(preferenceManager.FITORTO_ID, user.getFitortoID());
                 }
                 if (!TextUtils.isEmpty(user.getFeedCount())) {
                     post.setText(user.getFeedCount());

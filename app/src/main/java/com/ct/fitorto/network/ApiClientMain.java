@@ -1,5 +1,6 @@
 package com.ct.fitorto.network;
 
+import com.ct.fitorto.model.JsonAttendance;
 import com.ct.fitorto.model.JsonCoupon;
 import com.ct.fitorto.model.JsonResponseAddFeed;
 import com.ct.fitorto.model.JsonResponseCategory;
@@ -250,6 +251,22 @@ public class ApiClientMain {
         @POST("useCoupon.php")
         Call<JsonResponseFollow> useUserCoupons(@Field("userCouponID") String userCouponID,
                                                 @Field("flag") String flag);
+
+        @FormUrlEncoded
+        @POST("checkIn.php")
+        Call<JsonAttendance> checkIn(@Field("userID") String userID,
+                                     @Field("gymID") String gymID,
+                                     @Field("flag") String flag);
+
+
+        @FormUrlEncoded
+        @POST("payment.php")
+        Call<JsonResponseFollow> makePayment(@Field("userID") String userID,
+                                             @Field("orderID") String orderID,
+                                             @Field("ammount") String ammount,
+                                             @Field("status") String status,
+                                             @Field("gymID") String gymID
+                                             );
 
     }
 

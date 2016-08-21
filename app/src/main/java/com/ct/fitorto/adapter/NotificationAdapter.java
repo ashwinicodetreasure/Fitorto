@@ -1,6 +1,7 @@
 package com.ct.fitorto.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.model.Friends;
 import com.ct.fitorto.model.Notifications;
 import com.ct.fitorto.utils.DateTimeUtils;
 import com.squareup.picasso.Picasso;
@@ -26,15 +28,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private static final String TAG = "NotificationAdapter";
     Context context;
     private ArrayList<Notifications> mDataSet;
+    public OnItemClickListener onItemClickListener;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView ivUserPics;
         public TextView tvUserName;
         public TextView tvDate;
+        public ImageView ivType;
 
         public ViewHolder(View v) {
             super(v);
@@ -42,9 +46,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             ivUserPics = (ImageView) v.findViewById(R.id.ivUserPics);
             tvUserName = (TextView) v.findViewById(R.id.tvUserName);
             tvDate = (TextView) v.findViewById(R.id.tvDate);
+            ivType = (ImageView) v.findViewById(R.id.ivType);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(v, (Notifications) v.getTag());
+            }
         }
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     // END_INCLUDE(recyclerViewSampleViewHolder)
 
@@ -74,10 +89,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the contents of the view
-        // with that element
+
         Notifications more = mDataSet.get(position);
-        viewHolder.tvUserName.setText(Html.fromHtml("<b>" + more.getSenderName() + "</b> " + more.getNotification()));
+        viewHolder.tvUserName.setText(Html.fromHtml("<b>" + more.getSenderName() + "</b> <font color=\"#909090\">" + more.getNotification()));
         try {
             viewHolder.tvDate.setText(DateTimeUtils.formatToYesterdayOrToday(context, more.getDateTime()));
         } catch (ParseException e) {
@@ -88,7 +102,31 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         } else {
             Picasso.with(context).load(R.drawable.ic_profile).into(viewHolder.ivUserPics);
         }
+        updateNotificationCategory(more.getNotificationCategory(), viewHolder);
         viewHolder.itemView.setTag(more);
+    }
+
+    private void updateNotificationCategory(int notificationCategory, ViewHolder viewHolder) {
+        switch (notificationCategory) {
+            case 0:
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_noti_follow));
+                break;
+            case 1:
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_notification));
+                break;
+            case 2:
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_feed));
+                break;
+            case 3:
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_noti_like));
+                break;
+            case 4:
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_noti_coupon));
+                break;
+            case 5:
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_noti_follow));
+                break;
+        }
     }
 
 
@@ -100,6 +138,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return mDataSet.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, Notifications position);
+    }
 
 }
 

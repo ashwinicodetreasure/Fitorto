@@ -201,12 +201,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(HomeActivity.this, ChangeStatusActivity.class);
                 startActivityForResult(intent, ApplicationData.REQUEST_CODE_STATUS);
                 break;
-            case R.id.action_setting:
+            case R.id.action_refernce:
                 //Todo change activity name
                 Intent intent1 = new Intent(HomeActivity.this, ReferenceActivity.class);
                 startActivityForResult(intent1, ApplicationData.REQUEST_CODE_STATUS);
                 break;
-
+            case R.id.action_setting:
+                //Todo change activity name
+                Intent se = new Intent(HomeActivity.this, SettingActivity.class);
+                startActivityForResult(se, ApplicationData.REQUEST_CODE_STATUS);
+                break;
         }
 
 

@@ -11,121 +11,116 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Package implements Parcelable {
 
-
+    @SerializedName("packageID")
+    @Expose
+    private String packageID;
+    @SerializedName("packageType")
+    @Expose
+    private String packageType;
     @SerializedName("packageName")
     @Expose
     private String packageName;
-    @SerializedName("oneMonth")
+    @SerializedName("cost")
     @Expose
-    private String oneMonth;
-    @SerializedName("threeMonth")
+    private String cost;
+    @SerializedName("validity")
     @Expose
-    private String threeMonth;
-    @SerializedName("sixMonth")
+    private String validity;
+    @SerializedName("type")
     @Expose
-    private String sixMonth;
-    @SerializedName("oneYear")
-    @Expose
-    private String oneYear;
-
+    private String type;
 
     /**
-     *
-     * @return
-     * The packageName
+     * @return The packageID
+     */
+    public String getPackageID() {
+        return packageID;
+    }
+
+    /**
+     * @param packageID The packageID
+     */
+    public void setPackageID(String packageID) {
+        this.packageID = packageID;
+    }
+
+    /**
+     * @return The packageType
+     */
+    public String getPackageType() {
+        return packageType;
+    }
+
+    /**
+     * @param packageType The packageType
+     */
+    public void setPackageType(String packageType) {
+        this.packageType = packageType;
+    }
+
+    /**
+     * @return The packageName
      */
     public String getPackageName() {
-        return packageName==null?"":packageName;
+        return packageName;
     }
 
     /**
-     *
-     * @param packageName
-     * The packageName
+     * @param packageName The packageName
      */
     public void setPackageName(String packageName) {
-        this.packageName   = packageName;
-    }
-
-
-    /**
-     *
-     * @return
-     * The oneMonth
-     */
-    public String getOneMonth() {
-        return oneMonth==null?"":oneMonth;
+        this.packageName = packageName;
     }
 
     /**
-     *
-     * @param oneMonth
-     * The oneMonth
+     * @return The cost
      */
-    public void setOneMonth(String oneMonth) {
-        this.oneMonth = oneMonth;
+    public String getCost() {
+        return cost;
     }
 
     /**
-     *
-     * @return
-     * The threeMonth
+     * @param cost The cost
      */
-    public String getThreeMonth() {
-        return threeMonth==null?"":threeMonth;
+    public void setCost(String cost) {
+        this.cost = cost;
     }
 
     /**
-     *
-     * @param threeMonth
-     * The threeMonth
+     * @return The validity
      */
-    public void setThreeMonth(String threeMonth) {
-        this.threeMonth = threeMonth;
+    public String getValidity() {
+        return validity;
     }
 
     /**
-     *
-     * @return
-     * The sixMonth
+     * @param validity The validity
      */
-    public String getSixMonth() {
-        return sixMonth==null?"":sixMonth;
+    public void setValidity(String validity) {
+        this.validity = validity;
     }
 
     /**
-     *
-     * @param sixMonth
-     * The sixMonth
+     * @return The type
      */
-    public void setSixMonth(String sixMonth) {
-        this.sixMonth = sixMonth;
+    public String getType() {
+        return type;
     }
 
     /**
-     *
-     * @return
-     * The oneYear
+     * @param type The type
      */
-    public String getOneYear() {
-        return oneYear==null?"":oneYear;
-    }
-
-    /**
-     *
-     * @param oneYear
-     * The oneYear
-     */
-    public void setOneYear(String oneYear) {
-        this.oneYear = oneYear;
+    public void setType(String type) {
+        this.type = type;
     }
 
     protected Package(Parcel in) {
+        packageID = in.readString();
+        packageType = in.readString();
         packageName = in.readString();
-        oneMonth = in.readString();
-        threeMonth = in.readString();
-        sixMonth = in.readString();
-        oneYear = in.readString();
+        cost = in.readString();
+        validity = in.readString();
+        type = in.readString();
     }
 
     @Override
@@ -135,11 +130,12 @@ public class Package implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(packageID);
+        dest.writeString(packageType);
         dest.writeString(packageName);
-        dest.writeString(oneMonth);
-        dest.writeString(threeMonth);
-        dest.writeString(sixMonth);
-        dest.writeString(oneYear);
+        dest.writeString(cost);
+        dest.writeString(validity);
+        dest.writeString(type);
     }
 
     @SuppressWarnings("unused")
@@ -155,9 +151,8 @@ public class Package implements Parcelable {
         }
     };
 
-
     @Override
     public String toString() {
-        return this.packageName;
+        return packageName;
     }
 }

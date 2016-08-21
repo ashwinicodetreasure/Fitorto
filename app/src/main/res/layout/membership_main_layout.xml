@@ -419,125 +419,136 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="Roboto bold"
                 android:letterSpacing="0.1"
-                android:text="Gym Packages"
+                android:text="Fitness centers Packages"
                 android:textAllCaps="true"
                 android:textColor="#2B59A2"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
-            <TableLayout
-                android:id="@+id/expanpane2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+            <LinearLayout
+                android:id="@+id/llPackageContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/gym"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-                <TableRow
-                    android:id="@+id/month"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+            </LinearLayout>
+            <!-- <TableLayout
+                 android:id="@+id/expanpane2"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_below="@+id/gym"
+                 android:layout_marginLeft="65dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_marginTop="10dp">
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:letterSpacing="0.1"
-                        android:text="1 Month"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
+                 <TableRow
+                     android:id="@+id/month"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content">
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:id="@+id/oneMonth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
-                        android:letterSpacing="0.1"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
-                </TableRow>
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_column="1"
+                         android:letterSpacing="0.1"
+                         android:text="1 Month"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
 
-                <TableRow android:id="@+id/tmonth">
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:id="@+id/oneMonth"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="50dp"
+                         android:letterSpacing="0.1"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
+                 </TableRow>
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:letterSpacing="0.1"
-                        android:text="3 Months"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
+                 <TableRow android:id="@+id/tmonth">
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:id="@+id/threMonths"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
-                        android:letterSpacing="0.1"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
-                </TableRow>
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_column="1"
+                         android:letterSpacing="0.1"
+                         android:text="3 Months"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
 
-                <TableRow android:id="@+id/smonth">
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:id="@+id/threMonths"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="50dp"
+                         android:letterSpacing="0.1"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
+                 </TableRow>
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:letterSpacing="0.1"
-                        android:text="6 Months"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
+                 <TableRow android:id="@+id/smonth">
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:id="@+id/sixMonth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
-                        android:letterSpacing="0.1"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
-                </TableRow>
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_column="1"
+                         android:letterSpacing="0.1"
+                         android:text="6 Months"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
 
-                <TableRow android:id="@+id/yearly">
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:id="@+id/sixMonth"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="50dp"
+                         android:letterSpacing="0.1"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
+                 </TableRow>
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:letterSpacing="0.1"
-                        android:text="Yearly"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
+                 <TableRow android:id="@+id/yearly">
 
-                    <com.ct.fitorto.custom.CustomTextView
-                        android:id="@+id/yeraly"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
-                        android:letterSpacing="0.1"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold" />
-                </TableRow>
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_column="1"
+                         android:letterSpacing="0.1"
+                         android:text="Yearly"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
+
+                     <com.ct.fitorto.custom.CustomTextView
+                         android:id="@+id/yeraly"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="50dp"
+                         android:letterSpacing="0.1"
+                         android:textColor="#000000"
+                         android:textSize="@dimen/text_size_small"
+                         android:textStyle="bold" />
+                 </TableRow>
 
 
-            </TableLayout>
+             </TableLayout>-->
 
             <View
                 android:id="@+id/ex"
                 android:layout_width="fill_parent"
                 android:layout_height="2px"
-                android:layout_below="@+id/expanpane2"
+                android:layout_below="@+id/llPackageContainer"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"

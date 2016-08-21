@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="com.ct.fitorto.activity.SettingActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.PopupOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvInviteFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:letterSpacing="0.05"
+        android:padding="@dimen/margin_small"
+        android:text="INVITE FRIENDS"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/image_border" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:letterSpacing="0.05"
+        android:padding="@dimen/margin_small"
+        android:text="EDIT PROFILE"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/image_border" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:letterSpacing="0.05"
+        android:padding="@dimen/margin_small"
+        android:text="Change Password"
+        android:textAllCaps="true"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/image_border" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvTerms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:letterSpacing="0.05"
+        android:padding="@dimen/margin_small"
+        android:text="Terms &amp; Service"
+        android:textAllCaps="true"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/image_border" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:letterSpacing="0.05"
+        android:padding="@dimen/margin_small"
+        android:text="LOGOUT"
+        android:textAllCaps="true"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/image_border" />
+</LinearLayout>

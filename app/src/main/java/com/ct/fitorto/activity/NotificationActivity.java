@@ -30,7 +30,7 @@ import retrofit2.Response;
 /**
  * Created by codetreasure on 7/7/16.
  */
-public class NotificationActivity extends BaseActivity {
+public class NotificationActivity extends BaseActivity implements NotificationAdapter.OnItemClickListener {
 
     private PreferenceManager manager;
     private RecyclerView mRecyclerView;
@@ -105,19 +105,28 @@ public class NotificationActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(this, HomeActivity.class);
+       /* Intent i = new Intent(this, HomeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
+        startActivity(i);*/
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                Intent homeIntent = new Intent(this, HomeActivity.class);
+                this.finish();
+               /* Intent homeIntent = new Intent(this, HomeActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(homeIntent);
+                startActivity(homeIntent);*/
         }
         return (super.onOptionsItemSelected(menuItem));
+    }
+
+    @Override
+    public void onItemClick(View view, Notifications position) {
+        if (position.getNotificationCategory() == 4) {
+            Intent intent = new Intent(this, ReferenceActivity.class);
+            startActivity(intent);
+        }
     }
 }

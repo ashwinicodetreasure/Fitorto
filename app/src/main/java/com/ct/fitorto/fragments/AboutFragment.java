@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.activity.MyGymActivity;
 import com.ct.fitorto.activity.ProgressDetailActivity;
 import com.ct.fitorto.adapter.ProgressAdapter;
 import com.ct.fitorto.adapter.FitnessCentersAdapter;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by Ashwini on 6/23/2016.
  */
-public class AboutFragment extends BaseFragment implements ProgressAdapter.OnItemClickListener {
+public class AboutFragment extends BaseFragment implements ProgressAdapter.OnItemClickListener, FitnessCentersAdapter.OnItemClickListener {
 
     private LinearLayoutManager llayout, llayout1;
     private ArrayList<Gym> data;
@@ -91,6 +92,7 @@ public class AboutFragment extends BaseFragment implements ProgressAdapter.OnIte
             rview.setVisibility(View.VISIBLE);
             FitnessCentersAdapter radapter = new FitnessCentersAdapter(getActivity(), gymArrayList);
             rview.setAdapter(radapter);
+            radapter.setOnItemClickListener(this);
         } else {
             tvEmpty.setVisibility(View.VISIBLE);
             rview.setVisibility(View.GONE);
@@ -105,7 +107,7 @@ public class AboutFragment extends BaseFragment implements ProgressAdapter.OnIte
             //tvEmpty.setVisibility(View.GONE);
             adapter = new ProgressAdapter(this, getActivity(), carddata);
             rcard.setAdapter(adapter);
-            rcard.addItemDecoration(new SpacesItemDecoration(5));
+            rcard.addItemDecoration(new SpacesItemDecoration(10));
             adapter.setOnItemClickListener(this);
         } else {
             //tvEmpty.setVisibility(View.VISIBLE);
@@ -160,6 +162,13 @@ public class AboutFragment extends BaseFragment implements ProgressAdapter.OnIte
     public void onItemClick(View view, ProgressDetail category) {
         Intent intent = new Intent(getActivity(), ProgressDetailActivity.class);
         intent.putExtra(ApplicationData.PROGRESS_LIST, category);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(View view, Gym gym) {
+        Intent intent = new Intent(getActivity(), MyGymActivity.class);
+        intent.putExtra(ApplicationData.FITNESS_CENTER_DETAILS, gym);
         startActivity(intent);
     }
 }

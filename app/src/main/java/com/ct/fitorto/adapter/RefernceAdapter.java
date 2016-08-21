@@ -63,7 +63,7 @@ public class RefernceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mHolder.btnRedeem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    reedeemUserPoint(coupon.getCouponID(), "1", mHolder.btnRedeem);
+                    reedeemUserPoint(coupon.getUserCouponID(), "1", mHolder.btnRedeem);
                 }
             });
            /* if (!TextUtils.isEmpty(coupon.getBenifit())) {

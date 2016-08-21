@@ -1,20 +1,24 @@
 package com.ct.fitorto.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.activity.BookGymActivity;
 import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.GymImages;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Search;
+import com.ct.fitorto.utils.ApplicationData;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,8 +33,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     private ArrayList<Search> items;
     private OnItemClickListener listener;
+    private Context context;
 
-    public SearchAdapter(OnItemClickListener listener, ArrayList<Search> items) {
+    public SearchAdapter(Context context, OnItemClickListener listener, ArrayList<Search> items) {
+        this.context = context;
         this.items = items;
         this.listener = listener;
     }
@@ -51,7 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return items.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView gymaname;
         private TextView gymloaction;
@@ -60,6 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private TextView pack;
         private FlowLayout mFlowLayout;
         private LinearLayout imgContainer;
+        private Button btnBook;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +77,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             pack = (TextView) itemView.findViewById(R.id.textView11);
             mFlowLayout = (FlowLayout) itemView.findViewById(R.id.flow);
             imgContainer = (LinearLayout) itemView.findViewById(R.id.imgContainer);
+            btnBook = (Button) itemView.findViewById(R.id.bookbtn);
         }
 
         private void setcategory(List<String> sizeArrayList) {
@@ -130,9 +138,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             }
 
 
-            if (fu.size() > 0) {
+            /*if (fu.size() > 0) {
                 pack.setText("Rs." + fu.get(0).getOneMonth() + "/-");
-            }
+            }*/
 
 
             if (TextUtils.isEmpty(item.getGymName())) {
@@ -152,6 +160,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 imageButton.setImageResource(R.drawable.ic_star);
             }
             if (TextUtils.isEmpty(item.getRating())) {
+
             } else {
                 gymrating.setText(item.getRating());
             }
@@ -170,6 +179,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     listener.onItemClick(item);
                 }
             });
+
+
+            btnBook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, BookGymActivity.class);
+                    intent.putExtra(ApplicationData.SEARCH_RESULT, item);
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }

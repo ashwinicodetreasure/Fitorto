@@ -34,6 +34,7 @@
             android:textAllCaps="true"
             android:singleLine="true"
             android:letterSpacing="0.1"
+            android:layout_marginTop="10dp"
             android:textColor="@color/title_color"
             android:textSize="@dimen/text_size_small" />
 
@@ -61,7 +62,7 @@
             android:background="@drawable/checkinbtn"
             android:fontFamily="Roboto Regualar"
             android:gravity="center"
-            android:text="CHECKIN"
+            android:text="CHECK IN"
             android:textColor="#42bf42"
             android:letterSpacing="0.1"
             android:textSize="@dimen/text_size_small" />

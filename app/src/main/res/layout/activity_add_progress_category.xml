@@ -56,6 +56,7 @@
             android:layout_margin="@dimen/margin_small"
             android:hint="Unit (eg: For weight KG)"
             android:textColor="@color/colorText"
+            android:singleLine="true"
             android:textSize="@dimen/text_size_large" />
     </android.support.design.widget.TextInputLayout>
 

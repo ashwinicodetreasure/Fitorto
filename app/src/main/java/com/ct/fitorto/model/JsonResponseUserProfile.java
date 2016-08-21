@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Ashwini on 6/24/2016.
  */
 public class JsonResponseUserProfile {
+
     @SerializedName("status")
     @Expose
     private String status;

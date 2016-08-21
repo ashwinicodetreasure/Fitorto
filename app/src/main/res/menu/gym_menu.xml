@@ -7,11 +7,10 @@
         android:icon="@drawable/hearts"
         android:orderInCategory="3"
         android:title="Like"
-
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/share"
-        android:icon="@drawable/ic_share_black"
+        android:icon="@drawable/ic_action_social_share"
         android:orderInCategory="3"
         android:title="Share"
         app:showAsAction="ifRoom" />

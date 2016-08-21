@@ -33,4 +33,5 @@ public class ApplicationData {
     public static final String PROGRESS_VALUE = "progress_value";
     public static final int REQUEST_CODE_ADD_PROGRESS = 254;
     public static final String IS_INITIAL = "is_initial";
+    public static final String GYM_ID = "gym_id";
 }

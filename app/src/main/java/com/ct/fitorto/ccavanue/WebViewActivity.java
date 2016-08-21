@@ -31,26 +31,38 @@ import com.ct.fitorto.Utility.Constants;
 import com.ct.fitorto.Utility.RSAUtility;
 import com.ct.fitorto.Utility.ServiceHandler;
 import com.ct.fitorto.Utility.ServiceUtility;
+import com.ct.fitorto.baseclass.BaseActivity;
+import com.ct.fitorto.model.JsonResponseFollow;
+import com.ct.fitorto.network.ApiClientMain;
+import com.ct.fitorto.preferences.PreferenceManager;
+import com.ct.fitorto.utils.ApplicationData;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EncodingUtils;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class WebViewActivity extends AppCompatActivity implements  Communicator {
+
+public class WebViewActivity extends BaseActivity implements Communicator {
 
     WebView myBrowser;
     WebSettings webSettings;
     private BroadcastReceiver mIntentReceiver;
-    String bankUrl="";
+    String bankUrl = "";
     FragmentManager manager;
-    ActionDialog actionDialog= new ActionDialog();
+    ActionDialog actionDialog = new ActionDialog();
     Timer timer = new Timer();
     TimerTask timerTask;
     //we are going to use a handler to be able to run in our TimerTask
@@ -61,10 +73,11 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
     Intent mainIntent;
     String html, encVal;
     int MyDeviceAPI;
+    private PreferenceManager preferenceManager;
 
     /**
      * Async task class to get json by making HTTP call
-     * */
+     */
     private class RenderView extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -75,6 +88,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             dialog.setCancelable(false);
             dialog.show();
         }
+
         @Override
         protected Void doInBackground(Void... arg0) {
             try {
@@ -86,7 +100,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 params.add(new BasicNameValuePair(AvenuesParams.ORDER_ID, mainIntent.getStringExtra(AvenuesParams.ORDER_ID)));
                 params.add(new BasicNameValuePair("Merchant_Id", "102491"));
                 String vResponse = sh.makeServiceCall(mainIntent.getStringExtra(AvenuesParams.RSA_KEY_URL), ServiceHandler.POST, params);
-                System.out.println(vResponse);
+                //System.out.println(vResponse);
                 if (!ServiceUtility.chkNull(vResponse).equals("")
                         && ServiceUtility.chkNull(vResponse).toString().indexOf("ERROR") == -1) {
                     StringBuffer vEncVal = new StringBuffer("");
@@ -94,7 +108,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     vEncVal.append(ServiceUtility.addToPostParams(AvenuesParams.CURRENCY, mainIntent.getStringExtra(AvenuesParams.CURRENCY)));
                     encVal = RSAUtility.encrypt(vEncVal.substring(0, vEncVal.length() - 1), vResponse);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -108,32 +122,30 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 dialog.dismiss();
 
             @SuppressWarnings("unused")
-            class MyJavaScriptInterface
-            {
+            class MyJavaScriptInterface {
                 @JavascriptInterface
-                public void processHTML(String html)
-                {
+                public void processHTML(String html) {
                     try {
                         // process the html as needed by the app
-                        Log.v("Logs", "-------------- Process HTML : "+ html);
+                        //Log.v("Logs", "-------------- Process HTML : "+ html);
                         String status = null;
-                        if(html.indexOf("Failure")!=-1){
-                            status = "Transaction Declined!";
-                        }else if(html.indexOf("Success")!=-1){
-                            status = "Transaction Successful!";
-                        }else if(html.indexOf("Aborted")!=-1){
-                            status = "Transaction Cancelled!";
-                        }else{
+                        if (html.indexOf("Failure") != -1) {
+                            status = "Failure";
+                        } else if (html.indexOf("Success") != -1) {
+                            status = "Success";
+                        } else if (html.indexOf("Aborted") != -1) {
+                            status = "Aborted";
+                        } else {
                             status = "Status Not Known!";
                         }
                         //Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
+                            /*Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
                             intent.putExtra("transStatus", status);
-                            startActivity(intent);
-                    }catch (Exception e){
+                            startActivity(intent);*/
+                        updatePaymentStatus(status);
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        Log.v("Logs", "-------------- Error : "+e);
+                        //Log.v("Logs", "-------------- Error : "+e);
                     }
                 }
             }
@@ -141,7 +153,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             //final WebView webview = (WebView) findViewById(R.id.webView);
             //myBrowser.getSettings().setJavaScriptEnabled(true);
             myBrowser.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
-            myBrowser.setWebViewClient(new WebViewClient(){
+            myBrowser.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView webView, String url) {
                     bankUrl = url;
@@ -152,13 +164,13 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(myBrowser, url);
 
-                    if(url.indexOf("/ccavResponseHandler.php")!=-1){
+                    if (url.indexOf("/ccavResponseHandler.php") != -1) {
                         myBrowser.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     }
 
                     // calling load Waiting for otp fragment
-                    if(loadCounter < 1){
-                        if(MyDeviceAPI >= 19) {
+                    if (loadCounter < 1) {
+                        if (MyDeviceAPI >= 19) {
                             loadCitiBankAuthenticateOption(url);
                             loadWaitingFragment(url);
                         }
@@ -175,13 +187,13 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             /* An instance of this class will be registered as a JavaScript interface */
             StringBuffer params = new StringBuffer();
             params.append(ServiceUtility.addToPostParams(AvenuesParams.ACCESS_CODE, mainIntent.getStringExtra(AvenuesParams.ACCESS_CODE)));
-            params.append(ServiceUtility.addToPostParams(AvenuesParams.MERCHANT_ID,mainIntent.getStringExtra(AvenuesParams.MERCHANT_ID)));
-            params.append(ServiceUtility.addToPostParams(AvenuesParams.ORDER_ID,mainIntent.getStringExtra(AvenuesParams.ORDER_ID)));
-            params.append(ServiceUtility.addToPostParams(AvenuesParams.REDIRECT_URL,mainIntent.getStringExtra(AvenuesParams.REDIRECT_URL)));
-            params.append(ServiceUtility.addToPostParams(AvenuesParams.CANCEL_URL,mainIntent.getStringExtra(AvenuesParams.CANCEL_URL)));
+            params.append(ServiceUtility.addToPostParams(AvenuesParams.MERCHANT_ID, mainIntent.getStringExtra(AvenuesParams.MERCHANT_ID)));
+            params.append(ServiceUtility.addToPostParams(AvenuesParams.ORDER_ID, mainIntent.getStringExtra(AvenuesParams.ORDER_ID)));
+            params.append(ServiceUtility.addToPostParams(AvenuesParams.REDIRECT_URL, mainIntent.getStringExtra(AvenuesParams.REDIRECT_URL)));
+            params.append(ServiceUtility.addToPostParams(AvenuesParams.CANCEL_URL, mainIntent.getStringExtra(AvenuesParams.CANCEL_URL)));
             params.append(ServiceUtility.addToPostParams(AvenuesParams.ENC_VAL, URLEncoder.encode(encVal)));
 
-            String vPostParams = params.substring(0,params.length()-1);
+            String vPostParams = params.substring(0, params.length() - 1);
             try {
                 myBrowser.postUrl(Constants.TRANS_URL, EncodingUtils.getBytes(vPostParams, "UTF-8"));
             } catch (Exception e) {
@@ -189,6 +201,49 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             }
         }
     }
+
+    private void updatePaymentStatus(final String status) {
+
+        String orderId = mainIntent.getStringExtra(AvenuesParams.ORDER_ID);
+        String gymId = mainIntent.getStringExtra(ApplicationData.GYM_ID);
+        String ammount = mainIntent.getStringExtra(AvenuesParams.AMOUNT);
+        String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+
+       /* Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(new Date());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("hh:mm:ss");
+        String time = sdf1.format(new Date());*/
+        showProgressDialog("Processing please wait..",false);
+        Call<JsonResponseFollow> call = ApiClientMain.getApiClient().makePayment(userId, orderId, ammount, status, gymId);
+        call.enqueue(new Callback<JsonResponseFollow>() {
+            @Override
+            public void onResponse(Call<JsonResponseFollow> call, Response<JsonResponseFollow> response) {
+                cancelProgressDialog();
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("1")) {
+                        if (status.contains("Failure")) {
+                            showToast("Sorry for inconvenience");
+                        } else if (status.contains("Success")) {
+                            showToast("Transaction Successful!");
+                        } else if (status.contains("Aborted")) {
+                            showToast("Transaction Cancelled!");
+                        } else {
+                            showToast("Sorry for inconvenience.Status Not Known!");
+                        }
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponseFollow> call, Throwable t) {
+                cancelProgressDialog();
+                showToast("Sorry for inconvenience. Please try again");
+            }
+        });
+    }
+
     public void showToast(String msg) {
         Toast.makeText(this, "Toast: " + msg, Toast.LENGTH_LONG).show();
     }
@@ -198,13 +253,14 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
+        initToolbar(true);
         mainIntent = getIntent();
         manager = getFragmentManager();
 
         myBrowser = (WebView) findViewById(R.id.webView);
         webSettings = myBrowser.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
+        preferenceManager = new PreferenceManager(this);
         MyDeviceAPI = Build.VERSION.SDK_INT;
         // Calling async task to get display content
         new RenderView().execute();
@@ -214,7 +270,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
     public void startTimer() {
         try {
             //set a new Timer
-            if(timer == null) {
+            if (timer == null) {
                 timer = new Timer();
             }
             //initialize the TimerTask's job
@@ -222,7 +278,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
 
             //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
             timer.schedule(timerTask, 30000, 30000);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -244,13 +300,13 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     });
                 }
             };
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Method to stop timer
-    public void stopTimerTask(){
+    public void stopTimerTask() {
         //stop the timer, if it's not already null
         if (timer != null) {
             timer.cancel();
@@ -258,8 +314,8 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         }
     }
 
-    public void loadCitiBankAuthenticateOption(String url){
-        if(url.contains("https://www.citibank.co.in/acspage/cap_nsapi.so")){
+    public void loadCitiBankAuthenticateOption(String url) {
+        if (url.contains("https://www.citibank.co.in/acspage/cap_nsapi.so")) {
             CityBankFragment citiFrag = new CityBankFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, citiFrag, "CitiBankAuthFrag");
@@ -268,20 +324,20 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         }
     }
 
-    public void removeCitiBankAuthOption(){
+    public void removeCitiBankAuthOption() {
         CityBankFragment cityFrag = (CityBankFragment) manager.findFragmentByTag("CitiBankAuthFrag");
         FragmentTransaction transaction = manager.beginTransaction();
-        if(cityFrag!=null){
+        if (cityFrag != null) {
             transaction.remove(cityFrag);
             transaction.commit();
         }
     }
 
     // Method to load Waiting for OTP fragment
-    public void loadWaitingFragment(String url){
+    public void loadWaitingFragment(String url) {
 
         // SBI Debit Card
-        if(url.contains("https://acs.onlinesbi.com/sbi/")){
+        if (url.contains("https://acs.onlinesbi.com/sbi/")) {
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, waitingFragment, "OTPWaitingFrag");
@@ -290,7 +346,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         }
 
         // Kotak Bank Visa Debit card
-        else if(url.contains("https://cardsecurity.enstage.com/ACSWeb/")){
+        else if (url.contains("https://cardsecurity.enstage.com/ACSWeb/")) {
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, waitingFragment, "OTPWaitingFrag");
@@ -298,12 +354,12 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             startTimer();
         }
         // For SBI and All its Asscocites Net Banking
-        else if(url.contains("https://merchant.onlinesbi.com/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.onlinesbi.com/merchant/resendsmsotp.htm") || url.contains("https://m.onlinesbi.com/mmerchant/smsenablehighsecurity.htm")
+        else if (url.contains("https://merchant.onlinesbi.com/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.onlinesbi.com/merchant/resendsmsotp.htm") || url.contains("https://m.onlinesbi.com/mmerchant/smsenablehighsecurity.htm")
                 || url.contains("https://merchant.onlinesbh.com/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.onlinesbh.com/merchant/resendsmsotp.htm")
                 || url.contains("https://merchant.sbbjonline.com/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.sbbjonline.com/merchant/resendsmsotp.htm")
                 || url.contains("https://merchant.onlinesbm.com/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.onlinesbm.com/merchant/resendsmsotp.htm")
                 || url.contains("https://merchant.onlinesbp.com/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.onlinesbp.com/merchant/resendsmsotp.htm")
-                || url.contains("https://merchant.sbtonline.in/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.sbtonline.in/merchant/resendsmsotp.htm")){
+                || url.contains("https://merchant.sbtonline.in/merchant/smsenablehighsecurity.htm") || url.contains("https://merchant.sbtonline.in/merchant/resendsmsotp.htm")) {
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, waitingFragment, "OTPWaitingFrag");
@@ -312,7 +368,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         }
 
         // For ICICI Credit Card
-        else if(url.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer")){
+        else if (url.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer")) {
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, waitingFragment, "OTPWaitingFrag");
@@ -320,7 +376,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             startTimer();
         }
         // City bank Debit card
-        else if(url.equals("cityBankAuthPage")){
+        else if (url.equals("cityBankAuthPage")) {
             removeCitiBankAuthOption();
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -329,7 +385,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             startTimer();
         }
         // HDFC Debit Card and Credit Card
-        else if(url.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth")){
+        else if (url.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth")) {
             //removeCitiBankAuthOption();
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -338,7 +394,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             startTimer();
         }
         // For SBI  Visa credit Card
-        else if(url.contains("https://secure4.arcot.com/acspage/cap")){
+        else if (url.contains("https://secure4.arcot.com/acspage/cap")) {
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, waitingFragment, "OTPWaitingFrag");
@@ -347,14 +403,13 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         }
 
         // For Kotak Bank Visa Credit Card
-        else if (url.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer")){
+        else if (url.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer")) {
             OtpFragment waitingFragment = new OtpFragment();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(R.id.otp_frame, waitingFragment, "OTPWaitingFrag");
             transaction.commit();
             startTimer();
-        }
-        else{
+        } else {
             removeWaitingFragment();
             removeApprovalFragment();
             stopTimerTask();
@@ -362,25 +417,24 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
     }
 
     // Method to remove Waiting fragment
-    public void removeWaitingFragment(){
+    public void removeWaitingFragment() {
         OtpFragment waitingFragment = (OtpFragment) manager.findFragmentByTag("OTPWaitingFrag");
-        if(waitingFragment!=null){
+        if (waitingFragment != null) {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.remove(waitingFragment);
             transaction.commit();
-        }
-        else{
+        } else {
             // DO nothing
             //Toast.makeText(this," --test-- ",Toast.LENGTH_SHORT).show();
         }
     }
 
     // Method to load Approve Otp Fragment
-    public void loadApproveOTP(String otpText,String senderNo){
-        try{
+    public void loadApproveOTP(String otpText, String senderNo) {
+        try {
             Integer vTemp = Integer.parseInt(otpText);
 
-            if(bankUrl.contains("https://acs.onlinesbi.com/sbi/") && senderNo.contains("SBI") && (otpText.length() == 6 || otpText.length() == 8)){
+            if (bankUrl.contains("https://acs.onlinesbi.com/sbi/") && senderNo.contains("SBI") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -390,7 +444,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For Kotak bank Debit Card
-            else if(bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/") && senderNo.contains("KOTAK") && (otpText.length() == 6 || otpText.length() == 8)){
+            else if (bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/") && senderNo.contains("KOTAK") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -400,12 +454,12 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // for SBI Net Banking
-            else if((((bankUrl.contains("https://merchant.onlinesbi.com/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.onlinesbi.com/merchant/resendsmsotp.htm") || bankUrl.contains("https://m.onlinesbi.com/mmerchant/smsenablehighsecurity.htm")) && senderNo.contains("SBI"))
+            else if ((((bankUrl.contains("https://merchant.onlinesbi.com/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.onlinesbi.com/merchant/resendsmsotp.htm") || bankUrl.contains("https://m.onlinesbi.com/mmerchant/smsenablehighsecurity.htm")) && senderNo.contains("SBI"))
                     || ((bankUrl.contains("https://merchant.onlinesbh.com/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.onlinesbh.com/merchant/resendsmsotp.htm")) && senderNo.contains("SBH"))
                     || ((bankUrl.contains("https://merchant.sbbjonline.com/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.sbbjonline.com/merchant/resendsmsotp.htm")) && senderNo.contains("SBBJ"))
                     || ((bankUrl.contains("https://merchant.onlinesbm.com/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.onlinesbm.com/merchant/resendsmsotp.htm")) && senderNo.contains("SBM"))
                     || ((bankUrl.contains("https://merchant.onlinesbp.com/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.onlinesbp.com/merchant/resendsmsotp.htm")) && senderNo.contains("SBP"))
-                    || ((bankUrl.contains("https://merchant.sbtonline.in/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.sbtonline.in/merchant/resendsmsotp.htm")) && senderNo.contains("SBT"))) && (otpText.length() == 6 || otpText.length() == 8)){
+                    || ((bankUrl.contains("https://merchant.sbtonline.in/merchant/smsenablehighsecurity.htm") || bankUrl.contains("https://merchant.sbtonline.in/merchant/resendsmsotp.htm")) && senderNo.contains("SBT"))) && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -415,7 +469,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For ICICI Visa Credit Card
-            else if(bankUrl.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer") && senderNo.contains("ICICI")&& (otpText.length() == 6 || otpText.length() == 8)) {
+            else if (bankUrl.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer") && senderNo.contains("ICICI") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -425,7 +479,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For ICICI Debit card
-            else if(bankUrl.contains("https://acs.icicibank.com/acspage/cap?") && senderNo.contains("ICICI")&& (otpText.length() == 6 || otpText.length() == 8)) {
+            else if (bankUrl.contains("https://acs.icicibank.com/acspage/cap?") && senderNo.contains("ICICI") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -435,7 +489,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For CITI bank Debit card
-            else if(bankUrl.contains("https://www.citibank.co.in/acspage/cap_nsapi.so") && senderNo.contains("CITI")&& (otpText.length() == 6 || otpText.length() == 8)){
+            else if (bankUrl.contains("https://www.citibank.co.in/acspage/cap_nsapi.so") && senderNo.contains("CITI") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -445,7 +499,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For HDFC bank debit card and Credit Card
-            else if(bankUrl.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth") && senderNo.contains("HDFC")&& (otpText.length() == 6 || otpText.length() == 8)){
+            else if (bankUrl.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth") && senderNo.contains("HDFC") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -455,7 +509,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For HDFC Netbanking
-            else if(bankUrl.contains("https://netbanking.hdfcbank.com/netbanking/entry") && senderNo.contains("HDFC")&& (otpText.length() == 6 || otpText.length() == 8)){
+            else if (bankUrl.contains("https://netbanking.hdfcbank.com/netbanking/entry") && senderNo.contains("HDFC") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -465,7 +519,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 approveFragment.setOtpText(otpText);
             }
             // For SBI Visa credit Card
-            else if(bankUrl.contains("https://secure4.arcot.com/acspage/cap") && senderNo.contains("SBI")&& (otpText.length() == 6 || otpText.length() == 8)){
+            else if (bankUrl.contains("https://secure4.arcot.com/acspage/cap") && senderNo.contains("SBI") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -473,8 +527,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 transaction.add(R.id.otp_frame, approveFragment, "OTPApproveFrag");
                 transaction.commit();
                 approveFragment.setOtpText(otpText);
-            }
-            else if(bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer") && senderNo.contains("KOTAK") && (otpText.length() == 6 || otpText.length() == 8)){
+            } else if (bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer") && senderNo.contains("KOTAK") && (otpText.length() == 6 || otpText.length() == 8)) {
                 removeWaitingFragment();
                 stopTimerTask();
                 ApproveOTPFragment approveFragment = new ApproveOTPFragment();
@@ -482,32 +535,31 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 transaction.add(R.id.otp_frame, approveFragment, "OTPApproveFrag");
                 transaction.commit();
                 approveFragment.setOtpText(otpText);
-            }
-            else{
+            } else {
                 removeApprovalFragment();
                 stopTimerTask();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void removeApprovalFragment(){
-        ApproveOTPFragment approveOTPFragment = (ApproveOTPFragment)manager.findFragmentByTag("OTPApproveFrag");
-        if(approveOTPFragment !=null){
+    public void removeApprovalFragment() {
+        ApproveOTPFragment approveOTPFragment = (ApproveOTPFragment) manager.findFragmentByTag("OTPApproveFrag");
+        if (approveOTPFragment != null) {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.remove(approveOTPFragment);
             transaction.commit();
         }
     }
 
-    public void loadActionDialog(){
+    public void loadActionDialog() {
 
         try {
             actionDialog.show(getFragmentManager(), "ActionDialog");
             stopTimerTask();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -522,19 +574,19 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                try{
+                try {
                     //removeWaitingFragment();
                     removeApprovalFragment();
                     ///////////////////////////////////////
                     String msgText = intent.getStringExtra("get_otp");
                     String otp = msgText.split("\\|")[0];
                     String senderNo = msgText.split("\\|")[1];
-                    if(MyDeviceAPI >=19) {
+                    if (MyDeviceAPI >= 19) {
                         loadApproveOTP(otp, senderNo);
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Exception :"+e,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Exception :" + e, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -547,17 +599,14 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         this.unregisterReceiver(this.mIntentReceiver);
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -574,14 +623,21 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
         return super.onOptionsItemSelected(item);
     }
 
+*/
 
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
     // On click of Approve button
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void respond(String otpText) {
 
         String data = otpText;
-        try{
+        try {
             // For SBI and all the associates
             if (bankUrl.contains("https://acs.onlinesbi.com/sbi/")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('otp').value = '" + otpText + "'", new ValueCallback<String>() {
@@ -601,7 +657,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // For SBI Visa credit card
-            else if(bankUrl.contains("https://secure4.arcot.com/acspage/cap")){
+            else if (bankUrl.contains("https://secure4.arcot.com/acspage/cap")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementsByName('pin1')[0].value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -624,7 +680,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // For ICICI credit card
-            else if(bankUrl.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer")){
+            else if (bankUrl.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('txtAutoOtp').value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -633,7 +689,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // For ICICI bank Debit card
-            else if(bankUrl.contains("https://acs.icicibank.com/acspage/cap?")){
+            else if (bankUrl.contains("https://acs.icicibank.com/acspage/cap?")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('txtAutoOtp').value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -642,7 +698,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // For Citi Bank debit card
-            else if(bankUrl.contains("https://www.citibank.co.in/acspage/cap_nsapi.so")){
+            else if (bankUrl.contains("https://www.citibank.co.in/acspage/cap_nsapi.so")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementsByName('otp')[0].value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -651,7 +707,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // For HDFC Debit card and Credit card
-            else if(bankUrl.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth")){
+            else if (bankUrl.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('txtOtpPassword').value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -660,7 +716,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // HDFC Net Banking
-            else if(bankUrl.contains("https://netbanking.hdfcbank.com/netbanking/entry")){
+            else if (bankUrl.contains("https://netbanking.hdfcbank.com/netbanking/entry")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementsByName('fldOtpToken')[0].value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -669,7 +725,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // For Kotak Band visa Credit Card
-            else if(bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer")){
+            else if (bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('otpValue').value = '" + otpText + "'", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -678,7 +734,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 });
             }
             // for CITI Bank Authenticate with option selection
-            if(data.equals("password")){
+            if (data.equals("password")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('uid_tb_r').click();", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -686,7 +742,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     }
                 });
             }
-            if(data.equals("smsOtp")){
+            if (data.equals("smsOtp")) {
                 myBrowser.evaluateJavascript("javascript:document.getElementById('otp_tb_r').click();", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
@@ -696,7 +752,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 loadWaitingFragment("cityBankAuthPage");
             }
             loadCounter++;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -718,7 +774,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     });
                 }
                 // For HDFC Credit and Debit Card
-                else if(bankUrl.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth")){
+                else if (bankUrl.contains("https://netsafe.hdfcbank.com/ACSWeb/jsp/dynamicAuth.jsp?transType=payerAuth")) {
                     myBrowser.evaluateJavascript("javascript:generateOTP();", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
@@ -727,7 +783,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     });
                 }
                 // SBI Visa Credit Card
-                else if(bankUrl.contains("https://secure4.arcot.com/acspage/cap")){
+                else if (bankUrl.contains("https://secure4.arcot.com/acspage/cap")) {
                     myBrowser.evaluateJavascript("javascript:OnSubmitHandlerResend();", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
@@ -736,7 +792,7 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     });
                 }
                 // For Kotak Visa Credit Card
-                else if(bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer")){
+                else if (bankUrl.contains("https://cardsecurity.enstage.com/ACSWeb/EnrollWeb/KotakBank/server/OtpServer")) {
                     myBrowser.evaluateJavascript("javascript:doSendOTP();", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
@@ -745,13 +801,13 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                     });
                 }
                 // For ICICI Credit Card
-                else if(bankUrl.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer")){
+                else if (bankUrl.contains("https://www.3dsecure.icicibank.com/ACSWeb/EnrollWeb/ICICIBank/server/OtpServer")) {
                     myBrowser.evaluateJavascript("javascript:resend_otp();", new ValueCallback<String>() {
                         @Override
-                        public void onReceiveValue(String value) {}
+                        public void onReceiveValue(String value) {
+                        }
                     });
-                }
-                else {
+                } else {
                     myBrowser.evaluateJavascript("javascript:resendOTP();", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
@@ -767,8 +823,8 @@ public class WebViewActivity extends AppCompatActivity implements  Communicator 
                 stopTimerTask();
                 removeWaitingFragment();
             }
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(),"Action not available for this Payment Option !", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Action not available for this Payment Option !", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

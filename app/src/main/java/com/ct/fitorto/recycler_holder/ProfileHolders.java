@@ -16,6 +16,7 @@ public class ProfileHolders extends RecyclerView.ViewHolder  implements View.OnC
     public CircleImageView gymimage;
     public TextView gymtitle;
     public TextView gymstatus;
+    public TextView checkedin;
 
     public ProfileHolders(View itemView) {
         super(itemView);
@@ -23,6 +24,7 @@ public class ProfileHolders extends RecyclerView.ViewHolder  implements View.OnC
         gymimage =(CircleImageView)itemView.findViewById(R.id.gym_image);
         gymtitle=(TextView)itemView.findViewById((R.id.gym_name));
         gymstatus=(TextView)itemView.findViewById(R.id.gym_status);
+        checkedin= (TextView) itemView.findViewById(R.id.checkedin);
     }
 
     @Override

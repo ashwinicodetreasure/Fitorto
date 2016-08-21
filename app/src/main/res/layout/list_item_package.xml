@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/margin_small"
+        android:singleLine="true"
+        android:text=" "
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium" />
+
+    <com.ct.fitorto.custom.CustomTextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/margin_small"
+        android:singleLine="true"
+        android:text=" "
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_medium" />
+
+
+</RelativeLayout>

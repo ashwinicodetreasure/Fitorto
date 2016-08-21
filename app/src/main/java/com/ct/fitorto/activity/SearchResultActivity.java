@@ -93,7 +93,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
             temp_arraylist.addAll(arrayList);
             mEmptyView.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
-            adapter = new SearchAdapter(SearchResultActivity.this, arrayList);
+            adapter = new SearchAdapter(this,SearchResultActivity.this, arrayList);
             mRecyclerView.setAdapter(adapter);
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
@@ -208,26 +208,26 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
                 getFilterResult(1000, 100000);
                 break;
             case R.id.btn_1:
-                getFilterResult(0.5f, 5f);
+                getRatingFilterResult(0.5f, 5f);
                 break;
             case R.id.btn_2:
-                getFilterResult(1.5f, 5f);
+                getRatingFilterResult(1.5f, 5f);
                 break;
             case R.id.btn_3:
-                getFilterResult(2.5f, 5f);
+                getRatingFilterResult(2.5f, 5f);
                 break;
             case R.id.btn_4:
-                getFilterResult(3.5f, 5f);
+                getRatingFilterResult(3.5f, 5f);
                 break;
             case R.id.btn_5:
-                getFilterResult(4.5f, 5f);
+                getRatingFilterResult(4.5f, 5f);
                 break;
         }
     }
 
     public void sortArrayList() {
         Collections.sort(temp_arraylist, new ProductRatingSort());
-        adapter = new SearchAdapter(SearchResultActivity.this, temp_arraylist);
+        adapter = new SearchAdapter(this,SearchResultActivity.this, temp_arraylist);
         //adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -238,7 +238,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         Collections.sort(temp_arraylist, new FeesComparator());
         for (int i = 0; i < temp_arraylist.size(); i++) {
             if (temp_arraylist.get(i).getPackages().size() > 0) {
-                int price = (Integer.parseInt(temp_arraylist.get(i).getPackages().get(0).getOneMonth()));
+                int price = (Integer.parseInt(temp_arraylist.get(i).getPackages().get(0).getCost()));
                 if (price >= objMin && price <= objMax) {
                     arraylist.add(temp_arraylist.get(i));
                 }
@@ -247,7 +247,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         if (arraylist.size() > 0) {
             mEmptyView.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
-            adapter = new SearchAdapter(SearchResultActivity.this, arraylist);
+            adapter = new SearchAdapter(this,SearchResultActivity.this, arraylist);
             //  myDoctorAdapter.setOnItemClickListener(this);
             mRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -270,7 +270,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         if (temp_arraylist.size() > 0) {
             mEmptyView.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
-            adapter = new SearchAdapter(SearchResultActivity.this, temp_arraylist);
+            adapter = new SearchAdapter(this,SearchResultActivity.this, temp_arraylist);
             //adapter.setOnItemClickListener(this);
             mRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -291,7 +291,7 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         if (temp_arraylist.size() > 0) {
             mEmptyView.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
-            adapter = new SearchAdapter(SearchResultActivity.this, temp_arraylist);
+            adapter = new SearchAdapter(this,SearchResultActivity.this, temp_arraylist);
             // adapter.setOnItemClickListener(this);
             mRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -301,12 +301,12 @@ public class SearchResultActivity extends AppCompatActivity implements SearchAda
         }
     }
 
-    public class FeesComparator implements Comparator<Search> {
+   public class FeesComparator implements Comparator<Search> {
         @Override
         public int compare(Search o1, Search o2) {
             // TODO: 09/12/16 Solve crash problem.
             if (o1.getPackages().size() > 0 && o2.getPackages().size() > 0) {
-                return o1.getPackages().get(0).getOneMonth().compareTo(o2.getPackages().get(0).getOneMonth());
+                return o1.getPackages().get(0).getCost().compareTo(o2.getPackages().get(0).getCost());
             } else {
                 return 0;
             }

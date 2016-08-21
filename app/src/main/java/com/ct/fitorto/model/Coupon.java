@@ -14,6 +14,9 @@ public class Coupon {
     @SerializedName("couponID")
     @Expose
     private String couponID;
+    @SerializedName("userCouponID")
+    @Expose
+    private String userCouponID;
     @SerializedName("gymID")
     @Expose
     private String gymID;
@@ -32,6 +35,15 @@ public class Coupon {
     @SerializedName("dateTime")
     @Expose
     private String dateTime;
+
+
+    public String getUserCouponID() {
+        return userCouponID;
+    }
+
+    public void setUserCouponID(String userCouponID) {
+        this.userCouponID = userCouponID;
+    }
 
     /**
      *
