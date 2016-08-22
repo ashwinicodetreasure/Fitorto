@@ -61,7 +61,7 @@
         android:layout_marginTop="22dp"
         android:fontFamily="Roboto Regular"
         android:letterSpacing="0.05"
-        android:text="PRIVATE INFORMATION"
+        android:text="PERSONAL INFORMATION"
         android:textColor="#000000"
         android:textSize="18dp" />
 
@@ -191,13 +191,53 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-  <!--  <View
+    <View
         android:id="@+id/v8"
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_below="@+id/ivgender"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:background="#dbdbdb" />-->
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
 
+    <LinearLayout
+        android:id="@+id/llDob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_small"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivDob"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/v5"
+            android:layout_marginLeft="18dp"
+            android:src="@drawable/ic_dob"
+            android:tint="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tvDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/v6"
+            android:layout_below="@+id/v5"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="14dp"
+            android:background="@color/button_default"
+            android:inputType="textEmailAddress"
+            android:text="Enter Date of birth"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/ivgender"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="12dp"
+        android:background="#dbdbdb" />
 </LinearLayout>

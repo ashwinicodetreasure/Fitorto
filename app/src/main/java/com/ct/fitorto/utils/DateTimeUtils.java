@@ -150,6 +150,20 @@ public class DateTimeUtils implements Runnable {
         format = new SimpleDateFormat("hh:mm a");
         String formatedDate = format.format(newDate);
         return formatedDate;
-
     }
+
+    public static String formateAgeDate(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date newDate = null;
+        try {
+            newDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        format = new SimpleDateFormat("dd MMM, yyyy");
+        String formatedDate = format.format(newDate);
+        return formatedDate;
+    }
+
 }

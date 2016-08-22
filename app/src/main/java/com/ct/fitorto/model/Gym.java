@@ -89,13 +89,13 @@ public class Gym implements Parcelable {
     private List<Schedule> schedule = new ArrayList<Schedule>();
     @SerializedName("packages")
     @Expose
-    private List<Package> packages = new ArrayList<Package>();
+    private ArrayList<Package> packages = new ArrayList<Package>();
     @SerializedName("myPackages")
     @Expose
-    private List<MyPackage> myPackages = new ArrayList<MyPackage>();
+    private ArrayList<MyPackage> myPackages = new ArrayList<MyPackage>();
     @SerializedName("images")
     @Expose
-    private List<GymImages> images = new ArrayList<GymImages>();
+    private ArrayList<GymImages> images = new ArrayList<GymImages>();
 
     /**
      *
@@ -534,7 +534,7 @@ public class Gym implements Parcelable {
      * @return
      *     The packages
      */
-    public List<Package> getPackages() {
+    public ArrayList<Package> getPackages() {
         return packages;
     }
 
@@ -543,7 +543,7 @@ public class Gym implements Parcelable {
      * @param packages
      *     The packages
      */
-    public void setPackages(List<Package> packages) {
+    public void setPackages(ArrayList<Package> packages) {
         this.packages = packages;
     }
 
@@ -552,7 +552,7 @@ public class Gym implements Parcelable {
      * @return
      *     The myPackages
      */
-    public List<MyPackage> getMyPackages() {
+    public ArrayList<MyPackage> getMyPackages() {
         return myPackages;
     }
 
@@ -561,7 +561,7 @@ public class Gym implements Parcelable {
      * @param myPackages
      *     The myPackages
      */
-    public void setMyPackages(List<MyPackage> myPackages) {
+    public void setMyPackages(ArrayList<MyPackage> myPackages) {
         this.myPackages = myPackages;
     }
 
@@ -570,7 +570,7 @@ public class Gym implements Parcelable {
      * @return
      *     The images
      */
-    public List<GymImages> getImages() {
+    public ArrayList<GymImages> getImages() {
         return images;
     }
 
@@ -579,7 +579,7 @@ public class Gym implements Parcelable {
      * @param images
      *     The images
      */
-    public void setImages(List<GymImages> images) {
+    public void setImages(ArrayList<GymImages> images) {
         this.images = images;
     }
 

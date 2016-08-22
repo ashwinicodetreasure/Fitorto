@@ -1,6 +1,7 @@
 package com.ct.fitorto.activity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,9 @@ import com.ct.fitorto.model.Package;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
+import com.ct.fitorto.utils.DateTimeUtils;
+
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,14 +43,20 @@ import retrofit2.Response;
 /**
  * Created by Ashwini on 6/27/2016.
  */
-public class EditUserProfileActivity extends BaseActivity {
+public class EditUserProfileActivity extends BaseActivity implements View.OnClickListener {
 
     private PreferenceManager preferenceManager;
     private EditText edtName, edphone;
     private Spinner spGender;
     private TextView edemail;
     private String gender;
-
+    private LinearLayout llDob;
+    private TextView tvDob;
+    int year;
+    int month;
+    int day;
+    static final int DATE_PICKER_ID = 1111;
+    String dob = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +71,11 @@ public class EditUserProfileActivity extends BaseActivity {
 
     private void updateData() {
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
-        String status=preferenceManager.getPreferenceValues(ApplicationData.STATUS);
+        String status = preferenceManager.getPreferenceValues(ApplicationData.STATUS);
         String name = edtName.getText().toString();
         String phone = edphone.getText().toString();
         showProgressDialog("Please Wait...", false);
-        Call<JsonResponseUserUpdate> response = ApiClientMain.getApiClient().getResponseUserUpdate(userid, name, phone, "", gender, "", "", status);
+        Call<JsonResponseUserUpdate> response = ApiClientMain.getApiClient().getResponseUserUpdate(userid, name, phone, dob, gender, "", "", status);
         response.enqueue(new Callback<JsonResponseUserUpdate>() {
             @Override
             public void onResponse(Call<JsonResponseUserUpdate> call, Response<JsonResponseUserUpdate> response) {
@@ -71,7 +83,7 @@ public class EditUserProfileActivity extends BaseActivity {
                 cancelProgressDialog();
                 //for (FitortoUser user : resp.getData())  this code check for each
                 if (resp != null) {
-                    if (resp.getStatus()==1) {
+                    if (resp.getStatus() == 1) {
                         Toast.makeText(EditUserProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
                         finishThis();
                     } else {
@@ -98,6 +110,10 @@ public class EditUserProfileActivity extends BaseActivity {
         edtName = (EditText) findViewById(R.id.name);
         edemail = (TextView) findViewById(R.id.mail);
         edphone = (EditText) findViewById(R.id.phone);
+        llDob = (LinearLayout) findViewById(R.id.llDob);
+        tvDob = (TextView) findViewById(R.id.tvDob);
+        llDob.setOnClickListener(this);
+        tvDob.setOnClickListener(this);
     }
 
     private void initDataSet() {
@@ -138,6 +154,10 @@ public class EditUserProfileActivity extends BaseActivity {
 
                             if (!TextUtils.isEmpty(user.getGender())) {
                                 setGenderDropDown(user.getGender());
+                            }
+
+                            if (!TextUtils.isEmpty(user.getDob())) {
+                                tvDob.setText(DateTimeUtils.formateAgeDate(user.getDob()));
                             }
                         }
                     }
@@ -198,4 +218,45 @@ public class EditUserProfileActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.llDob:
+                showCalDialog(DATE_PICKER_ID);
+                break;
+            case R.id.tvDob:
+                showCalDialog(DATE_PICKER_ID);
+                break;
+        }
+    }
+
+
+    public void showCalDialog(int datePickerId) {
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog pickerDialog=new DatePickerDialog(this, pickerListener, year, month, day);
+        pickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        pickerDialog.show();
+    }
+
+    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            // Show selected date
+            dob = (new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day)).toString();
+            /*tvAgeDate.setText(new StringBuilder().append(month + 1)
+                    .append("-").append(day).append("-").append(year)
+                    .append(" "));*/
+            tvDob.setText(DateTimeUtils.formateAgeDate(dob));
+        }
+    };
 }

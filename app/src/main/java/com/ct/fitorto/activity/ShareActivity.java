@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Patterns;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -297,9 +299,6 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
 
             case R.id.sharebtn:
                 uploadData();
-                ivimage.setImageBitmap(null);
-                tvlink.setText("");
-                edcontent.setText("");
                 break;
             /*case R.id.ivRemove:
                 if(ivimage!=null){
@@ -312,24 +311,44 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void uploadData() {
+        boolean cancel = false;
         String string = edcontent.getText().toString();
-        if (!TextUtils.isEmpty(string)) {
-            showProgressDialog("Please wait..", false);
-            PreferenceManager preferenceManager = new PreferenceManager(ShareActivity.this);
-            String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
-            RequestBody id = ApiClientMain.getStringRequestBody(userId);
-            RequestBody content = ApiClientMain.getStringRequestBody(string);
-            RequestBody link = ApiClientMain.getStringRequestBody(this.link);
 
-            RequestBody flag = ApiClientMain.getStringRequestBody("1");
-            RequestBody image = null;
-            if (!TextUtils.isEmpty(picturePath)) {
-                image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
-            } else {
-//                image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), "");
-                image = null;
+        //if (!TextUtils.isEmpty(string)) {
+        PreferenceManager preferenceManager = new PreferenceManager(ShareActivity.this);
+        String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        RequestBody id = ApiClientMain.getStringRequestBody(userId);
+        RequestBody content = ApiClientMain.getStringRequestBody(string);
+        RequestBody link=null;
+        if (!TextUtils.isEmpty(this.link)) {
+            link= ApiClientMain.getStringRequestBody(this.link);
+            cancel = false;
+        } else {
+            link = null;
+            if (TextUtils.isEmpty(string)) {
+                cancel = true;
             }
+        }
 
+        RequestBody flag = ApiClientMain.getStringRequestBody("1");
+        RequestBody image = null;
+        if (!TextUtils.isEmpty(picturePath)) {
+            image = RequestBody.create(MediaType.parse(ApiClientMain.MEDIA_TYPE_IMAGE), new File(picturePath));
+            cancel = false;
+        } else {
+            image = null;
+            /*if(!TextUtils.isEmpty(this.link)){
+                cancel=false;
+            }*/
+            if (TextUtils.isEmpty(string)) {
+                cancel = true;
+            }
+        }
+
+        if (cancel) {
+            Toast.makeText(ShareActivity.this, "Please write something.", Toast.LENGTH_SHORT).show();
+        } else {
+            showProgressDialog("Please wait..", false);
             Call<JsonResponseAddFeed> response = ApiClientMain.getApiClient().getResponseFeed(id, content, link, flag, image);
             response.enqueue(new Callback<JsonResponseAddFeed>() {
                 @Override
@@ -340,6 +359,9 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
                     cancelProgressDialog();
                     JsonResponseAddFeed resp = response.body();
                     if (resp != null) {
+                        ivimage.setImageBitmap(null);
+                        tvlink.setText("");
+                        edcontent.setText("");
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             onBackPressed();
                         } else {
@@ -354,9 +376,10 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
                     Toast.makeText(ShareActivity.this, "Something went wrong please try again.", Toast.LENGTH_SHORT).show();
                 }
             });
-        } else {
-            Toast.makeText(ShareActivity.this, "Please write something.", Toast.LENGTH_SHORT).show();
         }
+       /* } else {
+            Toast.makeText(ShareActivity.this, "Please write something.", Toast.LENGTH_SHORT).show();
+        }*/
 
     }
 
@@ -377,7 +400,15 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
         });
 
         login.show();
-        login.getWindow().setLayout(700, 350);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        int dialogWidth=width-(width/5);
+        int dialogHeight= (int) (height-(height/1.5));
+        login.getWindow().setLayout(dialogWidth, dialogHeight);
     }
 
     private void isValidUrl(String url) {
@@ -473,7 +504,6 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
                 thumbnail = (BitmapFactory.decodeFile(picturePath));
                 ivRemove.setVisibility(View.VISIBLE);
                 ivimage.setImageBitmap(thumbnail);
-
             }
         }
     }

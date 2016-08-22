@@ -153,6 +153,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
         mRecyclerView.setVisibility(View.VISIBLE);
         followingAdapter = new FollowingAdapter(this, followings);
         mRecyclerView.setAdapter(followingAdapter);
+        followingAdapter.setOnItemClickListener(this);
     }
 
     private void updateFollowerData(ArrayList<Follower> followers) {
@@ -160,6 +161,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
         mRecyclerView.setVisibility(View.VISIBLE);
         followerAdapter = new FollowerAdapter(this, followers);
         mRecyclerView.setAdapter(followerAdapter);
+        followerAdapter.setOnItemClickListener(this);
     }
 
 

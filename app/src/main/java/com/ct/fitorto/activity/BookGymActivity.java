@@ -10,18 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.ct.fitorto.R;
 import com.ct.fitorto.Utility.AvenuesParams;
 import com.ct.fitorto.Utility.ServiceUtility;
 import com.ct.fitorto.baseclass.BaseActivity;
-import com.ct.fitorto.ccavanue.InitialActivity;
 import com.ct.fitorto.ccavanue.WebViewActivity;
+import com.ct.fitorto.model.Gym;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Search;
 import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
-
 import java.util.ArrayList;
 
 /**
@@ -40,6 +38,7 @@ public class BookGymActivity extends BaseActivity implements View.OnClickListene
     private ArrayList<Package> packageList = new ArrayList<>();
     private String packageId;
     private EditText accessCode, merchantId, currency, amount, orderId, rsaKeyUrl, redirectUrl, cancelUrl;
+    private Gym gym;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +61,17 @@ public class BookGymActivity extends BaseActivity implements View.OnClickListene
             String gymID = search.getGymID();
             if (search.getPackages().size() > 0) {
                 displayPackageSpinnerList(search.getPackages());
+            }
+        } else {
+            gym = getIntent().getParcelableExtra(ApplicationData.MY_GYM_RESULT);
+            if (gym != null) {
+                String userName = manager.getPreferenceValues(manager.PREF_CLIENT_NAME);
+                edtUserName.setText(userName);
+                edtGymName.setText(gym.getGymName());
+                String gymID = gym.getGymID();
+                if (gym.getPackages().size() > 0) {
+                    displayPackageSpinnerList(gym.getPackages());
+                }
             }
         }
     }
@@ -123,11 +133,14 @@ public class BookGymActivity extends BaseActivity implements View.OnClickListene
                 intent.putExtra(AvenuesParams.ORDER_ID, ServiceUtility.chkNull(orderId.getText()).toString().trim());
                 intent.putExtra(AvenuesParams.CURRENCY, ServiceUtility.chkNull(currency.getText()).toString().trim());
                 intent.putExtra(AvenuesParams.AMOUNT, ServiceUtility.chkNull(spPrice.getText()).toString().trim());
-                //intent.putExtra(AvenuesParams.AMOUNT, "1");//TODO Remove Dummy amont
                 intent.putExtra(AvenuesParams.REDIRECT_URL, ServiceUtility.chkNull(redirectUrl.getText()).toString().trim());
                 intent.putExtra(AvenuesParams.CANCEL_URL, ServiceUtility.chkNull(cancelUrl.getText()).toString().trim());
                 intent.putExtra(AvenuesParams.RSA_KEY_URL, ServiceUtility.chkNull(rsaKeyUrl.getText()).toString().trim());
-                intent.putExtra(ApplicationData.GYM_ID,search.getGymID());
+                if (search != null) {
+                    intent.putExtra(ApplicationData.GYM_ID, search.getGymID());
+                } else {
+                    intent.putExtra(ApplicationData.GYM_ID, gym.getGymID());
+                }
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "All parameters are mandatory.", Toast.LENGTH_LONG).show();

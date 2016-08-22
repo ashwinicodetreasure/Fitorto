@@ -48,15 +48,15 @@ public class RefernceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (coupon != null) {
             if (!TextUtils.isEmpty(coupon.getCouponType())) {
                 mHolder.tvValue.setText(coupon.getCouponType() + " " + coupon.getBenifit());
-                if (coupon.getCouponType().contains("Days")) {
+                //if (coupon.getCouponType().contains("Days")) {
                     if(coupon.getIsUsed().equals("1")){
                         mHolder.btnRedeem.setVisibility(View.INVISIBLE);
                     }else {
                         mHolder.btnRedeem.setVisibility(View.VISIBLE);
                     }
-                } else {
+               /* } else {
                     mHolder.btnRedeem.setVisibility(View.INVISIBLE);
-                }
+                }*/
             } else {
                 mHolder.tvValue.setText("");
             }
@@ -66,11 +66,6 @@ public class RefernceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     reedeemUserPoint(coupon.getUserCouponID(), "1", mHolder.btnRedeem);
                 }
             });
-           /* if (!TextUtils.isEmpty(coupon.getBenifit())) {
-                mHolder.tvDate.setText(coupon.getBenifit());
-            } else {
-                mHolder.tvDate.setText("");
-            }*/
             mHolder.itemView.setTag(coupon);
         }
     }

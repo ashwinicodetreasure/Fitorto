@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <EditText
         android:id="@+id/txtLink"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:hint="Paste link here"
-        android:inputType="text"
-        android:layout_toLeftOf="@+id/btnLink"
-        android:layout_toStartOf="@+id/btnLink"></EditText>
+        android:inputType="text"/>
+
     <Button
         android:id="@+id/btnLink"
         android:layout_width="80dp"
-        android:onClick="invokeLogin"
         android:layout_height="35dp"
+        android:layout_below="@+id/txtLink"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_medium"
         android:background="#388E3C"
+        android:gravity="center"
+        android:onClick="invokeLogin"
         android:text="Add"
-        android:layout_gravity=""
-        android:textColor="#FFFFFF"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="55dp"
-        android:layout_marginRight="10dp"></Button>
-</RelativeLayout>
+        android:textColor="#FFFFFF"/>
+</LinearLayout>

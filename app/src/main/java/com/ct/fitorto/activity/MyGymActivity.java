@@ -673,7 +673,7 @@ public class MyGymActivity extends AppCompatActivity implements View.OnClickList
                 String userFitortoId = manager.getPreferenceValues(manager.FITORTO_ID);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "I have an Fitorto App for you to benefit your fitness. Register with " + search.getGymName() + " with my code " + userFitortoId + " to avail the coupon! " + "http://www.fitorto.com"; //Todo change link with playstore link
+                String shareBody = "I have an Fitorto App for you to benefit your fitness. Register with " + search.getGymName() + " with my code " + userFitortoId + " to avail the coupon! " + "https://goo.gl/EX0k52"; //Todo change link with playstore link
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Fitorto Fitness App");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -701,7 +701,7 @@ public class MyGymActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (v.getId() == R.id.buy_mem) {
             Intent intent = new Intent(this, BookGymActivity.class);
-            intent.putExtra(ApplicationData.SEARCH_RESULT,search);
+            intent.putExtra(ApplicationData.MY_GYM_RESULT,search);
             startActivity(intent);
         }
     }

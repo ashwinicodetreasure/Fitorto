@@ -130,7 +130,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         profile.setOnClickListener(this);
         view.findViewById(R.id.llFollowing).setOnClickListener(this);
         view.findViewById(R.id.llFollowers).setOnClickListener(this);
-
+        followers.setOnClickListener(this);
+        following.setOnClickListener(this);
     }
 
     public void setUserData(final boolean showDialog) {     //to displaying user data
@@ -409,12 +410,23 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 Intent intent = new Intent(getActivity(), FollowersActivity.class);
                 intent.putExtra(ApplicationData.IS_FOLLOWER, false);
                 startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
+
+            case R.id.following:
+           /*     Intent intent1 = new Intent(getActivity(), FollowersActivity.class);
+                intent1.putExtra(ApplicationData.IS_FOLLOWER, true);
+                startActivityForResult(intent1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);*/
                 break;
             case R.id.llFollowers:
                 Intent intent1 = new Intent(getActivity(), FollowersActivity.class);
                 intent1.putExtra(ApplicationData.IS_FOLLOWER, true);
                 startActivityForResult(intent1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
+
+            case R.id.followers:
+                /*Intent intent = new Intent(getActivity(), FollowersActivity.class);
+                intent.putExtra(ApplicationData.IS_FOLLOWER, false);
+                startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);*/
                 break;
+
         }
     }
 }

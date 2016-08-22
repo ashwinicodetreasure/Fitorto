@@ -211,6 +211,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent se = new Intent(HomeActivity.this, SettingActivity.class);
                 startActivityForResult(se, ApplicationData.REQUEST_CODE_STATUS);
                 break;
+            case R.id.action_invite:
+                //Todo change activity name
+                String userFitortoId = manager.getPreferenceValues(manager.FITORTO_ID);
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Check out Fitorto Fitness App for your smartphone. Download it today from " + "https://goo.gl/EX0k52";
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Fitorto Fitness App");
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                break;
         }
 
 
@@ -275,7 +285,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.friends:
-                tvTitle.setText("Friends");
+                tvTitle.setText("Circle");
                 feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
                 profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);

@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,9 +118,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.ibEmailLogin).setOnClickListener(this);
         findViewById(R.id.tvCreateAccount).setOnClickListener(this);
         rlProgressBar = (RelativeLayout) findViewById(R.id.rlProgressBar);
-        preferenceManager=new PreferenceManager(this);
-        String userId=preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
-        if(!TextUtils.isEmpty(userId)){
+        preferenceManager = new PreferenceManager(this);
+        String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        if (!TextUtils.isEmpty(userId)) {
             Intent i = new Intent(LoginActivity.this, HomeActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
@@ -145,14 +146,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.tvCreateAccount:
                 Intent i = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(i);
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
         }
     }
 
     public void translateAnimation() {
         setViewVisbility(false);
-
         Animation mAnimation = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.translate_anim);
         findViewById(R.id.tvLogo).setVisibility(View.INVISIBLE);
         findViewById(R.id.tvSlogan).setVisibility(View.INVISIBLE);
@@ -270,11 +270,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (resp.getStatus().equals("1")) {
                             saveUserDetails(resp.getData());
                             Intent link = new Intent(LoginActivity.this, CityActivity.class);
-                            link.putExtra(ApplicationData.IS_INITIAL,true);
+                            link.putExtra(ApplicationData.IS_INITIAL, true);
                             link.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(link);
                             login.dismiss();
-                        }  else {
+                        } else {
                             Toast.makeText(LoginActivity.this, resp.getMsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -321,7 +321,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         //Toast.makeText(MainActivity.this, response.getName(), Toast.LENGTH_LONG).show();
                         if (response != null) {
-                            String imagelink = "https://graph.facebook.com/" + response.getId() + "/picture?type=large";
+                           /* String imagelink = "https://graph.facebook.com/" + response.getId() + "/picture?type=large";
                             if (!TextUtils.isEmpty(response.getEmail())) {
                                 preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL, response.getEmail());
                             }
@@ -333,8 +333,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                             if (!TextUtils.isEmpty(response.getPicture())) {
                                 preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK, imagelink);
-                            }
-                            socialLogin();
+                            }*/
+                            socialFbLogin(response);
                         }
                     }
                 });
@@ -398,26 +398,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL, acct.getEmail());
+           /* preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL, acct.getEmail());
             preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME, acct.getDisplayName());
             //preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_PHONE,acct.ge);
             if (acct.getPhotoUrl() != null) {
                 preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK, acct.getPhotoUrl().toString());
-            }
-            socialLogin();
+            }*/
+            socialGoogleLogin(acct);
 
         } else {
             Toast.makeText(LoginActivity.this, "Login error Please try again", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void socialLogin() {
-        final String email = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL);
-        final String name = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_NAME);
-        final String image = preferenceManager.getPreferenceValues(preferenceManager.USER_IMAGE_LINK);
+    private void socialGoogleLogin(GoogleSignInAccount profile) {
+        String imagelink = "";
+        if (!TextUtils.isEmpty(profile.getEmail())) {
+            preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL, profile.getEmail());
+        }
+        if (!TextUtils.isEmpty(profile.getDisplayName())) {
+            preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME, profile.getDisplayName());
+        }
+        if (profile.getPhotoUrl() != null) {
+            imagelink = profile.getPhotoUrl().toString();
+            preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK, profile.getPhotoUrl().toString());
+        }
         final String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
         String gcmToken = preferenceManager.getPreferenceValues(preferenceManager.GCM_TOKEN);
-        Call<JsonResponseSocial> response = ApiClientMain.getApiClient().getResponseSocial(name, email, "", image, "", gcmToken, "");
+        Call<JsonResponseSocial> response = ApiClientMain.getApiClient().getResponseSocial(profile.getDisplayName(), profile.getEmail(), "", imagelink, "", gcmToken, "");
         response.enqueue(new Callback<JsonResponseSocial>() {
 
             @Override
@@ -427,7 +435,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (resp.getStatus().equals("1")) {
                         saveUserDetails(resp.getData());
                         Intent i = new Intent(LoginActivity.this, CityActivity.class);
-                        i.putExtra(ApplicationData.IS_INITIAL,true);
+                        i.putExtra(ApplicationData.IS_INITIAL, true);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     } else {
@@ -439,11 +447,61 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(Call<JsonResponseSocial> call, Throwable t) {
                 Log.d("Error", "failed");
-                Toast.makeText(LoginActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
 
+    private void socialFbLogin(Profile profile) {
+       /* final String email = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL);
+        final String name = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_NAME);
+        final String image = preferenceManager.getPreferenceValues(preferenceManager.USER_IMAGE_LINK);*/
+
+        //Todo Login failed when fb login with phone number
+        String imagelink = "https://graph.facebook.com/" + profile.getId() + "/picture?type=large";
+
+        if (!TextUtils.isEmpty(profile.getName())) {
+            preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_NAME, profile.getName());
+        }
+        if (!TextUtils.isEmpty(profile.getGender())) {
+            preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_GENDER, profile.getGender());
+        }
+        if (!TextUtils.isEmpty(profile.getPicture())) {
+            preferenceManager.putPreferenceValues(preferenceManager.USER_IMAGE_LINK, imagelink);
+        }
+        final String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+        String gcmToken = preferenceManager.getPreferenceValues(preferenceManager.GCM_TOKEN);
+        if (!TextUtils.isEmpty(profile.getEmail())) {
+            preferenceManager.putPreferenceValues(preferenceManager.PREF_CLIENT_EMAIL, profile.getEmail());
+            Call<JsonResponseSocial> response = ApiClientMain.getApiClient().getResponseSocial(profile.getName(), profile.getEmail(), "", imagelink, "", gcmToken, "");
+            response.enqueue(new Callback<JsonResponseSocial>() {
+
+                @Override
+                public void onResponse(Call<JsonResponseSocial> call, Response<JsonResponseSocial> response) {
+                    JsonResponseSocial resp = response.body();
+                    if (resp != null) {
+                        if (resp.getStatus().equals("1")) {
+                            saveUserDetails(resp.getData());
+                            Intent i = new Intent(LoginActivity.this, CityActivity.class);
+                            i.putExtra(ApplicationData.IS_INITIAL, true);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(i);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Please Enter Valid username & password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonResponseSocial> call, Throwable t) {
+                    Log.d("Error", "failed");
+                    Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            showEmailDialog();
+        }
     }
 
     public void saveUserDetails(List<FitortoUser> data) {
@@ -462,6 +520,64 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public void showEmailDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_email_layout);
+        dialog.setTitle("Title...");
+
+        // set the custom dialog components - text, image and button
+        final EditText edtEmail = (EditText) dialog.findViewById(R.id.edtEmail);
+        Button dialogButton = (Button) dialog.findViewById(R.id.btnVerify);
+        // if button is clicked, close the custom dialog
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = edtEmail.getText().toString();
+                if (!TextUtils.isEmpty(email)) {
+                    if (isEmailValid(email)) {
+                        updateEmailID(email);
+                    }
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void updateEmailID(String email) {
+        final String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
+        String gcmToken = preferenceManager.getPreferenceValues(preferenceManager.GCM_TOKEN);
+        final String name = preferenceManager.getPreferenceValues(preferenceManager.PREF_CLIENT_NAME);
+        final String image = preferenceManager.getPreferenceValues(preferenceManager.USER_IMAGE_LINK);
+        Call<JsonResponseSocial> response = ApiClientMain.getApiClient().getResponseSocial(name, email, "", image, "", gcmToken, "");
+        response.enqueue(new Callback<JsonResponseSocial>() {
+
+            @Override
+            public void onResponse(Call<JsonResponseSocial> call, Response<JsonResponseSocial> response) {
+                JsonResponseSocial resp = response.body();
+                if (resp != null) {
+                    if (resp.getStatus().equals("1")) {
+                        saveUserDetails(resp.getData());
+                        Intent i = new Intent(LoginActivity.this, CityActivity.class);
+                        i.putExtra(ApplicationData.IS_INITIAL, true);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Please Enter Valid username & password", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponseSocial> call, Throwable t) {
+                Log.d("Error", "failed");
+                Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

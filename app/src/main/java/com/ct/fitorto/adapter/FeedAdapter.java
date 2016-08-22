@@ -304,7 +304,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     public static void likeFeed(PreferenceManager preferenceManager,final String feedId, String flag, String isLike, String isUser, final LikeButton button, final Feed feed, final TextSwitcher tvLike) {
         String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
-        Call<JsonResponselikeshare> response = ApiClientMain.getApiClient().getResponselikeshare(/*userId*/"1", feedId, flag, isLike, isUser);
+        Call<JsonResponselikeshare> response = ApiClientMain.getApiClient().getResponselikeshare(userId, feedId, flag, isLike, isUser);
         response.enqueue(new Callback<JsonResponselikeshare>() {
 
             @Override
