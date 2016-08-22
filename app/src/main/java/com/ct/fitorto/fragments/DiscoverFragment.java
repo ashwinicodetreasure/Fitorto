@@ -40,6 +40,7 @@ import retrofit2.Response;
  */
 public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.OnItemClickListener {
 
+    public static final int ID = 1;
     private GridLayoutManager lLayout;
     private RecyclerView rView;
     private DiscoverAdapter adapter;

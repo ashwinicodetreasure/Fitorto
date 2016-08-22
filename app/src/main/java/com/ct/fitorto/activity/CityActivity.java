@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ct.fitorto.fragments.DiscoverFragment;
+import com.ct.fitorto.fragments.FeedFragment;
 import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.CommonFunction;
 import com.ct.fitorto.R;
@@ -36,7 +38,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     List<City> citylist = new ArrayList<City>();
     private PreferenceManager preferenceManager;
     CityAdapter adapt;
-    private boolean isInitial=false;
+    private boolean isInitial = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +51,14 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
             //getSupportActionBar().setHomeButtonEnabled(true);
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        isInitial=getIntent().getBooleanExtra(ApplicationData.IS_INITIAL,false);
+        isInitial = getIntent().getBooleanExtra(ApplicationData.IS_INITIAL, false);
         preferenceManager = new PreferenceManager(CityActivity.this);
-        if(isInitial){
+        if (isInitial) {
             String city = preferenceManager.getPreferenceValues(preferenceManager.PREF_City);
             if (!TextUtils.isEmpty(city)) {
                 Intent intent = new Intent(CityActivity.this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra(ApplicationData.INDEX, DiscoverFragment.ID);
                 startActivity(intent);
             }
         }
@@ -91,6 +94,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
                             //Log.d("city",city1);
                             Intent intent = new Intent(CityActivity.this, HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra(ApplicationData.INDEX, DiscoverFragment.ID);
                             startActivity(intent);
 
                         }

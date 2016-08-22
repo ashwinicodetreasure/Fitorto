@@ -26,6 +26,7 @@ import com.ct.fitorto.fragments.DiscoverFragment;
 import com.ct.fitorto.fragments.FeedFragment;
 import com.ct.fitorto.fragments.FriendsFragment;
 import com.ct.fitorto.fragments.ProfileFragment;
+import com.ct.fitorto.model.Feed;
 import com.ct.fitorto.model.JsonResponseNotification;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.network.ApplicationUtility;
@@ -105,8 +106,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvdis = (TextView) findViewById(R.id.tvdis);
         tvpro = (TextView) findViewById(R.id.tvpro);
         tvfrd = (TextView) findViewById(R.id.tvfrd);
-
-        discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
+        switchFragment();
+        /*discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
         tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
 
         feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
@@ -116,8 +117,38 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
         tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
         tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
-        tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+        tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));*/
         getNotificationCount();
+    }
+
+    public void switchFragment() {
+        Intent intent = getIntent();
+        if (intent == null) {
+            onClick(feed);
+        } else {
+            switch (intent.getIntExtra(ApplicationData.INDEX, 0)) {
+                case FeedFragment.ID:
+                    onClick(feed);
+                    break;
+
+                case DiscoverFragment.ID:
+                    onClick(discover);
+                    break;
+
+                case ProfileFragment.ID:
+                    onClick(profile);
+                    break;
+
+                case FriendsFragment.ID:
+                    onClick(friends);
+                    break;
+
+                default:
+                    onClick(feed);
+                    break;
+            }
+        }
+
     }
 
     @Override
@@ -316,6 +347,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             if (fragment != null) {
                 fragment.onActivityResult(requestCode, resultCode, data);
             }
+        }
+
+        if(requestCode==ApplicationData.REQUEST_CODE_NOTIFICATION){
+            updateHotCount(0);
         }
     }
 

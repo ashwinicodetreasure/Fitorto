@@ -39,6 +39,7 @@ import retrofit2.Response;
  */
 public class FeedFragment extends BaseFragment {
 
+    public static final int ID =0 ;
     private LinearLayoutManager llayout;
     private FloatingActionButton fab;
     private FeedAdapter adapter;

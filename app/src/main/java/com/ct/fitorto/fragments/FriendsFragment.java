@@ -34,6 +34,7 @@ import retrofit2.Response;
 
 public class FriendsFragment extends BaseFragment {
 
+    public static final int ID = 3;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;

@@ -21,11 +21,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.ct.fitorto.R;
+import com.ct.fitorto.activity.FriendsProfileActivity;
 import com.ct.fitorto.activity.ImageViewDetails;
 import com.ct.fitorto.custom.CustomTextView;
 import com.ct.fitorto.model.Feed;
@@ -106,11 +108,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             holder.progressBar.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(feed.getImageLink())
-                    .fit()
                     .into(holder.display, new com.squareup.picasso.Callback() {
                         @Override
                         public void onSuccess() {
                             holder.progressBar.setVisibility(View.GONE);
+                            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                            holder.display.setLayoutParams(layoutParams);
                         }
 
                         @Override
@@ -136,24 +139,34 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         if (feed.getIsLike().equals("1")) {
             holder.like_btn.setLiked(true);
-           // holder.like_btn.setImageResource(R.drawable.ic_like);
+            // holder.like_btn.setImageResource(R.drawable.ic_like);
         } else {
             holder.like_btn.setLiked(false);
-           // holder.like_btn.setImageResource(R.drawable.ic_dislike);
+            // holder.like_btn.setImageResource(R.drawable.ic_dislike);
         }
 
         holder.like_btn.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                likeFeed(preferenceManager,feed.getFeedID(), "1", "1", "1", holder.like_btn, feed, holder.like);
+                likeFeed(preferenceManager, feed.getFeedID(), "1", "1", "1", holder.like_btn, feed, holder.like);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                likeFeed(preferenceManager,feed.getFeedID(), "0", "1", "1", holder.like_btn, feed, holder.like);
+                likeFeed(preferenceManager, feed.getFeedID(), "0", "1", "1", holder.like_btn, feed, holder.like);
 
             }
         });
+
+        holder.rlUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, FriendsProfileActivity.class);
+                i.putExtra(ApplicationData.FRIEND_ID, feed.getUserID());
+                context.startActivityForResult(i, ApplicationData.RESULT_CODE_FRIEND);
+            }
+        });
+
        /* holder.llLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,13 +191,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ImageViewDetails.class);
-                intent.putExtra(ApplicationData.FEED,feed);
+                intent.putExtra(ApplicationData.FEED, feed);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(context, holder.display, context.getResources().getString(R.string.activity_image_trans));
                     context.startActivity(intent, options.toBundle());
-                }
-                else {
+                } else {
                     context.startActivity(intent);
                 }
             }
@@ -266,6 +278,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         public TextView share;
         public Animation animScale;
         private View viewBlackTint;
+        private RelativeLayout rlUser;
 
         public ViewHolder(final View itemview) {
             super(itemview);
@@ -283,6 +296,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             share = (TextView) itemview.findViewById(R.id.tvShare);
             llLikes = (LinearLayout) itemview.findViewById(R.id.llLikes);
             llShare = (LinearLayout) itemview.findViewById(R.id.llShare);
+            rlUser= (RelativeLayout) itemview.findViewById(R.id.rlUser);
             animScale = AnimationUtils.loadAnimation(itemview.getContext(), R.anim.anim_scale);
 
 
@@ -302,7 +316,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
 
-    public static void likeFeed(PreferenceManager preferenceManager,final String feedId, String flag, String isLike, String isUser, final LikeButton button, final Feed feed, final TextSwitcher tvLike) {
+    public static void likeFeed(PreferenceManager preferenceManager, final String feedId, String flag, String isLike, String isUser, final LikeButton button, final Feed feed, final TextSwitcher tvLike) {
         String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
         Call<JsonResponselikeshare> response = ApiClientMain.getApiClient().getResponselikeshare(userId, feedId, flag, isLike, isUser);
         response.enqueue(new Callback<JsonResponselikeshare>() {

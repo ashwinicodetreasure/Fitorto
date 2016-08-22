@@ -24,6 +24,8 @@ import com.ct.fitorto.R;
 import com.ct.fitorto.baseclass.BaseActivity;
 import com.ct.fitorto.custom.AnimationUtil;
 import com.ct.fitorto.custom.GradientBackgroundPainter;
+import com.ct.fitorto.fragments.DiscoverFragment;
+import com.ct.fitorto.fragments.FeedFragment;
 import com.ct.fitorto.gcm.InstanceIdHelper;
 import com.ct.fitorto.model.FitortoUser;
 import com.ct.fitorto.model.JsonResponseSocial;
@@ -123,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!TextUtils.isEmpty(userId)) {
             Intent i = new Intent(LoginActivity.this, HomeActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.putExtra(ApplicationData.INDEX, FeedFragment.ID);
             startActivity(i);
 
         }

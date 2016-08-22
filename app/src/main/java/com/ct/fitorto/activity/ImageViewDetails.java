@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.ViewSwitcher;
 
@@ -39,6 +40,7 @@ public class ImageViewDetails extends AppCompatActivity implements View.OnClickL
     private LinearLayout llShare;
     private Feed feed;
     private PreferenceManager preferenceManager;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,13 +57,13 @@ public class ImageViewDetails extends AppCompatActivity implements View.OnClickL
             imageView.setTransitionName(getString(R.string.activity_image_trans));
         }
         if (!TextUtils.isEmpty(feed.getImageLink())) {
+            progressBar.setVisibility(View.VISIBLE);
             Picasso.with(this)
                     .load(feed.getImageLink())
-                    .fit()
                     .into(imageView, new com.squareup.picasso.Callback() {
                         @Override
                         public void onSuccess() {
-
+                            progressBar.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -118,6 +120,7 @@ public class ImageViewDetails extends AppCompatActivity implements View.OnClickL
         likebtn = (LikeButton) findViewById(R.id.likebtn);
         tv_like = (TextSwitcher) findViewById(R.id.tv_like);
         llShare = (LinearLayout) findViewById(R.id.llShare);
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
         preferenceManager = new PreferenceManager(this);
         llShare.setOnClickListener(this);
         tv_like.setFactory(new ViewSwitcher.ViewFactory() {

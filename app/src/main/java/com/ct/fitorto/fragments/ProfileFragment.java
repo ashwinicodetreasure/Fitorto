@@ -64,6 +64,7 @@ import retrofit2.Response;
 public class ProfileFragment extends BaseFragment implements View.OnClickListener {
 
 
+    public static final int ID = 2;
     private PreferenceManager preferenceManager;
     private TabLayout tabLayout;
     private ViewPager viewPager;

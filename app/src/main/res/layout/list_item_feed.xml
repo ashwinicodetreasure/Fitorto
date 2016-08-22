@@ -102,8 +102,8 @@
 
                 <ImageView
                     android:id="@+id/ivdis"
-                    android:layout_width="fill_parent"
-                    android:layout_height="280dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:transitionName="@string/activity_image_trans"
