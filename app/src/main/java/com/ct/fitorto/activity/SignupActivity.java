@@ -167,8 +167,8 @@ public class SignupActivity extends Activity implements View.OnClickListener {
                     if (resp.getData() != null) {
                         if (resp.getData().size() > 0) {
                             saveUserDetails(resp.getData());
-                            Intent i = new Intent(SignupActivity.this, CityActivity.class);
-                            i.putExtra(ApplicationData.IS_INITIAL,true);
+                            Intent i = new Intent(SignupActivity.this, OtpActivity.class);
+                           // i.putExtra(ApplicationData.IS_INITIAL,true);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i);
                         } else {

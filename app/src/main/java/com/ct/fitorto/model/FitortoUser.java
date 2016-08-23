@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Ashwini on 5/25/2016.
  */
 public class FitortoUser {
+
     @SerializedName("userID")
     @Expose
     private String userID;
@@ -64,6 +65,18 @@ public class FitortoUser {
     @SerializedName("feedCount")
     @Expose
     private String feedCount;
+
+    @SerializedName("isActive")
+    @Expose
+    private String isActive;
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
 
     public String getFeedCount() {
         return feedCount;

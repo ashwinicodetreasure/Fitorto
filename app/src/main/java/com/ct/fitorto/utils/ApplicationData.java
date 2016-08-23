@@ -36,4 +36,7 @@ public class ApplicationData {
     public static final String GYM_ID = "gym_id";
     public static final String MY_GYM_RESULT = "My_gym_result";
     public static final String INDEX = "index";
+    public static final String SMS_ORIGIN = "FTORTO";
+    public static final String OTP_DELIMITER = "is";
+    public static final String USER_VERIFIED = "is_user_verified";
 }

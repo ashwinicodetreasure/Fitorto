@@ -52,7 +52,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 String userFitortoId = manager.getPreferenceValues(manager.FITORTO_ID);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Check out Fitorto Fitness App for your smartphone. Download it today from " + "https://goo.gl/EX0k52"; //Todo change link with playstore link
+                String shareBody = "Check out Fitorto Fitness App for your smartphone. Download it today from " + "https://play.google.com/store/apps/details?id=com.ct.fitorto";
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Fitorto Fitness App");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -62,6 +62,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivityForResult(i, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
                 break;
             case R.id.tvChangePassword:
+                Intent i1 = new Intent(this, ChangePasswordActivity.class);
+                startActivityForResult(i1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
                 break;
             case R.id.tvTerms:
                 Uri uri = Uri.parse("http://www.fitorto.com/terms.html");

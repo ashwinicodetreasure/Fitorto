@@ -37,6 +37,7 @@ import retrofit2.http.Part;
  * Created by Ashwini on 5/25/2016.
  */
 public class ApiClientMain {
+
     private static FitortoApiInterface FitortoApiInterface;  // interface for Retrofit api
     public static final String URL = "http://52.40.44.62/FitortoServices/";
     public static final String MEDIA_TYPE_STRING = "text/plain";
@@ -210,7 +211,7 @@ public class ApiClientMain {
         Call<JsonResponseNotification> getNotification(@Field("userID") String userID);
 
         @FormUrlEncoded
-        @POST("registerUser.php")
+        @POST("registerUserT.php")
         Call<JsonResponseUser> registerUser(@Field("userName") String name, @Field("emailID") String email,
                                             @Field("password") String pass, @Field("phoneNo") String phone,
                                             @Field("androidRegKey") String androidRegKey, @Field("iosRegKey") String iosRegKey);
@@ -266,7 +267,22 @@ public class ApiClientMain {
                                              @Field("ammount") String ammount,
                                              @Field("status") String status,
                                              @Field("gymID") String gymID
-                                             );
+        );
+
+        @FormUrlEncoded
+        @POST("verify.php")
+        Call<JsonResponseUser> verifyOTP(@Field("userID") String userID,
+                                         @Field("otp") String otp);
+
+        @FormUrlEncoded
+        @POST("resendOTP.php")
+        Call<JsonResponseFollow> resendOTP(@Field("userID") String userID);
+
+        @FormUrlEncoded
+        @POST("changePassword.php")
+        Call<JsonResponseFollow> changePassword(@Field("userID") String userID,
+                                                @Field("currentPWD") String currentPWD,
+                                                @Field("newPWD") String newPWD);
 
     }
 

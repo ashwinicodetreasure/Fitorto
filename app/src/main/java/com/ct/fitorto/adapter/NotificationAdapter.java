@@ -115,7 +115,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_notification));
                 break;
             case 2:
-                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_feed));
+                viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_noti_feed));
                 break;
             case 3:
                 viewHolder.ivType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_noti_like));

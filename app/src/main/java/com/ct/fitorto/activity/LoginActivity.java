@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ImageButton goolgeLogin;
     private TextView skipbtn;
     private ImageButton fbLogin;
-    private Dialog login;
+
     private List<FitortoUser> user = new ArrayList<>();
     public static String projectId = "251491466859";
 
@@ -119,15 +119,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         fbLogin.setOnClickListener(this);
         findViewById(R.id.ibEmailLogin).setOnClickListener(this);
         findViewById(R.id.tvCreateAccount).setOnClickListener(this);
+        findViewById(R.id.tvForgotPassword).setOnClickListener(this);
         rlProgressBar = (RelativeLayout) findViewById(R.id.rlProgressBar);
         preferenceManager = new PreferenceManager(this);
         String userId = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
+        String isVerified = preferenceManager.getPreferenceValues(ApplicationData.USER_VERIFIED);
         if (!TextUtils.isEmpty(userId)) {
-            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            i.putExtra(ApplicationData.INDEX, FeedFragment.ID);
-            startActivity(i);
-
+            if (!TextUtils.isEmpty(isVerified)) {
+                if (isVerified.equals("1")) {
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    i.putExtra(ApplicationData.INDEX, FeedFragment.ID);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(LoginActivity.this, OtpActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    i.putExtra(ApplicationData.INDEX, FeedFragment.ID);
+                    startActivity(i);
+                }
+            }
         }
     }
 
@@ -150,6 +160,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent i = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.tvForgotPassword:
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordWebview.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -189,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.edtEmail).startAnimation(fadeInAnimation);
         findViewById(R.id.edtPassword).startAnimation(fadeInAnimation);
         findViewById(R.id.btnLogin).startAnimation(fadeInAnimation);
-
+        findViewById(R.id.tvForgotPassword).startAnimation(fadeInAnimation);
         fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -214,6 +228,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.edtEmail).setVisibility(viewVisbility ? View.VISIBLE : View.INVISIBLE);
         findViewById(R.id.edtPassword).setVisibility(viewVisbility ? View.VISIBLE : View.INVISIBLE);
         findViewById(R.id.btnLogin).setVisibility(viewVisbility ? View.VISIBLE : View.INVISIBLE);
+        findViewById(R.id.tvForgotPassword).setVisibility(viewVisbility ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void gcm() {
@@ -276,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             link.putExtra(ApplicationData.IS_INITIAL, true);
                             link.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(link);
-                            login.dismiss();
+
                         } else {
                             Toast.makeText(LoginActivity.this, resp.getMsg(), Toast.LENGTH_SHORT).show();
                         }
@@ -287,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onFailure(Call<JsonResponseUser> call, Throwable t) {
                     rlProgressBar.setVisibility(View.GONE);
                     //Log.d("Error", "failed");
-                    Toast.makeText(LoginActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -510,6 +525,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void saveUserDetails(List<FitortoUser> data) {
         if (data.size() > 0) {
             FitortoUser user = data.get(0);
+            preferenceManager.putPreferenceValues(ApplicationData.USER_VERIFIED, "1");
             preferenceManager.putPreferenceValues(preferenceManager.PREF_USER_UserId, user.getUserID());
         }
     }

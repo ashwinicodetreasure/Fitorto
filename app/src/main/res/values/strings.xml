@@ -77,4 +77,7 @@
     <string name="action_reference">Referral Reward</string>
     <string name="filter_activity">Filter</string>
     <string name="action_invite">Invite Friends</string>
+    <string name="txt_hint_current_pwd">Type your current password</string>
+    <string name="txt_hint_new_pwd">Type your new password</string>
+    <string name="txt_hint_retype_pwd">Retype your new password</string>
 </resources>

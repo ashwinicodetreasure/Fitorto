@@ -247,7 +247,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 String userFitortoId = manager.getPreferenceValues(manager.FITORTO_ID);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Check out Fitorto Fitness App for your smartphone. Download it today from " + "https://goo.gl/EX0k52";
+                String shareBody = "Check out Fitorto Fitness App for your smartphone. Download it today from " + "https://play.google.com/store/apps/details?id=com.ct.fitorto";
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Fitorto Fitness App");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));

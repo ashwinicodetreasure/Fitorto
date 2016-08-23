@@ -677,7 +677,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
                 String userFitortoId = manager.getPreferenceValues(manager.FITORTO_ID);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "I have an Fitorto App for you to benefit your fitness. Register with " + search.getGymName() + " with my code " + userFitortoId + " to avail the coupon! " + "https://goo.gl/EX0k52"; //Todo change link with playstore link
+                String shareBody = "I have an Fitorto App for you to benefit your fitness. Register with " + search.getGymName() + " with my code " + userFitortoId + " to avail the coupon! " + "https://play.google.com/store/apps/details?id=com.ct.fitorto";
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Fitorto Fitness App");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
