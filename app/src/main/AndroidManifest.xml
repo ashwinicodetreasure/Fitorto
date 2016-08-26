@@ -54,7 +54,7 @@
             android:name=".activity.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan"  />
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"

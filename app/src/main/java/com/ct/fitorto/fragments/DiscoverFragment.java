@@ -51,6 +51,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.On
     private ImageView ivNoInterNet;
     private TextView tvEmpty;
     private ImageButton ivRetry;
+    private Call<JsonResponseCategory> response;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,7 +97,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.On
             ivRetry.setVisibility(View.GONE);
             tvEmpty.setVisibility(View.GONE);
             ivNoInterNet.setVisibility(View.GONE);
-            Call<JsonResponseCategory> response = ApiClientMain.getApiClient().category(city);
+            response = ApiClientMain.getApiClient().category(city);
             response.enqueue(new Callback<JsonResponseCategory>() {
                 @Override
                 public void onResponse(Call<JsonResponseCategory> call, Response<JsonResponseCategory> response) {
@@ -185,7 +186,9 @@ public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.On
                     @Override
                     public void onFailure(Call<JsonResponseSearch> call, Throwable t) {
                         cancelProgressDialog();
-                        Toast.makeText(getActivity(), "Something went wrong.Please try again", Toast.LENGTH_SHORT).show();
+                        if(!call.isCanceled()){
+                            Toast.makeText(getActivity(), "Something went wrong.Please try again", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             } else {
@@ -193,6 +196,14 @@ public class DiscoverFragment extends BaseFragment implements DiscoverAdapter.On
             }
         } else {
             Toast.makeText(getActivity(), "No internet connection.Please try again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(response!=null){
+            response.cancel();
         }
     }
 }

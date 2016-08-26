@@ -52,7 +52,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 String userFitortoId = manager.getPreferenceValues(manager.FITORTO_ID);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Check out Fitorto Fitness App for your smartphone. Download it today from " + "https://play.google.com/store/apps/details?id=com.ct.fitorto";
+                String shareBody = "Check out Fitorto Fitness App for your smart phone. Download it today from " + "https://play.google.com/store/apps/details?id=com.ct.fitorto";
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Fitorto Fitness App");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));

@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -37,6 +39,7 @@ import com.ct.fitorto.network.ShareImageAsynctask;
 import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
 import com.ct.fitorto.utils.DateTimeUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
@@ -103,7 +106,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         }
 
 
-        if (!TextUtils.isEmpty(feed.getImageLink())) {
+     /*   if (!TextUtils.isEmpty(feed.getImageLink())) {
             holder.display.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.VISIBLE);
             Picasso.with(context)
@@ -126,8 +129,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         } else {
             holder.progressBar.setVisibility(View.GONE);
             holder.display.setVisibility(View.GONE);
+        }*/
+        if (!TextUtils.isEmpty(feed.getImageLink())){
+            holder.display.setVisibility(View.VISIBLE);
+            holder.display.setImageURI(feed.getImageLink());
+        }else {
+            holder.display.setVisibility(View.GONE);
         }
-
         if (!TextUtils.isEmpty(feed.getUrl())) {
             holder.link.setVisibility(View.VISIBLE);
             holder.link.setText(feed.getUrl());
@@ -267,7 +275,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         public TextView name;
         public TextView content;
         public TextView time;
-        public ImageView display;
+        public SimpleDraweeView display;
         public TextView link;
         public TextSwitcher like;
         public LikeButton like_btn;
@@ -287,7 +295,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             name = (TextView) itemview.findViewById(R.id.tv_title);
             content = (TextView) itemview.findViewById(R.id.tv_content);
             time = (TextView) itemview.findViewById(R.id.tvtime);
-            display = (ImageView) itemview.findViewById(R.id.ivdis);
+            display = (SimpleDraweeView) itemview.findViewById(R.id.ivdis);
             link = (TextView) itemview.findViewById(R.id.tv_link);
             like = (TextSwitcher) itemview.findViewById(R.id.tv_like);
             like_btn = (LikeButton) itemview.findViewById(R.id.likebtn);
@@ -310,6 +318,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
             like.setInAnimation(itemview.getContext(), R.anim.anim_up);
             like.setOutAnimation(itemview.getContext(), R.anim.anim_down);
+
+            display.getHierarchy().setProgressBarImage(ContextCompat.getDrawable(itemview.getContext(),R.drawable.circular_progress_bar));
         }
 
 

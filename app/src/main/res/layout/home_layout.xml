@@ -92,7 +92,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
                         android:padding="5dp"
-                        android:src="@drawable/ic_feed" />
+                        android:src="@drawable/ic_noti_feed" />
 
                     <com.ct.fitorto.custom.CustomTextViewBold
                         android:id="@+id/tvfeed"

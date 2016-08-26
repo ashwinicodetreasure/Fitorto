@@ -27,13 +27,6 @@ public class CustomTextView extends TextView {
         style(context);
     }
 
-    /*
-    android:fontFamily="sans-serif"           // roboto regular
-android:fontFamily="sans-serif-light"     // roboto light
-android:fontFamily="sans-serif-condensed" // roboto condensed
-android:fontFamily="sans-serif-thin"      // roboto thin (android 4.2)
-android:fontFamily="sans-serif-medium"
-     */
     private void style(Context context) {
         Typeface tf = Typeface.createFromAsset(context.getAssets(),
                 "Roboto-Regular.ttf");
@@ -50,7 +43,6 @@ android:fontFamily="sans-serif-medium"
             } else if (root instanceof TextView)
                 ((TextView) root).setTypeface(Typeface.createFromAsset(context.getAssets(), fontName));
         } catch (Exception e) {
-            //Log.e(TAG, String.format("Error occured when trying to apply %s font for %s view", fontName, root));
             e.printStackTrace();
         }
     }

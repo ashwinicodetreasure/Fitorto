@@ -21,8 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
-import com.ct.fitorto.adapter.Membership_Slider_Adapter;
-import com.ct.fitorto.baseclass.BaseActivity;
+import com.ct.fitorto.adapter.MembershipSliderAdapter;
 import com.ct.fitorto.custom.CirclePageIndicator;
 import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.Friday;
@@ -32,7 +31,6 @@ import com.ct.fitorto.model.Monday;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Saturday;
 import com.ct.fitorto.model.Schedule;
-import com.ct.fitorto.model.Search;
 import com.ct.fitorto.model.Sunday;
 import com.ct.fitorto.model.Thursday;
 import com.ct.fitorto.model.Tuesday;
@@ -604,7 +602,7 @@ public class MyGymActivity extends AppCompatActivity implements View.OnClickList
     private void initImageSlider() {
         mPager = (ViewPager) findViewById(R.id.mem_pager);
         if (search.getImages().size() > 0) {
-            mPager.setAdapter(new Membership_Slider_Adapter(MyGymActivity.this, search.getImages()));
+            mPager.setAdapter(new MembershipSliderAdapter(MyGymActivity.this, search.getImages()));
             CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.mem_indicator);
             indicator.setViewPager(mPager);
             final float density = getResources().getDisplayMetrics().density;

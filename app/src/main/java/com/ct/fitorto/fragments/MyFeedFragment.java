@@ -37,8 +37,7 @@ import retrofit2.Response;
  * Created by Ashwini on 6/23/2016.
  */
 public class MyFeedFragment extends BaseFragment {
-
-
+    
     private LinearLayoutManager llayout;
     private FloatingActionButton fab;
     private FeedAdapter adapter;
@@ -133,17 +132,19 @@ public class MyFeedFragment extends BaseFragment {
                     }
                     @Override
                     public void onFailure(Call<JsonResponseFeed> call, Throwable t) {
-                        empty_view.setVisibility(View.VISIBLE);
-                        tvEmpty.setVisibility(View.VISIBLE);
-                        tvEmpty.setText("Something went wrong.Please try again");
-                        ivRetry.setVisibility(View.VISIBLE);
-                        ivNoInterNet.setVisibility(View.GONE);
-                        ivRetry.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                getFeedData();
-                            }
-                        });
+                        if(!call.isCanceled()) {
+                            empty_view.setVisibility(View.VISIBLE);
+                            tvEmpty.setVisibility(View.VISIBLE);
+                            tvEmpty.setText("Something went wrong.Please try again");
+                            ivRetry.setVisibility(View.VISIBLE);
+                            ivNoInterNet.setVisibility(View.GONE);
+                            ivRetry.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    getFeedData();
+                                }
+                            });
+                        }
                     }
                 });
             } else {

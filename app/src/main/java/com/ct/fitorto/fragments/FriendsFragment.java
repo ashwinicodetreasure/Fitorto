@@ -42,6 +42,7 @@ public class FriendsFragment extends BaseFragment {
     private ArrayList<Follower> followers = new ArrayList<>();
     private PreferenceManager manager;
     private MaterialSearchView searchView;
+    private Call<JsonResponseFriends> response;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +64,7 @@ public class FriendsFragment extends BaseFragment {
         if (ApplicationUtility.checkConnection(getActivity())) {
             showProgressDialog("Please wait...", false);
             String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
-            Call<JsonResponseFriends> response = ApiClientMain.getApiClient().getFriendsList(userId);
+            response = ApiClientMain.getApiClient().getFriendsList(userId);
             response.enqueue(new Callback<JsonResponseFriends>() {
                 @Override
                 public void onResponse(Call<JsonResponseFriends> call, Response<JsonResponseFriends> response) {
@@ -86,7 +87,9 @@ public class FriendsFragment extends BaseFragment {
                 @Override
                 public void onFailure(Call<JsonResponseFriends> call, Throwable t) {
                     cancelProgressDialog();
-                    Toast.makeText(getActivity(), "Something went wrong.Please try again", Toast.LENGTH_SHORT).show();
+                    if(!call.isCanceled()){
+                        Toast.makeText(getActivity(), "Something went wrong.Please try again", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         } else {
@@ -138,5 +141,12 @@ public class FriendsFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(response!=null){
+            response.cancel();
+        }
+    }
 
 }

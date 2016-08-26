@@ -88,9 +88,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         View backgroundImage = findViewById(R.id.root_view);
 
         final int[] drawables = new int[3];
-        drawables[0] = R.drawable.gradient_3;
+        drawables[0] = R.drawable.gradient_1;
         drawables[1] = R.drawable.gradient_2;
-        drawables[2] = R.drawable.gradient_1;
+        drawables[2] = R.drawable.gradient_3;
 
         gradientBackgroundPainter = new GradientBackgroundPainter(backgroundImage, drawables);
         gradientBackgroundPainter.start();

@@ -13,11 +13,8 @@ import com.ct.fitorto.R;
 import com.ct.fitorto.activity.MyGymActivity;
 import com.ct.fitorto.model.Gym;
 import com.ct.fitorto.model.JsonAttendance;
-import com.ct.fitorto.model.JsonResponseFollow;
-import com.ct.fitorto.model.ProgressDetail;
 import com.ct.fitorto.network.ApiClientMain;
 import com.ct.fitorto.preferences.PreferenceManager;
-import com.ct.fitorto.recycler_holder.ProfileHolders;
 import com.ct.fitorto.utils.ApplicationData;
 import com.squareup.picasso.Picasso;
 

@@ -246,11 +246,9 @@ public class EditUserProfileActivity extends BaseActivity implements View.OnClic
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-
             // Show selected date
             dob = (new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day)).toString();
             /*tvAgeDate.setText(new StringBuilder().append(month + 1)

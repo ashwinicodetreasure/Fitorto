@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,11 +16,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ct.fitorto.R;
 import com.ct.fitorto.activity.ShareActivity;
 import com.ct.fitorto.adapter.FeedAdapter;
 import com.ct.fitorto.baseclass.BaseFragment;
+import com.ct.fitorto.custom.PreCachingLayoutManager;
 import com.ct.fitorto.model.Feed;
 import com.ct.fitorto.model.JsonResponseFeed;
 import com.ct.fitorto.network.ApiClientMain;
@@ -39,7 +42,7 @@ import retrofit2.Response;
  */
 public class FeedFragment extends BaseFragment {
 
-    public static final int ID =0 ;
+    public static final int ID = 0;
     private LinearLayoutManager llayout;
     private FloatingActionButton fab;
     private FeedAdapter adapter;
@@ -51,6 +54,8 @@ public class FeedFragment extends BaseFragment {
     private ImageView ivNoInterNet;
     private TextView tvEmpty;
     private ImageButton ivRetry;
+    private Call<JsonResponseFeed> response;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,9 +69,18 @@ public class FeedFragment extends BaseFragment {
         ivNoInterNet = (ImageView) view.findViewById(R.id.ivNoInterNet);
         tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
         ivRetry = (ImageButton) view.findViewById(R.id.ivRetry);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         preferenceManager = new PreferenceManager(getActivity());
         rview.setHasFixedSize(true);
-        rview.setLayoutManager(llayout);
+       /* rview.setItemViewCacheSize(20);
+        rview.setDrawingCacheEnabled(true);
+        rview.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);*/
+
+        PreCachingLayoutManager layoutManager = new PreCachingLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setExtraLayoutSpace(ApplicationData.getScreenHeight(getActivity()));
+        rview.setLayoutManager(layoutManager);
+        // rview.setLayoutManager(llayout);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,15 +91,41 @@ public class FeedFragment extends BaseFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions options =
                             ActivityOptions.makeSceneTransitionAnimation(getActivity(), fab, fab.getTransitionName());
-                    getActivity().startActivityForResult(new Intent(getActivity(), ShareActivity.class), ApplicationData.FEED_REQUEST_CODE ,options.toBundle());
+                    getActivity().startActivityForResult(new Intent(getActivity(), ShareActivity.class), ApplicationData.FEED_REQUEST_CODE, options.toBundle());
                 } else {
                     Intent intent = new Intent(getActivity(), ShareActivity.class);
                     startActivityForResult(intent, ApplicationData.FEED_REQUEST_CODE);
                 }
             }
         });
-        getFeedData(true);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                refreshItems();
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshItems();
+            }
+        });
+
+        //getFeedData(true);
         return view;
+    }
+
+    void refreshItems() {
+        // Load items
+        getFeedData(false);
+
+        // Load complete
+        onItemsLoadComplete();
+    }
+
+    void onItemsLoadComplete() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     public void getFeedData(final boolean showProgressbar) {
@@ -103,7 +143,7 @@ public class FeedFragment extends BaseFragment {
                 tvEmpty.setVisibility(View.GONE);
                 ivNoInterNet.setVisibility(View.GONE);
 
-                Call<JsonResponseFeed> response = ApiClientMain.getApiClient().getResponseFedd(userId);
+                response = ApiClientMain.getApiClient().getResponseFedd(userId);
                 response.enqueue(new Callback<JsonResponseFeed>() {
                     @Override
                     public void onResponse(Call<JsonResponseFeed> call, Response<JsonResponseFeed> response) {
@@ -134,17 +174,19 @@ public class FeedFragment extends BaseFragment {
                         if (showProgressbar) {
                             cancelProgressDialog();
                         }
-                        empty_view.setVisibility(View.VISIBLE);
-                        tvEmpty.setVisibility(View.VISIBLE);
-                        tvEmpty.setText("Something went wrong.Please try again");
-                        ivRetry.setVisibility(View.VISIBLE);
-                        ivNoInterNet.setVisibility(View.GONE);
-                        ivRetry.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                getFeedData(true);
-                            }
-                        });
+                        if (!call.isCanceled()) {
+                            empty_view.setVisibility(View.VISIBLE);
+                            tvEmpty.setVisibility(View.VISIBLE);
+                            tvEmpty.setText("Something went wrong.Please try again");
+                            ivRetry.setVisibility(View.VISIBLE);
+                            ivNoInterNet.setVisibility(View.GONE);
+                            ivRetry.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    getFeedData(true);
+                                }
+                            });
+                        }
                     }
                 });
             } else {
@@ -168,5 +210,13 @@ public class FeedFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         getFeedData(false);
         fab.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (response != null) {
+            response.cancel();
+        }
     }
 }

@@ -35,14 +35,14 @@
     <color name="orange">#FF9800</color>
     <color name="green">#4CAF50</color>
 
-    <color name="color1">#9C27B0</color>
-    <color name="color2">#FF4081</color>
-    <color name="color3">#7B1FA2</color>
-    <color name="color4">#F8BBD0</color>
-    <color name="color5">#FF5252</color>
+    <color name="color1">#F39E20</color>
+    <color name="color2">#f4bf71</color>
+    <color name="color3">#ED4923</color>
+    <color name="color4">#ED4923</color>
+    <color name="color5">#F47720</color>
     <color name="color6">#607D8B</color>
-    <color name="color7">#FF5722</color>
-    <color name="color8">#FFA000</color>
+    <color name="color7">#CE1347</color>
+    <color name="color8">#F05222</color>
     <color name="color9">#d3fcc6</color>
     <color name="color10">#9cf9fc</color>
 </resources>

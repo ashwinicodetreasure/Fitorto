@@ -34,6 +34,7 @@ import java.util.ArrayList;
 /**
  * Created by Ashwini on 3/28/2016.
  */
+
 public class FollowingFragment extends Fragment implements FollowingAdapter.OnItemClickListener {
 
     private RecyclerView recycler_view;

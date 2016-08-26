@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.ct.fitorto.R;
 
+import com.ct.fitorto.activity.ChangeStatusActivity;
 import com.ct.fitorto.activity.EditUserProfileActivity;
 import com.ct.fitorto.activity.FollowersActivity;
 import com.ct.fitorto.activity.LoginActivity;
@@ -89,6 +90,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private TextView post;
     private JsonResponseUserProfile resp;
     private TextView tvFitortoID;
+    private Call<JsonResponseUserProfile> response;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -133,6 +135,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         view.findViewById(R.id.llFollowers).setOnClickListener(this);
         followers.setOnClickListener(this);
         following.setOnClickListener(this);
+        userstatus.setOnClickListener(this);
     }
 
     public void setUserData(final boolean showDialog) {     //to displaying user data
@@ -144,7 +147,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             rlEmptyView.setVisibility(View.GONE);
             viewPager.setVisibility(View.VISIBLE);
             appbar.setVisibility(View.VISIBLE);
-            Call<JsonResponseUserProfile> response = ApiClientMain.getApiClient().getResponseUserprofile(userId);
+            response = ApiClientMain.getApiClient().getResponseUserprofile(userId);
             response.enqueue(new Callback<JsonResponseUserProfile>() {
                 @Override
                 public void onResponse(Call<JsonResponseUserProfile> call, Response<JsonResponseUserProfile> response) {
@@ -160,9 +163,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
                 @Override
                 public void onFailure(Call<JsonResponseUserProfile> call, Throwable t) {
-                    if (showDialog) {
-                        cancelProgressDialog();
-                    }
+                   // if (!call.isCanceled()) {
+                        if (showDialog) {
+                            cancelProgressDialog();
+                        }
+                   // }
                 }
             });
         } else {
@@ -389,8 +394,10 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
             @Override
             public void onFailure(Call<JsonResponseUpdateProfile> call, Throwable t) {
-                cancelProgressDialog();
-                Toast.makeText(getActivity(), "Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                if(!call.isCanceled()){
+                    cancelProgressDialog();
+                    Toast.makeText(getActivity(), "Something went wrong.Please try again", Toast.LENGTH_SHORT).show();
+                }
                 //Log.d("Error", t.getMessage());
             }
         });
@@ -427,7 +434,19 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 intent.putExtra(ApplicationData.IS_FOLLOWER, false);
                 startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);*/
                 break;
+            case R.id.user_status:
+                Intent statusIntent = new Intent(getActivity(), ChangeStatusActivity.class);
+                startActivityForResult(statusIntent, ApplicationData.REQUEST_CODE_STATUS);
+                break;
 
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(response!=null){
+            response.cancel();
         }
     }
 }

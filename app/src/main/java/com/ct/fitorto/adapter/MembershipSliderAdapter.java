@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-public class Membership_Slider_Adapter extends PagerAdapter {
+public class MembershipSliderAdapter extends PagerAdapter {
 
 
     private List<GymImages> IMAGES;
@@ -27,7 +27,7 @@ public class Membership_Slider_Adapter extends PagerAdapter {
     private Context context;
 
 
-    public Membership_Slider_Adapter(Context context, List<GymImages> IMAGES) {
+    public MembershipSliderAdapter(Context context, List<GymImages> IMAGES) {
         this.context = context;
         this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);

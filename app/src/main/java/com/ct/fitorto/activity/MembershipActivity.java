@@ -23,16 +23,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.ct.fitorto.R;
-import com.ct.fitorto.adapter.Membership_Slider_Adapter;
-import com.ct.fitorto.ccavanue.InitialActivity;
+import com.ct.fitorto.adapter.MembershipSliderAdapter;
 import com.ct.fitorto.flowlayout.FlowLayout;
 import com.ct.fitorto.model.Friday;
 import com.ct.fitorto.model.JsonResponseFollow;
-import com.ct.fitorto.model.JsonResponseUser;
 import com.ct.fitorto.model.Monday;
 import com.ct.fitorto.model.Package;
 import com.ct.fitorto.model.Saturday;
@@ -608,7 +605,7 @@ public class MembershipActivity extends AppCompatActivity implements View.OnClic
     private void initImageSlider() {
         mPager = (ViewPager) findViewById(R.id.mem_pager);
         if (search.getImages().size() > 0) {
-            mPager.setAdapter(new Membership_Slider_Adapter(MembershipActivity.this, search.getImages()));
+            mPager.setAdapter(new MembershipSliderAdapter(MembershipActivity.this, search.getImages()));
             CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.mem_indicator);
             indicator.setViewPager(mPager);
             final float density = getResources().getDisplayMetrics().density;

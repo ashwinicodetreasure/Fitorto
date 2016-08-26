@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import com.ct.fitorto.model.Feed;
 import com.ct.fitorto.network.ShareImageAsynctask;
 import com.ct.fitorto.preferences.PreferenceManager;
 import com.ct.fitorto.utils.ApplicationData;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
@@ -132,6 +134,7 @@ public class ImageViewDetails extends AppCompatActivity implements View.OnClickL
             }
         });
         findViewById(R.id.btnShare).getBackground().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
+
     }
 
     @Override

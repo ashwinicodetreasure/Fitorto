@@ -179,8 +179,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 if (new_badgeNumber == 0)
                     tvNotificationBadge.setVisibility(View.INVISIBLE);
                 else {
-                    tvNotificationBadge.setVisibility(View.VISIBLE);
-                    tvNotificationBadge.setText(Integer.toString(new_badgeNumber));
+                    if (new_badgeNumber > 0) {
+                        tvNotificationBadge.setVisibility(View.VISIBLE);
+                        tvNotificationBadge.setText(Integer.toString(new_badgeNumber));
+                    }
                 }
             }
         });
@@ -349,7 +351,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        if(requestCode==ApplicationData.REQUEST_CODE_NOTIFICATION){
+        if (requestCode == ApplicationData.REQUEST_CODE_NOTIFICATION) {
             updateHotCount(0);
         }
     }
