@@ -38,7 +38,7 @@ import retrofit2.Response;
 /**
  * Created by Ashwini on 6/28/2016.
  */
-public class FriendsProfileActivity extends BaseActivity {
+public class FriendsProfileActivity extends BaseActivity implements View.OnClickListener {
 
 
     private PreferenceManager preferenceManager;
@@ -82,7 +82,7 @@ public class FriendsProfileActivity extends BaseActivity {
                     JsonResponseFeed jsonResponse = response.body();
                     if (jsonResponse != null) {
                         if (jsonResponse.getData().size() > 0) {
-                            post.setText(""+jsonResponse.getCount());
+                            post.setText("" + jsonResponse.getCount());
                             feed = new ArrayList<>(jsonResponse.getData());
                             adapter = new FeedAdapter(FriendsProfileActivity.this, feed);
                             rview.setAdapter(adapter);
@@ -102,7 +102,7 @@ public class FriendsProfileActivity extends BaseActivity {
 
     /*User data to be display*/
     private void displayProfileData() {
-        showProgressDialog("Please Wait...",false);
+        showProgressDialog("Please Wait...", false);
         final String userid = preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);            //stored userid replace with static data
         Call<JsonResponseFriendsProfile> response = ApiClientMain.getApiClient().getResponseFriendProfile(userid, friendID);
         response.enqueue(new Callback<JsonResponseFriendsProfile>() {
@@ -196,8 +196,8 @@ public class FriendsProfileActivity extends BaseActivity {
         userstatus = (TextView) findViewById(R.id.user_status);
         edit = (TextView) findViewById(R.id.editbtn);
         post = (TextView) findViewById(R.id.post);
-        followers= (TextView) findViewById(R.id.followers);
-        following= (TextView) findViewById(R.id.following);
+        followers = (TextView) findViewById(R.id.followers);
+        following = (TextView) findViewById(R.id.following);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,13 +212,12 @@ public class FriendsProfileActivity extends BaseActivity {
 
         pDialog.setMessage("loading ...");
         pDialog.show();*/
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                follow();
+        edit.setOnClickListener(this);
+        findViewById(R.id.llFollowing).setOnClickListener(this);
+        findViewById(R.id.llFollowers).setOnClickListener(this);
+        followers.setOnClickListener(this);
+        following.setOnClickListener(this);
 
-            }
-        });
 
         /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -262,8 +261,10 @@ public class FriendsProfileActivity extends BaseActivity {
                 JsonResponseFollow resp = response.body();
                 if (resp != null) {
                     if (resp.getMsg().contains("unfollowed")) {
+                        user.setIsFollowing("0");
                         edit.setText("Follow");
                     } else {
+                        user.setIsFollowing("1");
                         edit.setText("Unfollow");
                     }
                    /* if (!resp.getStatus().equals("1")) {
@@ -291,5 +292,37 @@ public class FriendsProfileActivity extends BaseActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.editbtn:
+                follow();
+                break;
+            /*case R.id.llFollowing:
+                Intent intent = new Intent(this, FollowersActivity.class);
+                intent.putExtra(ApplicationData.IS_FOLLOWER, false);
+                intent.putExtra(preferenceManager.PREF_USER_UserId,friendID);
+                startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
+
+            case R.id.following:
+           *//*     Intent intent1 = new Intent(this, FollowersActivity.class);
+                intent1.putExtra(ApplicationData.IS_FOLLOWER, true);
+                startActivityForResult(intent1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);*//*
+                break;
+            case R.id.llFollowers:
+                Intent intent1 = new Intent(this, FollowersActivity.class);
+                intent1.putExtra(ApplicationData.IS_FOLLOWER, true);
+                intent1.putExtra(preferenceManager.PREF_USER_UserId,friendID);
+                startActivityForResult(intent1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
+
+            case R.id.followers:
+                *//*Intent intent = new Intent(this, FollowersActivity.class);
+                intent.putExtra(ApplicationData.IS_FOLLOWER, false);
+                startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);*//*
+                break;*/
+        }
     }
 }

@@ -61,7 +61,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
         isFollower = getIntent().getBooleanExtra(ApplicationData.IS_FOLLOWER, false);
         if (ApplicationUtility.checkConnection(this)) {
             showProgressDialog("Please wait...", false);
-            String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
+            String userId = getIntent().getStringExtra(manager.PREF_USER_UserId);
             Call<JsonResponseFriends> response = ApiClientMain.getApiClient().getFriendsList(userId);
             response.enqueue(new Callback<JsonResponseFriends>() {
                 @Override
@@ -75,6 +75,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
                             } else {
                                 mRecyclerView.setVisibility(View.GONE);
                                 tvEmptyView.setVisibility(View.VISIBLE);
+                                tvEmptyView.setText("No friend found.");
                             }
                             if (response.body().getFollowing().size() > 0) {
                                 tvEmptyView.setVisibility(View.GONE);
@@ -82,6 +83,7 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
                             } else {
                                 mRecyclerView.setVisibility(View.GONE);
                                 tvEmptyView.setVisibility(View.VISIBLE);
+                                tvEmptyView.setText("No friend found.");
                             }
 
                             if (isFollower) {
@@ -109,43 +111,6 @@ public class FollowersActivity extends BaseActivity implements FollowingAdapter.
                 }
             });
         }
-
-    /*    if (ApplicationUtility.checkConnection(this)) {
-            empty_view.setVisibility(View.GONE);
-            showProgressDialog("Please wait...", false);
-            String userId = manager.getPreferenceValues(manager.PREF_USER_UserId);
-            Call<JsonResponseNotification> call = ApiClientMain.getApiClient().getNotification(userId);
-            call.enqueue(new Callback<JsonResponseNotification>() {
-                @Override
-                public void onResponse(Call<JsonResponseNotification> call, Response<JsonResponseNotification> response) {
-                    cancelProgressDialog();
-                    if (response.body() != null) {
-                        if (response.body().getData().size() > 0) {
-                            tvEmptyView.setVisibility(View.GONE);
-                            updateData(response.body().getData());
-                        } else {
-                            mRecyclerView.setVisibility(View.GONE);
-                            tvEmptyView.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonResponseNotification> call, Throwable t) {
-                    cancelProgressDialog();
-                }
-            });
-        } else {
-            empty_view.setVisibility(View.VISIBLE);
-            ImageView ivRetry = (ImageView) findViewById(R.id.ivRetry);
-            ivRetry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    initDataSet();
-                }
-            });
-        }*/
-
     }
 
     private void updateFollowingData(ArrayList<Following> followings) {

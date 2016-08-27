@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!TextUtils.isEmpty(userId)) {
             if (!TextUtils.isEmpty(isVerified)) {
                 if (isVerified.equals("1")) {
+                    preferenceManager.putPreferenceBoolValues(ApplicationData.PREF_USER_FIRST_TIME, false);
                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     i.putExtra(ApplicationData.INDEX, FeedFragment.ID);

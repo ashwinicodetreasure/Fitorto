@@ -406,6 +406,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        String userId=preferenceManager.getPreferenceValues(preferenceManager.PREF_USER_UserId);
         switch (v.getId()) {
             case R.id.editbtn:
                 Intent i = new Intent(getActivity(), EditUserProfileActivity.class);
@@ -417,6 +418,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             case R.id.llFollowing:
                 Intent intent = new Intent(getActivity(), FollowersActivity.class);
                 intent.putExtra(ApplicationData.IS_FOLLOWER, false);
+                intent.putExtra(preferenceManager.PREF_USER_UserId,userId);
                 startActivityForResult(intent, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
 
             case R.id.following:
@@ -427,6 +429,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             case R.id.llFollowers:
                 Intent intent1 = new Intent(getActivity(), FollowersActivity.class);
                 intent1.putExtra(ApplicationData.IS_FOLLOWER, true);
+                intent1.putExtra(preferenceManager.PREF_USER_UserId,userId);
                 startActivityForResult(intent1, ApplicationData.REQUEST_CODE_EDIT_PROFILE);
 
             case R.id.followers:

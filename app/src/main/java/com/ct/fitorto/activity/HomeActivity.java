@@ -114,10 +114,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
         profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
         friendsimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-        tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
+        tvfeed.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
-        tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
-        tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));*/
+        tvpro.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        tvfrd.setTextColor(getResources().getColor(R.color.colorPrimaryDark));*/
         getNotificationCount();
     }
 
@@ -263,18 +263,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        feedimg.clearColorFilter();
+        discoverimg.clearColorFilter();
+        profileimg.clearColorFilter();
+        friendsimg.clearColorFilter();
         switch (v.getId()) {
             case R.id.feed:
                 tvTitle.setText("Feeds");
                 feedimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
-                discoverimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
-                profileimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
-                friendsimg.clearColorFilter();//setColorFilter(R.color.tint, PorterDuff.Mode.SRC_IN);
+                discoverimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                profileimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                friendsimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
                 tvfeed.setTextColor(getResources().getColor(R.color.selectedTab));
-                tvdis.setTextColor(getResources().getColor(R.color.unSelectedTab));
-                tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
-                tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvdis.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvpro.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvfrd.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 fr = new FeedFragment();
                 fm = getSupportFragmentManager();
                 ft = fm.beginTransaction();
@@ -284,14 +287,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.discover:
                 tvTitle.setText("Discover");
-                feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
+                feedimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
                 discoverimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
-                profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                friendsimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                profileimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                friendsimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                tvfeed.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 tvdis.setTextColor(getResources().getColor(R.color.selectedTab));
-                tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
-                tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvpro.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvfrd.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
                 fr = new DiscoverFragment();
                 fm = getSupportFragmentManager();
@@ -303,14 +306,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.profile:
                 tvTitle.setText("Profile");
-                feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
+                feedimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                discoverimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
                 profileimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
-                friendsimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
-                tvdis.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                friendsimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                tvfeed.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvdis.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 tvpro.setTextColor(getResources().getColor(R.color.selectedTab));
-                tvfrd.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvfrd.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 fr = new ProfileFragment();
                 fm = getSupportFragmentManager();
                 ft = fm.beginTransaction();
@@ -319,13 +322,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.friends:
                 tvTitle.setText("Circle");
-                feedimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                discoverimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
-                profileimg.clearColorFilter();//setColorFilter(R.color.colorPrimary, PorterDuff.Mode.SRC_IN);
+                feedimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                discoverimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                profileimg.setColorFilter(R.color.colorPrimaryDark, PorterDuff.Mode.SRC_IN);
                 friendsimg.setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
-                tvfeed.setTextColor(getResources().getColor(R.color.unSelectedTab));
-                tvdis.setTextColor(getResources().getColor(R.color.unSelectedTab));
-                tvpro.setTextColor(getResources().getColor(R.color.unSelectedTab));
+                tvfeed.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvdis.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvpro.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 tvfrd.setTextColor(getResources().getColor(R.color.selectedTab));
                 /*Intent intent2 = new Intent(HomeActivity.this, MembershipActivity.class);
                 startActivity(intent2);*/

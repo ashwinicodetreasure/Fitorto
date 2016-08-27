@@ -150,14 +150,15 @@ public class FeedFragment extends BaseFragment {
                         if (showProgressbar) {
                             cancelProgressDialog();
                         }
-
                         if (response.isSuccessful()) {
                             JsonResponseFeed jsonResponse = response.body();
                             if (jsonResponse != null) {
                                 if (jsonResponse.getData().size() > 0) {
+                                    feed.clear();
                                     feed.addAll(jsonResponse.getData());
                                     adapter = new FeedAdapter(getActivity(), feed);
                                     rview.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
                                 } else {
                                     tvEmpty.setVisibility(View.VISIBLE);
                                     tvEmpty.setText(getActivity().getString(R.string.feed_empty_text));

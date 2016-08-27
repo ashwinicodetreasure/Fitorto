@@ -130,10 +130,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             holder.progressBar.setVisibility(View.GONE);
             holder.display.setVisibility(View.GONE);
         }*/
-        if (!TextUtils.isEmpty(feed.getImageLink())){
+        if (!TextUtils.isEmpty(feed.getImageLink())) {
             holder.display.setVisibility(View.VISIBLE);
             holder.display.setImageURI(feed.getImageLink());
-        }else {
+        } else {
             holder.display.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(feed.getUrl())) {
@@ -287,6 +287,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         public Animation animScale;
         private View viewBlackTint;
         private RelativeLayout rlUser;
+        private ImageButton btnShare;
 
         public ViewHolder(final View itemview) {
             super(itemview);
@@ -304,7 +305,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             share = (TextView) itemview.findViewById(R.id.tvShare);
             llLikes = (LinearLayout) itemview.findViewById(R.id.llLikes);
             llShare = (LinearLayout) itemview.findViewById(R.id.llShare);
-            rlUser= (RelativeLayout) itemview.findViewById(R.id.rlUser);
+            rlUser = (RelativeLayout) itemview.findViewById(R.id.rlUser);
+            btnShare = (ImageButton) itemview.findViewById(R.id.btnShare);
+            btnShare.setVisibility(View.VISIBLE);
             animScale = AnimationUtils.loadAnimation(itemview.getContext(), R.anim.anim_scale);
 
 
@@ -319,7 +322,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             like.setInAnimation(itemview.getContext(), R.anim.anim_up);
             like.setOutAnimation(itemview.getContext(), R.anim.anim_down);
 
-            display.getHierarchy().setProgressBarImage(ContextCompat.getDrawable(itemview.getContext(),R.drawable.circular_progress_bar));
+            display.getHierarchy().setProgressBarImage(ContextCompat.getDrawable(itemview.getContext(), R.drawable.circular_progress_bar));
         }
 
 

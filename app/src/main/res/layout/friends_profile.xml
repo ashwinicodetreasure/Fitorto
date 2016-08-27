@@ -57,7 +57,7 @@
                     app:civ_border_width="1dp" />
 
 
-                <TextView
+              <!--  <TextView
                     android:id="@+id/post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,15 +129,131 @@
                     android:fontFamily="Roboto Regular"
                     android:text="following"
                     android:textColor="@color/post_color"
-                    android:textSize="13sp" />
+                    android:textSize="13sp" />-->
+                <LinearLayout
+                    android:id="@+id/llSocial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_toRightOf="@+id/profile_image"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                <TextView
+                    <LinearLayout
+                        android:id="@+id/llPosts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.ct.fitorto.custom.CustomTextView
+                            android:id="@+id/post"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/p"
+                            android:layout_margin="@dimen/margin_small"
+                            android:letterSpacing="0.05"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <com.ct.fitorto.custom.CustomTextView
+                            android:id="@+id/p"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/fo"
+                            android:fontFamily="Roboto Regular"
+                            android:letterSpacing="0.05"
+                            android:text="posts"
+                            android:textAllCaps="true"
+                            android:textColor="@color/post_color"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFollowers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_small"
+                        android:layout_toRightOf="@+id/profile_image"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.ct.fitorto.custom.CustomTextView
+                            android:id="@+id/followers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_small"
+                            android:layout_toRightOf="@+id/post"
+                            android:letterSpacing="0.05"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <com.ct.fitorto.custom.CustomTextView
+                            android:id="@+id/fo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/p"
+                            android:fontFamily="Roboto Regular"
+                            android:letterSpacing="0.05"
+                            android:text="followers"
+                            android:textAllCaps="true"
+                            android:textColor="@color/post_color"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFollowing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_small"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.ct.fitorto.custom.CustomTextView
+                            android:id="@+id/following"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_small"
+                            android:layout_toRightOf="@+id/followers"
+                            android:letterSpacing="0.05"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <com.ct.fitorto.custom.CustomTextView
+                            android:id="@+id/follow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/fo"
+                            android:fontFamily="Roboto Regular"
+                            android:letterSpacing="0.05"
+                            android:text="following"
+                            android:textAllCaps="true"
+                            android:textColor="@color/post_color"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <com.ct.fitorto.custom.CustomTextView
                     android:id="@+id/editbtn"
-                    android:layout_width="190dp"
+                    android:layout_width="150dp"
                     android:layout_height="35dp"
-                    android:layout_alignLeft="@+id/p"
-                    android:layout_below="@+id/p"
+                    android:layout_alignLeft="@+id/llSocial"
+                    android:layout_alignStart="@+id/llSocial"
                     android:layout_marginTop="10dp"
+                    android:layout_below="@+id/llSocial"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginStart="42dp"
                     android:background="@drawable/checkinbtn"
                     android:fontFamily="Roboto Meduim"
                     android:gravity="center"
@@ -145,19 +261,19 @@
                     android:textColor="@color/colorText"
                     android:textSize="15sp" />
 
-                <TextView
+                <com.ct.fitorto.custom.CustomTextView
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_image"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="Roboto Meduim"
-                    android:text=" "
+                    android:text="Ashwini shukla"
                     android:textColor="@color/title_color"
                     android:textSize="16sp" />
 
-                <TextView
+                <com.ct.fitorto.custom.CustomTextView
                     android:id="@+id/user_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
